@@ -1,5 +1,5 @@
 Dummy model:
-Code given as input to SMBioNet and its result as output
+Code given as input to SMBioNet and its result as output parameters set (model1) 
 ####### Input for SMBioNet #######
 VAR
 p1 = 0 1 ;
