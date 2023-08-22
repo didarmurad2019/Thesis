@@ -1,0 +1,37 @@
+Dummy model:
+Code given as input to SMBioNet and its result as output
+####### Input for SMBioNet #######
+VAR
+p1 = 0 1 ;
+p2 = 0 1 ;
+p3 = 0 1 ;
+REG
+p3 [(p3<1)]=> p1 ;
+p1 [(p1>=1)]=> p2 ;
+p2 [(p2>=1)]=> p3 ;
+PARA
+# Parameters for p1
+K_p1 = 0 1 ;
+K_p1+p3 = 0 1 ;
+# Parameters for p2
+K_p2 = 0 1 ;
+K_p2+p1 = 0 1 ;
+# Parameters for p3
+K_p3 = 0 1 ;
+K_p3+p2 = 0 1 ;
+CTL
+((p1=1&p2=0&p3=0)->
+EF(p1=0&p2=1&p3=1))&
+((p1=0&p2=0&p3=0)->
+EF(AG(p1=0&p2=0&p3=0)))&
+((p1=0&p2=0&p3=0)->
+EX(EF(p1=0&p2=0&p3=0)))
+####### Output #######
+# MODEL 1
+# K_p1 = 0
+# K_p1+p3 = 0
+# K_p2 = 0
+# K_p2+p1 = 1
+# K_p3 = 0
+# K_p3+p2 = 1
+# SELECTED MODELS / CHECKED MODELS = 1 / 27 (420ms)
