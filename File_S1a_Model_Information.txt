@@ -1,0 +1,2600 @@
+
+Model information: ODEs, reactions, and rates. 
+
+Table S1a. Average gene expression values of the complement and coagulation entities acquired from 
+the analysis of microarray dataset (source: GEO accession GSE177477, Title: Type I interferon pathways 
+in SARS-CoV-2-infected individuals from Pakistan)
+Table S1b. The concentration of entities explored from experimental studies and estimation.
+Table S2.  For intervened disease state (INT-DS) modeling and analysis the drugs and targets  
+
+The kinetic constants and reactions reference and evidence details are provided in (Table S3a-Table S3e).pdf
+Table S3a. Complement entities kinetic constants.
+Table S3b. Coagulation entities kinetic constants.
+Table S3c. Complement and coagulation cross-talk entities kinetic constants.
+Table S3d. Complement, coagulation entities and SASR-CoV-2 structure proteins kinetic constants.
+Table S3e. Drug-Target interactions kinetic constants.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-1
+
+d(CoV2S)/dt = 1/Plasma*(-(([k^+_CoV2SlgG]*CoV2S*lgG-[k^-_CoV2SlgG]*[CoV2S:lgG])*Plasma) + 
+(([k^F10a_catCoV2S]*CoV2S*F10a/([k^F10a_mCoV2S]+CoV2S))*Plasma) + 
+(([k^F2a_catCoV2S]*CoV2S*F2a/([k^F2a_mCoV2S]+CoV2S))*Plasma) - 
+(([k^CoV2S_catgC1qR]*CoV2S*gC1qR)*Plasma) - 
+(([k^+_CoV2SHK]*HK*CoV2S)*Plasma))  
+
+Name    Reaction                      Reaction rate                                       
+r161    CoV2S -> HK                   [k^+_CoV2SHK]*HK*CoV2S                                         
+r17     CoV2S + lgG <-> [CoV2S:lgG]   [k^+_CoV2SlgG]*CoV2S*lgG-[k^-_CoV2SlgG]*[CoV2S:lgG]            
+r237    F10a -> CoV2S                 [k^F10a_catCoV2S]*CoV2S*F10a/([k^F10a_mCoV2S]+CoV2S)
+r238    F2a -> CoV2S                  [k^F2a_catCoV2S]*CoV2S*F2a/([k^F2a_mCoV2S]+CoV2S)
+r20     CoV2S -> gC1qR                [k^CoV2S_catgC1qR]*CoV2S*gC1qR
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-2
+
+d(lgG)/dt = 1/Plasma*(-(([k^+_CoV2SlgG]*CoV2S*lgG-[k^-_CoV2SlgG]*[CoV2S:lgG])*Plasma) - 
+((r49.[k^+_lgGfC3b]*lgG*fC3b)*Plasma))
+
+Name    Reaction                       Reaction rate      
+r17     CoV2S + lgG <-> [CoV2S:lgG]    [k^+_CoV2SlgG]*CoV2S*lgG-[k^-_CoV2SlgG]*[CoV2S:lgG]
+r49     lgG + fC3b -> [lgG:fC3b]       [k^+_lgGfC3b]*lgG*fC3b
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-3
+
+d([CoV2S:lgG])/dt = 1/Plasma*((([k^+_CoV2SlgG]*CoV2S*lgG-[k^-_CoV2SlgG]*[CoV2S:lgG])*Plasma) - 
+(([k^+_CoV2SlgGC1q]*[CoV2S:lgG]*C1q)*Plasma))
+
+Name    Reaction                        Reaction rate      
+r17     CoV2S + lgG <-> [CoV2S:lgG]     [k^+_CoV2SlgG]*CoV2S*lgG-[k^-_CoV2SlgG]*[CoV2S:lgG]
+r16     [CoV2S:lgG] -> C1q              [k^+_CoV2SlgGC1q]*[CoV2S:lgG]*C1q
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-4
+
+d(C1q)/dt = 1/Plasma*(-(([k^+_C1qrs]*[C1r:C1s]*C1q)*Plasma-([k^-_C1qrs]*[C1q:C1r:C1s])*Plasma) + 
+(([k^+_CoV2SlgGC1q]*[CoV2S:lgG]*C1q)*Plasma) - 
+(([k^+_C1qgC1qR]*C1q*gC1qR)*Plasma-([k^-_C1qgC1qR]*[C1q:gC1qR])*Plasma) - 
+(([k^+_C1INHC1q]*C1INH*C1q)*Plasma)) 
+
+Name    Reaction                            Reaction rate      
+r16     [CoV2S:lgG] -> C1q                  [k^+_CoV2SlgGC1q]*[CoV2S:lgG]*C1q
+r7      C1INH + C1q -> null                 [k^+_C1INHC1q]*C1INH*C1q
+r4      C1q + gC1qR <-> [C1q:gC1qR]         [k^+_C1qgC1qR]*C1q*gC1qR - [k^-_C1qgC1qR]*[C1q:gC1qR]
+r2      [C1r:C1s] + C1q <-> [C1q:C1r:C1s]   [k^+_C1qrs]*[C1r:C1s]*C1q - [k^-_C1qrs]*[C1q:C1r:C1s]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-5
+
+d(C2)/dt = 1/Plasma*(-(([k^+_C4bC2]*C2*C4b)*Plasma-([k^-_C4bC2]*[C4b:C2])*Plasma) - 
+(([k^+_fC3bC4bC2]*[fC3b:C4b]*C2)*Plasma-([k^-_fC3bC4bC2]*[fC3b:C4b:C2])*Plasma) - 
+((r75.[k^MASP2_catC2]*C2*MASP2/(r75.[k^MASP2_mC2]+C2)+[k^C1s_catC2]*C2*C1s/([k^C1s_mC2]+C2))*Plasma))
+
+Name    Reaction                            Reaction rate
+r75     C2 -> C2b + C2a                     [k^MASP2_catC2]*C2*MASP2/([k^MASP2_mC2]+C2)+[k^C1s_catC2]*C2*C1s/([k^C1s_mC2]+C2)
+r73     C2 + C4b <-> [C4b:C2]               [k^+_C4bC2]*C2*C4b - [k^-_C4bC2]*[C4b:C2]
+r92     [fC3b:C4b] + C2 <-> [fC3b:C4b:C2]   [k^+_fC3bC4bC2]*[fC3b:C4b]*C2 - [k^-_fC3bC4bC2]*[fC3b:C4b:C2]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-6
+
+d(C1INH)/dt = 1/Plasma*(-(([k^+_C1C1INH]*C1INH*C1)*Plasma) - ((r14.[k^+_C1INHMASP2]*C1INH*MASP2)*Plasma) - 
+((r12.[k^+_C1INHMASP1]*C1INH*MASP1)*Plasma) - (([k^+_C1INHF12a]*C1INH*F12a)*Plasma) - 
+(([k^+_C1INHF2a]*C1INH*F2a)*Plasma) - (([k^+_C1INHPn]*C1INH*Pn)*Plasma) - 
+(([k^+_C1INHKAL]*C1INH*KAL)*Plasma) - (([k^+_F11aC1INH]*C1INH*F11a)*Plasma) - 
+(([k^+_C1INHC1q]*C1INH*C1q)*Plasma))
+
+Name    Reaction                            Reaction rate
+r6      C1INH + C1 -> null                  [k^+_C1C1INH]*C1INH*C1
+r14     C1INH + MASP2 -> [C1INH:MASP2]      [k^+_C1INHMASP2]*C1INH*MASP2
+r12     C1INH + MASP1 -> [C1INH:MASP1]      [k^+_C1INHMASP1]*C1INH*MASP1
+r270    C1INH + F12a -> null                [k^+_C1INHF12a]*C1INH*F12a
+r264    C1INH + F2a -> null                 [k^+_C1INHF2a]*C1INH*F2a
+r262    C1INH + Pn -> null                  [k^+_C1INHPn]*C1INH*Pn
+r269    KAL + C1INH -> null                 [k^+_C1INHKAL]*C1INH*KAL
+r236    C1INH + F11a -> null                [k^+_F11aC1INH]*C1INH*F11a
+r7      C1INH + C1q -> null                 [k^+_C1INHC1q]*C1INH*C1q
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-7
+
+d(MBL)/dt = 1/Plasma*(-(([k^+_MBLMASP1]*MBL*MASP1)*Plasma- ([k^-_MBLMASP1]*[MBL:MASP1])*Plasma) - 
+(([k^+_MBLMASP2]*MBL*MASP2)*Plasma-([k^-_MBLMASP2]*[MBL:MASP2])*Plasma))
+
+Name    Reaction                            Reaction rate
+r8      MBL + MASP1 <-> [MBL:MASP1]         [k^+_MBLMASP1]*MBL*MASP1 - [k^-_MBLMASP1]*[MBL:MASP1]
+r10     MBL + MASP2 <-> [MBL:MASP2]         [k^+_MBLMASP2]*MBL*MASP2 - [k^-_MBLMASP2]*[MBL:MASP2]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-8
+
+d(C4)/dt = 1/Plasma*(-(([k^C1_catC4]*C4*C1/(r35.[k^C1_mC4]*(1+[C4b:C2]/r35.[k^C1_mC2]+
+[fC3b:C4b:C2]/r35.[k^C1_mC2]+C4/r35.[k^C1_mC4]))+
+[k^MASP1_catC4]*[MBL:MASP1]*C4/(r35.[k^MASP1_mC4]*(1+[C4b:C2]/r35.[k^MASP1_mC2]+
+[fC3b:C4b:C2]/r35.[k^MASP1_mC2]+C4/r35.[k^MASP1_mC4]))+
+[k^MASP2_catC4]*[MBL:MASP2]*C4/(r35.[k^MASP2_mC4]*(1+[C4b:C2]/r35.[k^MASP2_mC2]+
+[fC3b:C4b:C2]/r35.[k^MASP2_mC2]+C4/r35.[k^MASP2_mC4])))*Plasma) - 
+(([k^+_C1sC4]*C4*C1s)*Plasma-([k^-_C1sC4]*[C1s:C4])*Plasma) - 
+(([k^+_MASP2C4]*MASP2*C4)*Plasma-([k^-_MASP2C4]*[MASP2:C4])*Plasma))
+
+Name    Reaction                            Reaction rate
+r35     C4 -> C4a + C4b                     [k^C1_catC4]*C4*C1/([k^C1_mC4]*(1+[C4b:C2]/[k^C1_mC2]+
+                                            [fC3b:C4b:C2]/[k^C1_mC2]+C4/[k^C1_mC4]))+
+					    [k^MASP1_catC4]*[MBL:MASP1]*C4/([k^MASP1_mC4]*(1+[C4b:C2]/[k^MASP1_mC2]+
+					    [fC3b:C4b:C2]/[k^MASP1_mC2]+C4/[k^MASP1_mC4]))+
+					    [k^MASP2_catC4]*[MBL:MASP2]*C4/([k^MASP2_mC4]*(1+[C4b:C2]/[k^MASP2_mC2]+
+					    [fC3b:C4b:C2]/[k^MASP2_mC2]+C4/[k^MASP2_mC4]))
+
+r34	C4 + C1s <-> [C1s:C4]               [k^+_C1sC4]*C4*C1s - [k^-_C1sC4]*[C1s:C4]									
+r33     MASP2 + C4 <-> [MASP2:C4]           [k^+_MASP2C4]*MASP2*C4 - [k^-_MASP2C4]*[MASP2:C4]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-9
+
+d(C2a)/dt = 1/Plasma*(-(([k^+_C4bC2a]*C2a*C4b)*Plasma-
+([k^-_C4bC2a]*[C4b:C2a])*Plasma) + 
+((r77.[k^-_dC4bC2aC4BP]*[C4b:C2a:C4BP]+r77.[k^-_dC4bC2aCR1]*[C4b:C2a:CR1]+
+r77.[k^-_C4bC2aC3b]*[C4b:C2a:C3b]+r77.[k^-_dC4bC2aC3bCR1]*[C4b:C2a:C3b:CR1])*Plasma) + 
+((r75.[k^MASP2_catC2]*C2*MASP2/(r75.[k^MASP2_mC2]+C2)+
+[k^C1s_catC2]*C2*C1s/([k^C1s_mC2]+C2))*Plasma))
+
+Name    Reaction                            Reaction rate
+r78     C2a + C4b <-> [C4b:C2a]             [k^+_C4bC2a]*C2a*C4b - [k^-_C4bC2a]*[C4b:C2a]
+r77     null -> C2a                         [k^-_dC4bC2aC4BP]*[C4b:C2a:C4BP]+[k^-_dC4bC2aCR1]*[C4b:C2a:CR1]+
+                                            [k^-_C4bC2aC3b]*[C4b:C2a:C3b]+[k^-_dC4bC2aC3bCR1]*[C4b:C2a:C3b:CR1]
+r75     C2 -> C2b + C2a		            [k^MASP2_catC2]*C2*MASP2/([k^MASP2_mC2]+C2)+[k^C1s_catC2]*C2*C1s/([k^C1s_mC2]+C2)
+									
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-10
+
+d(C4b)/dt = 1/Plasma*((([k^C1_catC4]*C4*C1/(r35.[k^C1_mC4]*(1+[C4b:C2]/r35.[k^C1_mC2]+
+[fC3b:C4b:C2]/r35.[k^C1_mC2]+C4/r35.[k^C1_mC4]))+
+[k^MASP1_catC4]*[MBL:MASP1]*C4/(r35.[k^MASP1_mC4]*(1+[C4b:C2]/r35.[k^MASP1_mC2]+
+[fC3b:C4b:C2]/r35.[k^MASP1_mC2]+C4/r35.[k^MASP1_mC4]))+
+[k^MASP2_catC4]*[MBL:MASP2]*C4/(r35.[k^MASP2_mC4]*(1+[C4b:C2]/r35.[k^MASP2_mC2]+
+[fC3b:C4b:C2]/r35.[k^MASP2_mC2]+C4/r35.[k^MASP2_mC4])))*Plasma) - 
+(([k^+_C4bC2a]*C2a*C4b)*Plasma-([k^-_C4bC2a]*[C4b:C2a])*Plasma) - 
+(([k^+_C4bC4BP]*C4BP*C4b)*Plasma-([k^-_C4bC4BP]*[C4b:C4BP])*Plasma) - 
+(([k^+_C4bC2]*C2*C4b)*Plasma-([k^-_C4bC2]*[C4b:C2])*Plasma) - 
+(([k^+_fC3bC4b]*fC3b*C4b)*Plasma))
+
+Name    Reaction                            Reaction rate
+r35     C4 -> C4a + C4b                     [k^C1_catC4]*C4*C1/([k^C1_mC4]*(1+[C4b:C2]/[k^C1_mC2]+
+                                            [fC3b:C4b:C2]/[k^C1_mC2]+C4/[k^C1_mC4]))+
+					    [k^MASP1_catC4]*[MBL:MASP1]*C4/([k^MASP1_mC4]*(1+[C4b:C2]/[k^MASP1_mC2]+
+					    [fC3b:C4b:C2]/[k^MASP1_mC2]+C4/[k^MASP1_mC4]))+
+                                            [k^MASP2_catC4]*[MBL:MASP2]*C4/([k^MASP2_mC4]*(1+[C4b:C2]/[k^MASP2_mC2]+
+                                            [fC3b:C4b:C2]/[k^MASP2_mC2]+C4/[k^MASP2_mC4]))
+
+
+r78     C2a + C4b <-> [C4b:C2a]             [k^+_C4bC2a]*C2a*C4b - [k^-_C4bC2a]*[C4b:C2a]
+r80     C4BP + C4b <-> [C4b:C4BP]           [k^+_C4bC4BP]*C4BP*C4b - [k^-_C4bC4BP]*[C4b:C4BP]
+r73     C2 + C4b <-> [C4b:C2]               [k^+_C4bC2]*C2*C4b - [k^-_C4bC2]*[C4b:C2]
+r79     C4b + fC3b -> [fC3b:C4b]            [k^+_fC3bC4b]*fC3b*C4b
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-11
+	
+d([C4b:C2a])/dt = 1/Plasma*((([k^+_C4bC2a]*C2a*C4b)*Plasma-([k^-_C4bC2a]*[C4b:C2a])*Plasma) - 
+(([k^+_C4bC2aCR1]*CR1*[C4b:C2a])*Plasma-([k^-_C4bC2aCR1]*[C4b:C2a:CR1])*Plasma) - 
+(([k^+_C4bC2aDAF]*DAF*[C4b:C2a]-[k^-_C4bC2aDAF]*[C4b:C2a:DAF])*Plasma) - 
+(([k^+_C4bC2aC3b]*C3b*[C4b:C2a])*Plasma-(r132.[k^-_C4bC2aC3b]*[C4b:C2a:C3b])*Plasma) - 
+(([k^+_C4bC2aC4BP]*C4BP*[C4b:C2a])*Plasma-([k^-_C4bC2aC4BP]*[C4b:C2a:C4BP])*Plasma) + 
+((r102.[k^C1_catC2]*[C4b:C2]*C1/(r102.[k^C1_mC2]*(1+[C4b:C2]/r102.[k^C1_mC2]+
+[fC3b:C4b:C2]/r102.[k^C1_mC2]+C4/r102.[k^C1_mC4]))+
+r102.[k^MASP1_catC2]*[MBL:MASP1]*[C4b:C2]/(r102.[k^MASP1_mC2]*(1+[C4b:C2]/r102.[k^MASP1_mC2]+
+[fC3b:C4b:C2]/r102.[k^MASP1_mC2]+C4/r102.[k^MASP1_mC4]))+
+r102.[k^MASP2_catC2]*[MBL:MASP2]*[C4b:C2]/(r102.[k^MASP2_mC2]*(1+[C4b:C2]/r102.[k^MASP2_mC2]+
+[fC3b:C4b:C2]/r102.[k^MASP2_mC2]+C4/r102.[k^MASP2_mC4])))*Plasma))
+
+Name    Reaction                                Reaction rate
+r78      C2a + C4b <-> [C4b:C2a]                [k^+_C4bC2a]*C2a*C4b - [k^-_C4bC2a]*[C4b:C2a]
+r105     CR1 + [C4b:C2a] <-> [C4b:C2a:CR1]      [k^+_C4bC2aCR1]*CR1*[C4b:C2a] - [k^-_C4bC2aCR1]*[C4b:C2a:CR1]
+r103     DAF + [C4b:C2a] <-> [C4b:C2a:DAF]      [k^+_C4bC2aDAF]*DAF*[C4b:C2a] - [k^-_C4bC2aDAF]*[C4b:C2a:DAF]
+r132     C3b + [C4b:C2a] <-> [C4b:C2a:C3b]      [k^+_C4bC2aC3b]*C3b*[C4b:C2a] - [k^-_C4bC2aC3b]*[C4b:C2a:C3b]
+r87      C4BP + [C4b:C2a] <-> [C4b:C2a:C4BP]    [k^+_C4bC2aC4BP]*C4BP*[C4b:C2a] - [k^-_C4bC2aC4BP]*[C4b:C2a:C4BP]
+r102     null -> [C4b:C2a]                      [k^C1_catC2]*[C4b:C2]*C1/([k^C1_mC2]*(1+[C4b:C2]/[k^C1_mC2]+
+                                                [fC3b:C4b:C2]/[k^C1_mC2]+C4/[k^C1_mC4]))+
+						[k^MASP1_catC2]*[MBL:MASP1]*[C4b:C2]/([k^MASP1_mC2]*(1+[C4b:C2]/[k^MASP1_mC2]+
+						[fC3b:C4b:C2]/[k^MASP1_mC2]+C4/[k^MASP1_mC4]))+
+						[k^MASP2_catC2]*[MBL:MASP2]*[C4b:C2]/([k^MASP2_mC2]*(1+[C4b:C2]/[k^MASP2_mC2]+
+                                                [fC3b:C4b:C2]/[k^MASP2_mC2]+C4/[k^MASP2_mC4]))
+												
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-12
+
+d(C4BP)/dt = 1/Plasma*(-(([k^+_C4bC4BP]*C4BP*C4b)*Plasma-([k^-_C4bC4BP]*[C4b:C4BP])*Plasma) - 
+(([k^+_C4bC2aC4BP]*C4BP*[C4b:C2a])*Plasma-([k^-_C4bC2aC4BP]*[C4b:C2a:C4BP])*Plasma))
+
+Name    Reaction                                Reaction rate
+r80     C4BP + C4b <-> [C4b:C4BP]               [k^+_C4bC4BP]*C4BP*C4b - [k^-_C4bC4BP]*[C4b:C4BP] 
+r87     C4BP + [C4b:C2a] <-> [C4b:C2a:C4BP]     [k^+_C4bC2aC4BP]*C4BP*[C4b:C2a] - [k^-_C4bC2aC4BP]*[C4b:C2a:C4BP]
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-13
+
+d(C3)/dt = 1/Plasma*(-(([k^C3WBb_catC3]*[C3W:Bb]*C3/([k^C3WBb_mC3]+C3)+
+[k^C4bC2a_catC3]*[C4b:C2a]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+C5/[k^C4bC2a_mC5]))+
+[k^fC3bBb_catC3]*([fC3b:Bb]+[fC3b:Bb:P])*C3/(r122.[k^fC3bBb_mC3]*(1+C3/r122.[k^fC3bBb_mC3]+C5/r122.[k^fC3bBb_mC5]))
++[k^fC3bBb_catC3]*[fC3b:Bb:C3b]*C3/(r122.[k^fC3bBb_mC3]*(1+C3/r122.[k^fC3bBb_mC3]+C5/r122.[k^fC3bBbC3b_mC5]))+
+[k^C4bC2a_catC3]*[C4b:C2a:C3b]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+C5/[k^C4bC2aC3b_mC5]))+
+[k^fC3bBb_catC3]*[fC3b:Bb:C3b:P]*C3/(r122.[k^fC3bBb_mC3]*(1+C3/r122.[k^fC3bBb_mC3]+C5/r122.[k^fC3bBbC3b_mC5]))+
+[k^KAL_catC3]*KAL*C3/([k^KAL_mC3]+C3)+[k^Pn_catC3]*Pn*C3/([k^Pn_mC3]+C3)+
+[k^F2a_catC3]*F2a*C3/([k^F2a_mC3]+C3)+[k^F10a_catC3]*F10a*C3/([k^F10a_mC3]+C3))*Plasma) - 
+((r124.[k^+_C3W]*C3)*Plasma) + (([k^+_sC3])*Plasma))
+
+Name    Reaction              Reaction rate
+r122    C3 -> C3b + C3a       [k^C3WBb_catC3]*[C3W:Bb]*C3/([k^C3WBb_mC3]+C3)+
+                              [k^C4bC2a_catC3]*[C4b:C2a]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+
+			      C5/[k^C4bC2a_mC5]))+[k^fC3bBb_catC3]*([fC3b:Bb]+
+			      [fC3b:Bb:P])*C3/([k^fC3bBb_mC3]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBb_mC5]))+
+			      [k^fC3bBb_catC3]*[fC3b:Bb:C3b]*C3/([k^fC3bBb_mC3]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBbC3b_mC5]))+
+			      [k^C4bC2a_catC3]*[C4b:C2a:C3b]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+C5/[k^C4bC2aC3b_mC5]))+
+			      [k^fC3bBb_catC3]*[fC3b:Bb:C3b:P]*C3/([k^fC3bBb_mC3]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBbC3b_mC5]))+
+			      [k^KAL_catC3]*KAL*C3/([k^KAL_mC3]+C3)+[k^Pn_catC3]*Pn*C3/([k^Pn_mC3]+C3)+
+			      [k^F2a_catC3]*F2a*C3/([k^F2a_mC3]+C3)+[k^F10a_catC3]*F10a*C3/([k^F10a_mC3]+C3)
+							  
+r124    C3 -> null            [k^+_C3W]*C3
+r123    null -> C3            [k^+_sC3]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-14
+
+d(MASP1)/dt = 1/Plasma*(-(([k^+_MBLMASP1]*MBL*MASP1)*Plasma-([k^-_MBLMASP1]*[MBL:MASP1])*Plasma) - 
+((r12.[k^+_C1INHMASP1]*C1INH*MASP1)*Plasma))
+
+Name    Reaction                                 Reaction rate
+r8      MBL + MASP1 <-> [MBL:MASP1]              [k^+_MBLMASP1]*MBL*MASP1 - [k^-_MBLMASP1]*[MBL:MASP1]
+r12     C1INH + MASP1 -> [C1INH:MASP1]           [k^+_C1INHMASP1]*C1INH*MASP1 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-15
+
+d([MBL:MASP1])/dt = 1/Plasma*((([k^+_MBLMASP1]*MBL*MASP1)*Plasma- ([k^-_MBLMASP1]*[MBL:MASP1])*Plasma) - 
+((r9.[k^+_C1INHMASP1]*C1INH*[MBL:MASP1])*Plasma))
+
+Name    Reaction                                 Reaction rate
+r8      MBL + MASP1 <-> [MBL:MASP1]              [k^+_MBLMASP1]*MBL*MASP1 - [k^-_MBLMASP1]*[MBL:MASP1]
+r9     [MBL:MASP1] -> null                       [k^+_C1INHMASP1]*C1INH*[MBL:MASP1]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-16
+
+d(C3W)/dt = 1/Plasma*(((r24.[k^+_C3W]*C3)*Plasma) - (([k^+_C3WFH]*FH*C3W)*Plasma-([k^-_C3WFH]*[C3W:FH])*Plasma) - 
+(([k^+_C3WFB]*FB*C3W)*Plasma-([k^-_C3WFB]*[C3W:FB])*Plasma) - (([k^-_dC3W]*C3W)*Plasma))
+
+Name    Reaction                   Reaction rate
+r24     null -> C3W                [k^+_C3W]*C3
+r36     FH + C3W <-> [C3W:FH]      [k^+_C3WFH]*FH*C3W - [k^-_C3WFH]*[C3W:FH]
+r23     FB + C3W <-> [C3W:FB]      [k^+_C3WFB]*FB*C3W - [k^-_C3WFB]*[C3W:FB]
+r25     C3W -> null                [k^-_dC3W]*C3W
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-17
+
+d([C3W:Bb])/dt = 1/Plasma*(-(([k^+_C3WBbFH]*FH*[C3W:Bb])*Plasma-([k^-_C3WBbFH]*[C3W:Bb:FH])*Plasma) + 
+((r26.[k^FD_catC3WFB]*[C3W:FB]*FD/(r26.[k^FD_mC3WFB]+[C3W:FB]+[fC3b:FB]+[fC3b:FB:P]+
+[lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+[k^KAL_catC3WFB]*[C3W:FB]*KAL/([k^KAL_mC3WFB]+[C3W:FB]))*Plasma) - 
+((r28.[k^-_C3WBb]*[C3W:Bb])*Plasma) - ((r62.[k^-_dC3WBb]*[C3W:Bb])*Plasma))
+
+Name    Reaction                         Reaction rate
+r39     FH + [C3W:Bb] <-> [C3W:Bb:FH]    [k^+_C3WBbFH]*FH*[C3W:Bb] - [k^-_C3WBbFH]*[C3W:Bb:FH]
+r26     [C3W:FB] -> [C3W:Bb] + Ba        [k^FD_catC3WFB]*[C3W:FB]*FD/([k^FD_mC3WFB]+[C3W:FB]+[fC3b:FB]+
+                                         [fC3b:FB:P]+[lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+
+					 [fC3b:C4b:P:FB]+[fC3b:C3b:FB])+[k^KAL_catC3WFB]*[C3W:FB]*KAL/([k^KAL_mC3WFB]+[C3W:FB])
+r28     [C3W:Bb] -> Bb                   [k^-_C3WBb]*[C3W:Bb]
+r62     [C3W:Bb] -> null                 [k^-_dC3WBb]*[C3W:Bb]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-18
+
+d(FH)/dt = 1/Plasma*(-(([k^+_C3WFH]*FH*C3W)*Plasma-([k^-_C3WFH]*[C3W:FH])*Plasma) - 
+(([k^+_fC3bBbFH]*FH*[fC3b:Bb]-[k^-_fC3bBbFH]*[fC3b:Bb:FH])*Plasma) + 
+((r65.[k^FI_catfC3bFH]*[fC3b:FH]*FI/(r65.[k^FI_mfC3bFH]+[fC3b:FH]+[fC3b:CR1]+
+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3W:FH]+[C3b:FH]+[C3b:CR1])+
+r65.[k^FI_catC3bFH]*[C3b:FH]*FI/(r65.[k^FI_mC3bFH]+[C3b:FH]+[fC3b:FH]+[C3W:FH]+
+[fC3b:CR1]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:CR1])+
+r65.[k^FI_catC3WFH]*[C3W:FH]*FI/(r65.[k^FI_mC3WFH]+[C3W:FH]+[fC3b:FH]+[fC3b:CR1]+
+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:FH]+[C3b:CR1])+
+r65.[k^FI_catfC3bC4bFH]*[fC3b:C4b:FH]*FI/(r65.[k^FI_mfC3bC4bFH]+[fC3b:C4b:FH]+[C3W:FH]+
+[fC3b:FH]+[fC3b:CR1]+[fC3b:C4b:CR1]+[C3b:FH]+[C3b:CR1]))*Plasma) - 
+(([k^+_fC3bBbC3bFH]*FH*[fC3b:Bb:C3b])*Plasma-([k^-_fC3bBbC3bFH]*[fC3b:Bb:C3b:FH])*Plasma) - 
+(([k^+_fC3bFH]*FH*fC3b)*Plasma-([k^-_fC3bFH]*[fC3b:FH])*Plasma) - 
+(([k^+_C3bFH]*FH*C3b)*Plasma-([k^-_C3bFH]*[C3b:FH])*Plasma) - 
+(([k^+_C3WBbFH]*FH*[C3W:Bb])*Plasma-([k^-_C3WBbFH]*[C3W:Bb:FH])*Plasma) - 
+(([k^-_dFH]*FH)*Plasma) + (([k^+_sFH])*Plasma) - 
+(([k^+_fC3bC4bFH]*FH*[fC3b:C4b])*Plasma-([k^-_fC3bC4bFH]*[fC3b:C4b:FH])*Plasma) - 
+(([k^+_FHF2a]*FH*F2a)*Plasma) - (([k^+_FHF1a]*FH*F1a)*Plasma))
+
+Name    Reaction                                       Reaction rate
+r36     FH + C3W <-> [C3W:FH]                          [k^+_C3WFH]*FH*C3W - [k^-_C3WFH]*[C3W:FH]
+r83     FH + [fC3b:Bb] <-> [fC3b:Bb:FH]                [k^+_fC3bBbFH]*FH*[fC3b:Bb] - [k^-_fC3bBbFH]*[fC3b:Bb:FH]
+r65     FI -> FH                                       [k^FI_catfC3bFH]*[fC3b:FH]*FI/([k^FI_mfC3bFH]+[fC3b:FH]+[fC3b:CR1]+
+                                                       [fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3W:FH]+[C3b:FH]+[C3b:CR1])+
+						       [k^FI_catC3bFH]*[C3b:FH]*FI/([k^FI_mC3bFH]+[C3b:FH]+[fC3b:FH]+
+						       [C3W:FH]+[fC3b:CR1]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:CR1])+
+						       [k^FI_catC3WFH]*[C3W:FH]*FI/([k^FI_mC3WFH]+[C3W:FH]+[fC3b:FH]+
+						       [fC3b:CR1]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:FH]+[C3b:CR1])+
+						       [k^FI_catfC3bC4bFH]*[fC3b:C4b:FH]*FI/([k^FI_mfC3bC4bFH]+
+						       [fC3b:C4b:FH]+[C3W:FH]+[fC3b:FH]+[fC3b:CR1]+[fC3b:C4b:CR1]+[C3b:FH]+[C3b:CR1])
+r115    FH + [fC3b:Bb:C3b] <-> [fC3b:Bb:C3b:FH]        [k^+_fC3bBbC3bFH]*FH*[fC3b:Bb:C3b] - [k^-_fC3bBbC3bFH]*[fC3b:Bb:C3b:FH]
+r37     FH + fC3b <-> [fC3b:FH]                        [k^+_fC3bFH]*FH*fC3b - [k^-_fC3bFH]*[fC3b:FH]
+r126    FH + C3b <-> [C3b:FH]                          [k^+_C3bFH]*FH*C3b - [k^-_C3bFH]*[C3b:FH]
+r39     FH + [C3W:Bb] <-> [C3W:Bb:FH]                  [k^+_C3WBbFH]*FH*[C3W:Bb] - [k^-_C3WBbFH]*[C3W:Bb:FH]
+r64     FH -> null                                     [k^-_dFH]*FH
+r63     null -> FH                                     [k^+_sFH]
+r81     FH + [fC3b:C4b] <-> [fC3b:C4b:FH]              [k^+_fC3bC4bFH]*FH*[fC3b:C4b] - [k^-_fC3bC4bFH]*[fC3b:C4b:FH]
+r241    FH + F2a -> null                               [k^+_FHF2a]*FH*F2a
+r263    FH + F1a -> null                               [k^+_FHF1a]*FH*F1a
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-19
+
+d(fC3b)/dt = 1/Plasma*((([k^+_fC3b]*fC3b*W)*Plasma) + ((r94.[k^-_fC3bBb]*[fC3b:Bb])*Plasma) - 
+(([k^+_fC3bFB]*FB*fC3b)*Plasma-([k^-_fC3bFB]*[fC3b:FB])*Plasma) - 
+(([k^+_fC3bFH]*FH*fC3b)*Plasma-([k^-_fC3bFH]*[fC3b:FH])*Plasma) - 
+((r49.[k^+_lgGfC3b]*lgG*fC3b)*Plasma) - 
+(([k^+_fC3bCR1]*CR1*fC3b)*Plasma-([k^-_fC3bCR1]*[fC3b:CR1])*Plasma) - 
+(([k^+_fC3bC4b]*fC3b*C4b)*Plasma) - (([k^+_fC3bC3bFB]*[C3b:FB]*fC3b)*Plasma -
+([k^-_fC3bC3bFB]*[fC3b:C3b:FB])*Plasma) - (([k^-_dfC3b]*fC3b)*Plasma))
+
+Name    Reaction                               Reaction rate
+r70     W -> fC3b                              [k^+_fC3b]*fC3b*W
+r94     [fC3b:Bb] -> fC3b                      [k^-_fC3bBb]*[fC3b:Bb]
+r41     FB + fC3b <-> [fC3b:FB]                [k^+_fC3bFB]*FB*fC3b - [k^-_fC3bFB]*[fC3b:FB]
+r37     FH + fC3b <-> [fC3b:FH]                [k^+_fC3bFH]*FH*fC3b - [k^-_fC3bFH]*[fC3b:FH]
+r49     lgG + fC3b -> [lgG:fC3b]               [k^+_lgGfC3b]*lgG*fC3b
+r111    CR1 + fC3b <-> [fC3b:CR1]              [k^+_fC3bCR1]*CR1*fC3b - [k^-_fC3bCR1]*[fC3b:CR1]
+r79     C4b + fC3b -> [fC3b:C4b]               [k^+_fC3bC4b]*fC3b*C4b
+r89     [C3b:FB] + fC3b <-> [fC3b:C3b:FB]      [k^+_fC3bC3bFB]*[C3b:FB]*fC3b - [k^-_fC3bC3bFB]*[fC3b:C3b:FB]
+r72     fC3b -> null                           [k^-_dfC3b]*fC3b
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-20
+
+d([fC3b:Bb])/dt = 1/Plasma*(-((r94.[k^-_fC3bBb]*[fC3b:Bb])*Plasma) - 
+(([k^+_fC3bBbFH]*FH*[fC3b:Bb]-[k^-_fC3bBbFH]*[fC3b:Bb:FH])*Plasma) - 
+(([k^+_fC3bBbCR1]*CR1*[fC3b:Bb])*Plasma - ([k^-_fC3bBbCR1]*[fC3b:Bb:CR1])*Plasma) - 
+(([k^+_fC3bBbDAF]*DAF*[fC3b:Bb])*Plasma-([k^-_fC3bBbDAF]*[fC3b:Bb:DAF])*Plasma) - 
+(([k^+_fC3bBbC3b]*C3b*[fC3b:Bb])*Plasma-([k^-_fC3bBbC3b]*[fC3b:Bb:C3b])*Plasma) + 
+(([k^FD_catfC3bFB]*[fC3b:FB]*FD/([k^FD_mfC3bFB]+[fC3b:FB]+[fC3b:FB:P]+[C3W:FB]+[lgG:fC3b:FB]+
+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+[k^KAL_catfC3bFB]*[fC3b:FB]*KAL/([k^KAL_mfC3bFB]+[fC3b:FB]))*Plasma) - 
+(([k^+_fC3bBbP]*P*[fC3b:Bb]-r99.[k^-_fC3bBbP]*[fC3b:Bb:P])*Plasma) - 
+(([k^-_dfC3bBb]*[fC3b:Bb])*Plasma))
+
+Name    Reaction                               Reaction rate
+r94     [fC3b:Bb] -> fC3b                      [k^-_fC3bBb]*[fC3b:Bb]
+r83     FH + [fC3b:Bb] <-> [fC3b:Bb:FH]        [k^+_fC3bBbFH]*FH*[fC3b:Bb] - [k^-_fC3bBbFH]*[fC3b:Bb:FH]
+r98     CR1 + [fC3b:Bb] <-> [fC3b:Bb:CR1]      [k^+_fC3bBbCR1]*CR1*[fC3b:Bb] - [k^-_fC3bBbCR1]*[fC3b:Bb:CR1]
+r119    DAF + [fC3b:Bb] <-> [fC3b:Bb:DAF]      [k^+_fC3bBbDAF]*DAF*[fC3b:Bb] - [k^-_fC3bBbDAF]*[fC3b:Bb:DAF]
+r97     C3b + [fC3b:Bb] <-> [fC3b:Bb:C3b]      [k^+_fC3bBbC3b]*C3b*[fC3b:Bb] - [k^-_fC3bBbC3b]*[fC3b:Bb:C3b]
+r42     [fC3b:FB] -> [fC3b:Bb] + Ba            [k^FD_catfC3bFB]*[fC3b:FB]*FD/([k^FD_mfC3bFB]+[fC3b:FB]+[fC3b:FB:P]+[C3W:FB]+
+                                               [lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+
+					       [fC3b:C3b:FB])+[k^KAL_catfC3bFB]*[fC3b:FB]*KAL/([k^KAL_mfC3bFB]+[fC3b:FB])
+r99    	P + [fC3b:Bb] <-> [fC3b:Bb:P]	       [k^+_fC3bBbP]*P*[fC3b:Bb] - [k^-_fC3bBbP]*[fC3b:Bb:P]
+r95     [fC3b:Bb] -> null                      [k^-_dfC3bBb]*[fC3b:Bb]
+								   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-21
+	
+d(FI)/dt = 1/Plasma*(-((r131.[k^FI_catfC3bCR1]*[fC3b:CR1]*FI/(r131.[k^FI_mfC3bCR1]+[fC3b:CR1]+
+[fC3b:FH]+[C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:FH]+[C3b:CR1])+
+r131.[k^FI_catC3bCR1]*[C3b:CR1]*FI/(r131.[k^FI_mC3bCR1]+[C3b:CR1]+
+[fC3b:FH]+[fC3b:CR1]+[C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:FH])+
+r131.[k^FI_catfC3bC4bCR1]*[fC3b:C4b:CR1]*FI/(r131.[k^FI_mfC3bC4bCR1]+
+[fC3b:C4b:CR1]+[fC3b:FH]+[fC3b:CR1]+[C3W:FH]+[fC3b:C4b:FH]+[C3b:FH]+[C3b:CR1]))*Plasma) - 
+((r65.[k^FI_catfC3bFH]*[fC3b:FH]*FI/(r65.[k^FI_mfC3bFH]+[fC3b:FH]+[fC3b:CR1]+[fC3b:C4b:FH]+
+[fC3b:C4b:CR1]+[C3W:FH]+[C3b:FH]+[C3b:CR1])+
+r65.[k^FI_catC3bFH]*[C3b:FH]*FI/(r65.[k^FI_mC3bFH]+[C3b:FH]+[fC3b:FH]+[C3W:FH]+[fC3b:CR1]+
+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:CR1])+
+r65.[k^FI_catC3WFH]*[C3W:FH]*FI/(r65.[k^FI_mC3WFH]+[C3W:FH]+[fC3b:FH]+[fC3b:CR1]+
+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:FH]+[C3b:CR1])+
+r65.[k^FI_catfC3bC4bFH]*[fC3b:C4b:FH]*FI/(r65.[k^FI_mfC3bC4bFH]+[fC3b:C4b:FH]+
+[C3W:FH]+[fC3b:FH]+[fC3b:CR1]+[fC3b:C4b:CR1]+[C3b:FH]+[C3b:CR1]))*Plasma))
+
+Name    Reaction                     Reaction rate
+r131    FI -> CR1                    [k^FI_catfC3bCR1]*[fC3b:CR1]*FI/([k^FI_mfC3bCR1]+[fC3b:CR1]+[fC3b:FH]+
+                                     [C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:FH]+[C3b:CR1])+
+				     [k^FI_catC3bCR1]*[C3b:CR1]*FI/([k^FI_mC3bCR1]+[C3b:CR1]+[fC3b:FH]+
+				     [fC3b:CR1]+[C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:FH])+
+				     [k^FI_catfC3bC4bCR1]*[fC3b:C4b:CR1]*FI/([k^FI_mfC3bC4bCR1]+
+				     [fC3b:C4b:CR1]+[fC3b:FH]+[fC3b:CR1]+[C3W:FH]+[fC3b:C4b:FH]+[C3b:FH]+[C3b:CR1])
+r65     FI -> FH		     [k^FI_catfC3bFH]*[fC3b:FH]*FI/([k^FI_mfC3bFH]+[fC3b:FH]+[fC3b:CR1]+
+                                     [fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3W:FH]+[C3b:FH]+[C3b:CR1])+
+				     [k^FI_catC3bFH]*[C3b:FH]*FI/([k^FI_mC3bFH]+[C3b:FH]+[fC3b:FH]+
+				     [C3W:FH]+[fC3b:CR1]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:CR1])+
+				     [k^FI_catC3WFH]*[C3W:FH]*FI/([k^FI_mC3WFH]+[C3W:FH]+[fC3b:FH]+
+				     [fC3b:CR1]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:FH]+[C3b:CR1])+
+				     [k^FI_catfC3bC4bFH]*[fC3b:C4b:FH]*FI/([k^FI_mfC3bC4bFH]+
+				     [fC3b:C4b:FH]+[C3W:FH]+[fC3b:FH]+[fC3b:CR1]+[fC3b:C4b:CR1]+[C3b:FH]+[C3b:CR1])						 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-22
+
+d(CR1)/dt = 1/Plasma*(((r131.[k^FI_catfC3bCR1]*[fC3b:CR1]*FI/(r131.[k^FI_mfC3bCR1]+[fC3b:CR1]+[fC3b:FH]+
+[C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:FH]+[C3b:CR1])+
+r131.[k^FI_catC3bCR1]*[C3b:CR1]*FI/(r131.[k^FI_mC3bCR1]+[C3b:CR1]+[fC3b:FH]+[fC3b:CR1]+[C3W:FH]+
+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:FH])+
+r131.[k^FI_catfC3bC4bCR1]*[fC3b:C4b:CR1]*FI/(r131.[k^FI_mfC3bC4bCR1]+[fC3b:C4b:CR1]+[fC3b:FH]+
+[fC3b:CR1]+[C3W:FH]+[fC3b:C4b:FH]+[C3b:FH]+[C3b:CR1]))*Plasma) - 
+(([k^+_C4bC2aCR1]*CR1*[C4b:C2a])*Plasma-([k^-_C4bC2aCR1]*[C4b:C2a:CR1])*Plasma) - 
+(([k^+_fC3bBbCR1]*CR1*[fC3b:Bb])*Plasma-([k^-_fC3bBbCR1]*[fC3b:Bb:CR1])*Plasma) - 
+(([k^+_fC3bBb3bCR1]*CR1*[fC3b:Bb:C3b])*Plasma-([k^-_fC3bBb3bCR1]*[fC3b:Bb:C3b:CR1])*Plasma) - 
+(([k^+_C4b2a3bCR1]*CR1*[C4b:C2a:C3b])*Plasma-([k^-_C4b2a3bCR1]*[C4b:C2a:C3b:CR1])*Plasma) - 
+(([k^+_C3bCR1]*CR1*C3b)*Plasma-([k^-_C3bCR1]*[C3b:CR1])*Plasma) - 
+(([k^+_fC3bCR1]*CR1*fC3b)*Plasma-([k^-_fC3bCR1]*[fC3b:CR1])*Plasma) - 
+(([k^+_fC3bC4bCR1]*[fC3b:C4b]*CR1)*Plasma-([k^-_fC3bC4bCR1]*[fC3b:C4b:CR1])*Plasma))
+
+Name    Reaction                                   Reaction rate
+r131    FI -> CR1                                  [k^FI_catfC3bCR1]*[fC3b:CR1]*FI/([k^FI_mfC3bCR1]+[fC3b:CR1]+[fC3b:FH]+
+                                                   [C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:FH]+[C3b:CR1])+
+						   [k^FI_catC3bCR1]*[C3b:CR1]*FI/([k^FI_mC3bCR1]+[C3b:CR1]+[fC3b:FH]+
+						   [fC3b:CR1]+[C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:FH])+
+						   [k^FI_catfC3bC4bCR1]*[fC3b:C4b:CR1]*FI/([k^FI_mfC3bC4bCR1]+
+						   [fC3b:C4b:CR1]+[fC3b:FH]+[fC3b:CR1]+[C3W:FH]+[fC3b:C4b:FH]+[C3b:FH]+[C3b:CR1])
+r105    CR1 + [C4b:C2a] <-> [C4b:C2a:CR1]          [k^+_C4bC2aCR1]*CR1*[C4b:C2a] - [k^-_C4bC2aCR1]*[C4b:C2a:CR1]
+r98     CR1 + [fC3b:Bb] <-> [fC3b:Bb:CR1]          [k^+_fC3bBbCR1]*CR1*[fC3b:Bb] - [k^-_fC3bBbCR1]*[fC3b:Bb:CR1]
+r113    CR1 + [fC3b:Bb:C3b] <-> [fC3b:Bb:C3b:CR1]  [k^+_fC3bBb3bCR1]*CR1*[fC3b:Bb:C3b] - [k^-_fC3bBb3bCR1]*[fC3b:Bb:C3b:CR1]
+r133    CR1 + [C4b:C2a:C3b] <-> [C4b:C2a:C3b:CR1]  [k^+_C4b2a3bCR1]*CR1*[C4b:C2a:C3b] - [k^-_C4b2a3bCR1]*[C4b:C2a:C3b:CR1]
+r128    CR1 + C3b <-> [C3b:CR1]                    [k^+_C3bCR1]*CR1*C3b - [k^-_C3bCR1]*[C3b:CR1]
+r111    CR1 + fC3b <-> [fC3b:CR1]                  [k^+_fC3bCR1]*CR1*fC3b - [k^-_fC3bCR1]*[fC3b:CR1]
+r96     [fC3b:C4b] + CR1 <-> [fC3b:C4b:CR1]        [k^+_fC3bC4bCR1]*[fC3b:C4b]*CR1 - [k^-_fC3bC4bCR1]*[fC3b:C4b:CR1]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-23
+
+d(DAF)/dt = 1/Plasma*(-(([k^+_C4bC2aDAF]*DAF*[C4b:C2a]-[k^-_C4bC2aDAF]*[C4b:C2a:DAF])*Plasma) - 
+(([k^+_fC3bBbDAF]*DAF*[fC3b:Bb])*Plasma-([k^-_fC3bBbDAF]*[fC3b:Bb:DAF])*Plasma) - 
+(([k^+_fC3bBbC3bDAF]*DAF*[fC3b:Bb:C3b])*Plasma-([k^-_fC3bBbC3bDAF]*[fC3b:Bb:C3b:DAF])*Plasma) - 
+(([k^+_C4bC2aC3bDAF]*DAF*[C4b:C2a:C3b]-[k^-_C4bC2aC3bDAF]*[C4b:C2a:C3b:DAF])*Plasma))
+
+Name    Reaction                                   Reaction rate
+r103    DAF + [C4b:C2a] <-> [C4b:C2a:DAF]          [k^+_C4bC2aDAF]*DAF*[C4b:C2a] - [k^-_C4bC2aDAF]*[C4b:C2a:DAF]
+r119    DAF + [fC3b:Bb] <-> [fC3b:Bb:DAF]          [k^+_fC3bBbDAF]*DAF*[fC3b:Bb] - [k^-_fC3bBbDAF]*[fC3b:Bb:DAF]
+r135    DAF + [fC3b:Bb:C3b] <-> [fC3b:Bb:C3b:DAF]  [k^+_fC3bBbC3bDAF]*DAF*[fC3b:Bb:C3b] - [k^-_fC3bBbC3bDAF]*[fC3b:Bb:C3b:DAF]
+r145    DAF + [C4b:C2a:C3b] <-> [C4b:C2a:C3b:DAF]  [k^+_C4bC2aC3bDAF]*DAF*[C4b:C2a:C3b]-[k^-_C4bC2aC3bDAF]*[C4b:C2a:C3b:DAF]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-24
+
+d(C3b)/dt = 1/Plasma*((([k^C3WBb_catC3]*[C3W:Bb]*C3/([k^C3WBb_mC3]+C3)+
+[k^C4bC2a_catC3]*[C4b:C2a]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+C5/[k^C4bC2a_mC5]))+
+[k^fC3bBb_catC3]*([fC3b:Bb]+[fC3b:Bb:P])*C3/(r122.[k^fC3bBb_mC3]*(1+C3/r122.[k^fC3bBb_mC3]+C5/r122.[k^fC3bBb_mC5]))+
+[k^fC3bBb_catC3]*[fC3b:Bb:C3b]*C3/(r122.[k^fC3bBb_mC3]*(1+C3/r122.[k^fC3bBb_mC3]+C5/r122.[k^fC3bBbC3b_mC5]))+
+[k^C4bC2a_catC3]*[C4b:C2a:C3b]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+C5/[k^C4bC2aC3b_mC5]))+
+[k^fC3bBb_catC3]*[fC3b:Bb:C3b:P]*C3/(r122.[k^fC3bBb_mC3]*(1+C3/r122.[k^fC3bBb_mC3]+C5/r122.[k^fC3bBbC3b_mC5]))+
+[k^KAL_catC3]*KAL*C3/([k^KAL_mC3]+C3)+[k^Pn_catC3]*Pn*C3/([k^Pn_mC3]+C3)+[k^F2a_catC3]*F2a*C3/([k^F2a_mC3]+C3)+
+[k^F10a_catC3]*F10a*C3/([k^F10a_mC3]+C3))*Plasma) - 
+(([k^+_fC3bBbC3b]*C3b*[fC3b:Bb])*Plasma-([k^-_fC3bBbC3b]*[fC3b:Bb:C3b])*Plasma) - 
+(([k^+_C4bC2aC3b]*C3b*[C4b:C2a])*Plasma-(r132.[k^-_C4bC2aC3b]*[C4b:C2a:C3b])*Plasma) - 
+(([k^+_C3bFH]*FH*C3b)*Plasma-([k^-_C3bFH]*[C3b:FH])*Plasma) - 
+(([k^+_C3bCR1]*CR1*C3b)*Plasma-([k^-_C3bCR1]*[C3b:CR1])*Plasma) - 
+(([k^+_C3bP]*P*C3b)*Plasma-([k^-_C3bP]*[C3b:P])*Plasma) - 
+(([k^+_C3bFB]*FB*C3b)*Plasma-([k^-_C3bFB]*[C3b:FB])*Plasma) - 
+(([k^-_dC3b]*C3b)*Plasma))
+
+Name    Reaction                                   Reaction rate
+r122    C3 -> C3b + C3a                            [k^C3WBb_catC3]*[C3W:Bb]*C3/([k^C3WBb_mC3]+C3)+
+                                                   [k^C4bC2a_catC3]*[C4b:C2a]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+
+			                           C5/[k^C4bC2a_mC5]))+[k^fC3bBb_catC3]*([fC3b:Bb]+
+			                           [fC3b:Bb:P])*C3/([k^fC3bBb_mC3]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBb_mC5]))+
+			                           [k^fC3bBb_catC3]*[fC3b:Bb:C3b]*C3/([k^fC3bBb_mC3]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBbC3b_mC5]))+
+			                           [k^C4bC2a_catC3]*[C4b:C2a:C3b]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+C5/[k^C4bC2aC3b_mC5]))+
+			                           [k^fC3bBb_catC3]*[fC3b:Bb:C3b:P]*C3/([k^fC3bBb_mC3]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBbC3b_mC5]))+
+			                           [k^KAL_catC3]*KAL*C3/([k^KAL_mC3]+C3)+[k^Pn_catC3]*Pn*C3/([k^Pn_mC3]+C3)+
+			                           [k^F2a_catC3]*F2a*C3/([k^F2a_mC3]+C3)+[k^F10a_catC3]*F10a*C3/([k^F10a_mC3]+C3)
+				  
+r97     C3b + [fC3b:Bb] <-> [fC3b:Bb:C3b]	   [k^+_fC3bBbC3b]*C3b*[fC3b:Bb] - [k^-_fC3bBbC3b]*[fC3b:Bb:C3b]
+r132    C3b + [C4b:C2a] <-> [C4b:C2a:C3b]          [k^+_C4bC2aC3b]*C3b*[C4b:C2a] - [k^-_C4bC2aC3b]*[C4b:C2a:C3b]
+r126   	FH + C3b <-> [C3b:FH]                      [k^+_C3bFH]*FH*C3b - [k^-_C3bFH]*[C3b:FH]		  
+r128    CR1 + C3b <-> [C3b:CR1]                    [k^+_C3bCR1]*CR1*C3b - [k^-_C3bCR1]*[C3b:CR1]
+r130    P + C3b <-> [C3b:P]                        [k^+_C3bP]*P*C3b - [k^-_C3bP]*[C3b:P]
+r90     FB + C3b <-> [C3b:FB]                      [k^+_C3bFB]*FB*C3b - [k^-_C3bFB]*[C3b:FB]
+r125    C3b -> null                                [k^-_dC3b]*C3b
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-25 
+
+d([fC3b:Bb:C3b])/dt = 1/Plasma*((([k^+_fC3bBbC3b]*C3b*[fC3b:Bb])*Plasma-([k^-_fC3bBbC3b]*[fC3b:Bb:C3b])*Plasma) - 
+(([k^+_fC3bBb3bCR1]*CR1*[fC3b:Bb:C3b])*Plasma-([k^-_fC3bBb3bCR1]*[fC3b:Bb:C3b:CR1])*Plasma) - 
+(([k^+_fC3bBbC3bDAF]*DAF*[fC3b:Bb:C3b])*Plasma-([k^-_fC3bBbC3bDAF]*[fC3b:Bb:C3b:DAF])*Plasma) - 
+(([k^+_fC3bBbC3bFH]*FH*[fC3b:Bb:C3b])*Plasma-([k^-_fC3bBbC3bFH]*[fC3b:Bb:C3b:FH])*Plasma) - 
+(([k^+_fC3bBbC3bP]*P*[fC3b:Bb:C3b])*Plasma-(r118.[k^-_fC3bBbC3bP]*[fC3b:Bb:C3b:P])*Plasma) + 
+((r117.[k^FD_catfC3bC3bFB]*[fC3b:C3b:FB]*FD/(r117.[k^FD_mfC3bC3bFB]+[fC3b:C3b:FB]+[C3W:FB]+[fC3b:FB]+
+[C3b:FB]+[fC3b:FB:P]+[fC3b:C4b:FB]+[lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[fC3b:C4b:P:FB]))*Plasma))
+
+Name    Reaction                                   Reaction rate
+r97     C3b + [fC3b:Bb] <-> [fC3b:Bb:C3b]          [k^+_fC3bBbC3b]*C3b*[fC3b:Bb] - [k^-_fC3bBbC3b]*[fC3b:Bb:C3b]
+r113    CR1 + [fC3b:Bb:C3b] <-> [fC3b:Bb:C3b:CR1]  [k^+_fC3bBb3bCR1]*CR1*[fC3b:Bb:C3b] - [k^-_fC3bBb3bCR1]*[fC3b:Bb:C3b:CR1]
+r135    DAF + [fC3b:Bb:C3b] <-> [fC3b:Bb:C3b:DAF]  [k^+_fC3bBbC3bDAF]*DAF*[fC3b:Bb:C3b] - [k^-_fC3bBbC3bDAF]*[fC3b:Bb:C3b:DAF]
+r115    FH + [fC3b:Bb:C3b] <-> [fC3b:Bb:C3b:FH]    [k^+_fC3bBbC3bFH]*FH*[fC3b:Bb:C3b] - [k^-_fC3bBbC3bFH]*[fC3b:Bb:C3b:FH]
+r118    P + [fC3b:Bb:C3b] <-> [fC3b:Bb:C3b:P]      [k^+_fC3bBbC3bP]*P*[fC3b:Bb:C3b] - [k^-_fC3bBbC3bP]*[fC3b:Bb:C3b:P]
+r117    null -> [fC3b:Bb:C3b]                      [k^FD_catfC3bC3bFB]*[fC3b:C3b:FB]*FD/([k^FD_mfC3bC3bFB]+[fC3b:C3b:FB]+
+                                                   [C3W:FB]+[fC3b:FB]+[C3b:FB]+[fC3b:FB:P]+[fC3b:C4b:FB]+[lgG:fC3b:FB]+
+						   [lgG:fC3b:FB:P]+[fC3b:C4b:P:FB])
+												   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-26
+
+d([C4b:C2a:C3b])/dt = 1/Plasma*((([k^+_C4bC2aC3b]*C3b*[C4b:C2a])*Plasma-(r132.[k^-_C4bC2aC3b]*[C4b:C2a:C3b])*Plasma) - 
+(([k^+_C4b2a3bCR1]*CR1*[C4b:C2a:C3b])*Plasma-([k^-_C4b2a3bCR1]*[C4b:C2a:C3b:CR1])*Plasma) - 
+(([k^+_C4bC2aC3bDAF]*DAF*[C4b:C2a:C3b]-[k^-_C4bC2aC3bDAF]*[C4b:C2a:C3b:DAF])*Plasma) + 
+((r107.[k^C1_catC2]*[fC3b:C4b:C2]*C2/(r107.[k^C1_mC2]*(1+[C4b:C2]/r107.[k^C1_mC2]+
+[fC3b:C4b:C2]/r107.[k^C1_mC2]+C4/r107.[k^C1_mC4]))+
+r107.[k^MASP1_catC2]*[MBL:MASP1]*[fC3b:C4b:C2]/(r107.[k^MASP1_mC2]*(1+[C4b:C2]/r107.[k^MASP1_mC2]+
+[fC3b:C4b:C2]/r107.[k^MASP1_mC2]+C4/r107.[k^MASP1_mC4]))+
+r107.[k^MASP2_catC2]*[MBL:MASP2]*[fC3b:C4b:C2]/(r107.[k^MASP2_mC2]*(1+[C4b:C2]/r107.[k^MASP2_mC2]+
+[fC3b:C4b:C2]/r107.[k^MASP2_mC2]+C4/r107.[k^MASP2_mC4])))*Plasma))
+
+Name    Reaction                                   Reaction rate
+r132    C3b + [C4b:C2a] <-> [C4b:C2a:C3b]          [k^+_C4bC2aC3b]*C3b*[C4b:C2a] - [k^-_C4bC2aC3b]*[C4b:C2a:C3b]
+r133    CR1 + [C4b:C2a:C3b] <-> [C4b:C2a:C3b:CR1]  [k^+_C4b2a3bCR1]*CR1*[C4b:C2a:C3b] - [k^-_C4b2a3bCR1]*[C4b:C2a:C3b:CR1]
+r145    DAF + [C4b:C2a:C3b] <-> [C4b:C2a:C3b:DAF]  [k^+_C4bC2aC3bDAF]*DAF*[C4b:C2a:C3b]-[k^-_C4bC2aC3bDAF]*[C4b:C2a:C3b:DAF]
+r107    [fC3b:C4b:C2] -> [C4b:C2a:C3b]             [k^C1_catC2]*[fC3b:C4b:C2]*C2/([k^C1_mC2]*(1+[C4b:C2]/[k^C1_mC2]+
+                                                   [fC3b:C4b:C2]/[k^C1_mC2]+C4/[k^C1_mC4]))+
+						   [k^MASP1_catC2]*[MBL:MASP1]*[fC3b:C4b:C2]/([k^MASP1_mC2]*(1+[C4b:C2]/[k^MASP1_mC2]+
+						   [fC3b:C4b:C2]/[k^MASP1_mC2]+C4/[k^MASP1_mC4]))+
+						   [k^MASP2_catC2]*[MBL:MASP2]*[fC3b:C4b:C2]/([k^MASP2_mC2]*(1+[C4b:C2]/[k^MASP2_mC2]+
+						   [fC3b:C4b:C2]/[k^MASP2_mC2]+C4/[k^MASP2_mC4]))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-27
+
+d(C2b)/dt = 1/Plasma*(((r76.[k^C1_catC2]*[C4b:C2]*C1/(r76.[k^C1_mC2]*(1+[C4b:C2]/r76.[k^C1_mC2]+
+[fC3b:C4b:C2]/r76.[k^C1_mC2]+C4/r76.[k^C1_mC4]))+
+r76.[k^C1_catC2]*[fC3b:C4b:C2]*C1/(r76.[k^C1_mC2]*(1+[C4b:C2]/r76.[k^C1_mC2]+
+[fC3b:C4b:C2]/r76.[k^C1_mC2]+C4/r76.[k^C1_mC4]))+
+r76.[k^MASP1_catC2]*[MBL:MASP1]*[C4b:C2]/(r76.[k^MASP1_mC2]*(1+[C4b:C2]/r76.[k^MASP1_mC2]+
+[fC3b:C4b:C2]/r76.[k^MASP1_mC2]+C4/r76.[k^MASP1_mC4]))+
+r76.[k^MASP2_catC2]*[MBL:MASP2]*[C4b:C2]/(r76.[k^MASP2_mC2]*(1+[C4b:C2]/r76.[k^MASP2_mC2]+
+[fC3b:C4b:C2]/r76.[k^MASP2_mC2]+C4/r76.[k^MASP2_mC4]))+
+r76.[k^MASP1_catC2]*[MBL:MASP1]*[fC3b:C4b:C2]/(r76.[k^MASP1_mC2]*(1+[C4b:C2]/r76.[k^MASP1_mC2]+
+[fC3b:C4b:C2]/r76.[k^MASP1_mC2]+C4/r76.[k^MASP1_mC4]))+
+r76.[k^MASP2_catC2]*[MBL:MASP2]*[fC3b:C4b:C2]/(r76.[k^MASP2_mC2]*(1+[C4b:C2]/r76.[k^MASP2_mC2]+
+[fC3b:C4b:C2]/r76.[k^MASP2_mC2]+C4/r76.[k^MASP2_mC4])))*Plasma) + 
+((r75.[k^MASP2_catC2]*C2*MASP2/(r75.[k^MASP2_mC2]+C2)+[k^C1s_catC2]*C2*C1s/([k^C1s_mC2]+C2))*Plasma))
+
+Name    Reaction              Reaction rate
+r76     null -> C2b           [k^C1_catC2]*[C4b:C2]*C1/([k^C1_mC2]*(1+[C4b:C2]/[k^C1_mC2]+
+                              [fC3b:C4b:C2]/[k^C1_mC2]+C4/[k^C1_mC4]))+
+			      [k^C1_catC2]*[fC3b:C4b:C2]*C1/([k^C1_mC2]*(1+[C4b:C2]/[k^C1_mC2]+
+			      [fC3b:C4b:C2]/[k^C1_mC2]+C4/[k^C1_mC4]))+
+			      [k^MASP1_catC2]*[MBL:MASP1]*[C4b:C2]/([k^MASP1_mC2]*(1+[C4b:C2]/[k^MASP1_mC2]+
+			      [fC3b:C4b:C2]/[k^MASP1_mC2]+C4/[k^MASP1_mC4]))+
+			      [k^MASP2_catC2]*[MBL:MASP2]*[C4b:C2]/([k^MASP2_mC2]*(1+[C4b:C2]/[k^MASP2_mC2]+
+			      [fC3b:C4b:C2]/[k^MASP2_mC2]+C4/[k^MASP2_mC4]))+
+			      [k^MASP1_catC2]*[MBL:MASP1]*[fC3b:C4b:C2]/([k^MASP1_mC2]*(1+[C4b:C2]/[k^MASP1_mC2]+
+			      [fC3b:C4b:C2]/[k^MASP1_mC2]+C4/[k^MASP1_mC4]))+
+			      [k^MASP2_catC2]*[MBL:MASP2]*[fC3b:C4b:C2]/([k^MASP2_mC2]*(1+[C4b:C2]/[k^MASP2_mC2]+
+			      [fC3b:C4b:C2]/[k^MASP2_mC2]+C4/[k^MASP2_mC4]))                   
+r75     C2 -> C2b + C2a       [k^MASP2_catC2]*C2*MASP2/([k^MASP2_mC2]+C2)+[k^C1s_catC2]*C2*C1s/([k^C1s_mC2]+C2)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-28
+
+d(C4a)/dt = 1/Plasma*((([k^C1_catC4]*C4*C1/(r35.[k^C1_mC4]*(1+[C4b:C2]/r35.[k^C1_mC2]+
+[fC3b:C4b:C2]/r35.[k^C1_mC2]+C4/r35.[k^C1_mC4]))+
+[k^MASP1_catC4]*[MBL:MASP1]*C4/(r35.[k^MASP1_mC4]*(1+[C4b:C2]/r35.[k^MASP1_mC2]+
+[fC3b:C4b:C2]/r35.[k^MASP1_mC2]+C4/r35.[k^MASP1_mC4]))+
+[k^MASP2_catC4]*[MBL:MASP2]*C4/(r35.[k^MASP2_mC4]*(1+[C4b:C2]/r35.[k^MASP2_mC2]+
+[fC3b:C4b:C2]/r35.[k^MASP2_mC2]+C4/r35.[k^MASP2_mC4])))*Plasma))
+
+Name    Reaction              Reaction rate
+r35     C4 -> C4a + C4b       [k^C1_catC4]*C4*C1/([k^C1_mC4]*(1+[C4b:C2]/[k^C1_mC2]+[fC3b:C4b:C2]/[k^C1_mC2]+C4/[k^C1_mC4]))+
+                              [k^MASP1_catC4]*[MBL:MASP1]*C4/([k^MASP1_mC4]*(1+[C4b:C2]/[k^MASP1_mC2]+
+			      [fC3b:C4b:C2]/[k^MASP1_mC2]+C4/[k^MASP1_mC4]))+
+			      [k^MASP2_catC4]*[MBL:MASP2]*C4/([k^MASP2_mC4]*(1+[C4b:C2]/[k^MASP2_mC2]+
+			      [fC3b:C4b:C2]/[k^MASP2_mC2]+C4/[k^MASP2_mC4]))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-29
+d([C4b:C4BP])/dt = 1/Plasma*((([k^+_C4bC4BP]*C4BP*C4b)*Plasma-([k^-_C4bC4BP]*[C4b:C4BP])*Plasma))
+
+Name    Reaction                       Reaction rate
+r80    	C4BP + C4b <-> [C4b:C4BP]      [k^+_C4bC4BP]*C4BP*C4b - [k^-_C4bC4BP]*[C4b:C4BP]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-30
+
+d([C4b:C2a:C4BP])/dt = 1/Plasma*((([k^+_C4bC2aC4BP]*C4BP*[C4b:C2a])*Plasma-([k^-_C4bC2aC4BP]*[C4b:C2a:C4BP])*Plasma) - 
+((r88.[k^-_dC4bC2aC4BP]*[C4b:C2a:C4BP])*Plasma))
+
+Name    Reaction                               Reaction rate
+r87     C4BP + [C4b:C2a] <-> [C4b:C2a:C4BP]    [k^+_C4bC2aC4BP]*C4BP*[C4b:C2a] - [k^-_C4bC2aC4BP]*[C4b:C2a:C4BP]
+r88    [C4b:C2a:C4BP] -> null                  [k^-_dC4bC2aC4BP]*[C4b:C2a:C4BP]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-31
+
+d(C3a)/dt = 1/Plasma*((([k^C3WBb_catC3]*[C3W:Bb]*C3/([k^C3WBb_mC3]+C3)+
+[k^C4bC2a_catC3]*[C4b:C2a]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+C5/[k^C4bC2a_mC5]))+
+[k^fC3bBb_catC3]*([fC3b:Bb]+[fC3b:Bb:P])*C3/(r122.[k^fC3bBb_mC3]*(1+C3/r122.[k^fC3bBb_mC3]+C5/r122.[k^fC3bBb_mC5]))+
+[k^fC3bBb_catC3]*[fC3b:Bb:C3b]*C3/(r122.[k^fC3bBb_mC3]*(1+C3/r122.[k^fC3bBb_mC3]+
+C5/r122.[k^fC3bBbC3b_mC5]))+[k^C4bC2a_catC3]*[C4b:C2a:C3b]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+C5/[k^C4bC2aC3b_mC5]))+
+[k^fC3bBb_catC3]*[fC3b:Bb:C3b:P]*C3/(r122.[k^fC3bBb_mC3]*(1+C3/r122.[k^fC3bBb_mC3]+C5/r122.[k^fC3bBbC3b_mC5]))+
+[k^KAL_catC3]*KAL*C3/([k^KAL_mC3]+C3)+[k^Pn_catC3]*Pn*C3/([k^Pn_mC3]+C3)+
+[k^F2a_catC3]*F2a*C3/([k^F2a_mC3]+C3)+[k^F10a_catC3]*F10a*C3/([k^F10a_mC3]+C3))*Plasma) - 
+(([k^+_C3aC3aR1]*C3a*C3aR1)*Plasma-([k^-_C3aC3aR1]*[C3a:C3aR1])*Plasma) - 
+(([k^C3a_catTF]*C3a)*Plasma) - (([k^+_C3aTAFIa]*TAFIa*C3a)*Plasma) - (([k^-_dC3a]*C3a)*Plasma))
+
+Name    Reaction                         Reaction rate
+r122    C3 -> C3b + C3a                  [k^C3WBb_catC3]*[C3W:Bb]*C3/([k^C3WBb_mC3]+C3)+
+                                         [k^C4bC2a_catC3]*[C4b:C2a]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+
+			                 C5/[k^C4bC2a_mC5]))+[k^fC3bBb_catC3]*([fC3b:Bb]+
+			                 [fC3b:Bb:P])*C3/([k^fC3bBb_mC3]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBb_mC5]))+
+			                 [k^fC3bBb_catC3]*[fC3b:Bb:C3b]*C3/([k^fC3bBb_mC3]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBbC3b_mC5]))+
+			                 [k^C4bC2a_catC3]*[C4b:C2a:C3b]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+C5/[k^C4bC2aC3b_mC5]))+
+			                 [k^fC3bBb_catC3]*[fC3b:Bb:C3b:P]*C3/([k^fC3bBb_mC3]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBbC3b_mC5]))+
+			                 [k^KAL_catC3]*KAL*C3/([k^KAL_mC3]+C3)+[k^Pn_catC3]*Pn*C3/([k^Pn_mC3]+C3)+
+			                 [k^F2a_catC3]*F2a*C3/([k^F2a_mC3]+C3)+[k^F10a_catC3]*F10a*C3/([k^F10a_mC3]+C3)
+r138    C3a + C3aR1 <-> [C3a:C3aR1]      [k^+_C3aC3aR1]*C3a*C3aR1 - [k^-_C3aC3aR1]*[C3a:C3aR1]
+r234    C3a -> TF                        [k^C3a_catTF]*C3a
+r246    TAFIa + C3a -> null              [k^+_C3aTAFIa]*TAFIa*C3a
+r137    C3a -> null                      [k^-_dC3a]*C3a
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-32
+
+d([fC3b:Bb:CR1])/dt = 1/Plasma*((([k^+_fC3bBbCR1]*CR1*[fC3b:Bb])*Plasma-([k^-_fC3bBbCR1]*[fC3b:Bb:CR1])*Plasma) - 
+((r108.[k^-_dfC3bBbCR1]*[fC3b:Bb:CR1])*Plasma))
+
+Name    Reaction                             Reaction rate
+r98     CR1 + [fC3b:Bb] <-> [fC3b:Bb:CR1]    [k^+_fC3bBbCR1]*CR1*[fC3b:Bb] - [k^-_fC3bBbCR1]*[fC3b:Bb:CR1]
+r108    [fC3b:Bb:CR1] -> null                [k^-_dfC3bBbCR1]*[fC3b:Bb:CR1]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-33
+
+d([fC3b:Bb:DAF])/dt = 1/Plasma*((([k^+_fC3bBbDAF]*DAF*[fC3b:Bb])*Plasma-([k^-_fC3bBbDAF]*[fC3b:Bb:DAF])*Plasma) - 
+((r120.[k^-_dfC3bBbDAF]*[fC3b:Bb:DAF])*Plasma))
+
+Name    Reaction                               Reaction rate
+r119    DAF + [fC3b:Bb] <-> [fC3b:Bb:DAF]      [k^+_fC3bBbDAF]*DAF*[fC3b:Bb] - [k^-_fC3bBbDAF]*[fC3b:Bb:DAF]
+r120    [fC3b:Bb:DAF] -> null                  [k^-_dfC3bBbDAF]*[fC3b:Bb:DAF]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-34
+
+d([C4b:C2a:CR1])/dt = 1/Plasma*((([k^+_C4bC2aCR1]*CR1*[C4b:C2a])*Plasma-([k^-_C4bC2aCR1]*[C4b:C2a:CR1])*Plasma) - 
+((r106.[k^-_dC4bC2aCR1]*[C4b:C2a:CR1])*Plasma))
+
+Name    Reaction                               Reaction rate
+r105    CR1 + [C4b:C2a] <-> [C4b:C2a:CR1]      [k^+_C4bC2aCR1]*CR1*[C4b:C2a] - [k^-_C4bC2aCR1]*[C4b:C2a:CR1]
+r106    [C4b:C2a:CR1] -> null                  [k^-_dC4bC2aCR1]*[C4b:C2a:CR1]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-35
+
+d([C4b:C2a:DAF])/dt = 1/Plasma*((([k^+_C4bC2aDAF]*DAF*[C4b:C2a]-[k^-_C4bC2aDAF]*[C4b:C2a:DAF])*Plasma) - 
+((r104.[k^-_dC4bC2aDAF]*[C4b:C2a:DAF])*Plasma))
+
+Name    Reaction                               Reaction rate
+r103    DAF + [C4b:C2a] <-> [C4b:C2a:DAF]      [k^+_C4bC2aDAF]*DAF*[C4b:C2a] - [k^-_C4bC2aDAF]*[C4b:C2a:DAF]
+r104    [C4b:C2a:DAF] -> null                  [k^-_dC4bC2aDAF]*[C4b:C2a:DAF]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-36
+
+d([fC3b:Bb:FH])/dt = 1/Plasma*((([k^+_fC3bBbFH]*FH*[fC3b:Bb]-[k^-_fC3bBbFH]*[fC3b:Bb:FH])*Plasma) - 
+((r84.[k^-_dfC3bBbFH]*[fC3b:Bb:FH])*Plasma))
+
+Name    Reaction                               Reaction rate
+r83     FH + [fC3b:Bb] <-> [fC3b:Bb:FH]        [k^+_fC3bBbFH]*FH*[fC3b:Bb] - [k^-_fC3bBbFH]*[fC3b:Bb:FH]
+r84     [fC3b:Bb:FH] -> null                   [k^-_dfC3bBbFH]*[fC3b:Bb:FH]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-37
+
+d([fC3b:Bb:C3b:CR1])/dt = 1/Plasma*((([k^+_fC3bBb3bCR1]*CR1*[fC3b:Bb:C3b])*Plasma-([k^-_fC3bBb3bCR1]*[fC3b:Bb:C3b:CR1])*Plasma) - 
+((r114.[k^-_dfC3bBbC3bCR1]*[fC3b:Bb:C3b:CR1])*Plasma))
+
+Name    Reaction                                      Reaction rate
+r113    CR1 + [fC3b:Bb:C3b] <-> [fC3b:Bb:C3b:CR1]     [k^+_fC3bBb3bCR1]*CR1*[fC3b:Bb:C3b] - [k^-_fC3bBb3bCR1]*[fC3b:Bb:C3b:CR1]
+r114    [fC3b:Bb:C3b:CR1] -> null                     [k^-_dfC3bBbC3bCR1]*[fC3b:Bb:C3b:CR1]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-38
+
+d([fC3b:Bb:C3b:DAF])/dt = 1/Plasma*((([k^+_fC3bBbC3bDAF]*DAF*[fC3b:Bb:C3b])*Plasma-([k^-_fC3bBbC3bDAF]*[fC3b:Bb:C3b:DAF])*Plasma) - 
+((r136.[k^-_dfC3bBbC3bDAF]*[fC3b:Bb:C3b:DAF])*Plasma))
+
+Name    Reaction                                      Reaction rate
+r135    DAF + [fC3b:Bb:C3b] <-> [fC3b:Bb:C3b:DAF]     [k^+_fC3bBbC3bDAF]*DAF*[fC3b:Bb:C3b] - [k^-_fC3bBbC3bDAF]*[fC3b:Bb:C3b:DAF]
+r136    [fC3b:Bb:C3b:DAF] -> null                     [k^-_dfC3bBbC3bDAF]*[fC3b:Bb:C3b:DAF]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-39
+
+d([fC3b:Bb:C3b:FH])/dt = 1/Plasma*((([k^+_fC3bBbC3bFH]*FH*[fC3b:Bb:C3b])*Plasma-([k^-_fC3bBbC3bFH]*[fC3b:Bb:C3b:FH])*Plasma) - 
+((r116.[k^-_dfC3bBbC3bFH]*[fC3b:Bb:C3b:FH])*Plasma))
+
+Name    Reaction                                      Reaction rate
+r115    FH + [fC3b:Bb:C3b] <-> [fC3b:Bb:C3b:FH]       [k^+_fC3bBbC3bFH]*FH*[fC3b:Bb:C3b] - [k^-_fC3bBbC3bFH]*[fC3b:Bb:C3b:FH]
+r116    [fC3b:Bb:C3b:FH] -> null                      [k^-_dfC3bBbC3bFH]*[fC3b:Bb:C3b:FH]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-40
+
+d([C4b:C2a:C3b:CR1])/dt = 1/Plasma*((([k^+_C4b2a3bCR1]*CR1*[C4b:C2a:C3b])*Plasma-([k^-_C4b2a3bCR1]*[C4b:C2a:C3b:CR1])*Plasma) - 
+((r134.[k^-_dC4bC2aC3bCR1]*[C4b:C2a:C3b:CR1])*Plasma))
+
+Name    Reaction                                      Reaction rate
+r133    CR1 + [C4b:C2a:C3b] <-> [C4b:C2a:C3b:CR1]     [k^+_C4b2a3bCR1]*CR1*[C4b:C2a:C3b] - [k^-_C4b2a3bCR1]*[C4b:C2a:C3b:CR1]
+r134    [C4b:C2a:C3b:CR1] -> null                     [k^-_dC4bC2aC3bCR1]*[C4b:C2a:C3b:CR1]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-41
+
+d([C4b:C2a:C3b:DAF])/dt = 1/Plasma*((([k^+_C4bC2aC3bDAF]*DAF*[C4b:C2a:C3b]-[k^-_C4bC2aC3bDAF]*[C4b:C2a:C3b:DAF])*Plasma) - 
+(([k^-_dC4b2a3bDAF]*[C4b:C2a:C3b:DAF])*Plasma))
+
+Name    Reaction                                      Reaction rate
+r145    DAF + [C4b:C2a:C3b] <-> [C4b:C2a:C3b:DAF]     [k^+_C4bC2aC3bDAF]*DAF*[C4b:C2a:C3b]-[k^-_C4bC2aC3bDAF]*[C4b:C2a:C3b:DAF]
+r146    [C4b:C2a:C3b:DAF] -> null                     [k^-_dC4b2a3bDAF]*[C4b:C2a:C3b:DAF]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-42
+
+d(FB)/dt = 1/Plasma*(-(([k^+_C3WFB]*FB*C3W)*Plasma- ([k^-_C3WFB]*[C3W:FB])*Plasma) - 
+(([k^+_fC3bFB]*FB*fC3b)*Plasma-([k^-_fC3bFB]*[fC3b:FB])*Plasma) + (([k^+_sFB])*Plasma) - 
+(([k^+_lgGfC3bFB]*[lgG:fC3b]*FB)*Plasma-([k^-_lgGfC3bFB]*[lgG:fC3b:FB])*Plasma) - 
+(([k^+_C3bFB]*FB*C3b)*Plasma-([k^-_C3bFB]*[C3b:FB])*Plasma) - 
+(([k^+_fC3bC4bFB]*FB*[fC3b:C4b]-[k^-_fC3bC4bFB]*[fC3b:C4b:FB])*Plasma) - 
+(([k^+_fC3bC4bPFB]*FB*[fC3b:C4b:P])*Plasma-([k^-_fC3bC4bPFB]*[fC3b:C4b:P:FB])*Plasma) - 
+(([k^-_dFB]*FB)*Plasma))
+
+Name    Reaction                                  Reaction rate
+r23     FB + C3W <-> [C3W:FB]                     [k^+_C3WFB]*FB*C3W - [k^-_C3WFB]*[C3W:FB]
+r41     FB + fC3b <-> [fC3b:FB]                   [k^+_fC3bFB]*FB*fC3b - [k^-_fC3bFB]*[fC3b:FB]
+r31     null -> FB                                [k^+_sFB]
+r60     [lgG:fC3b] + FB <-> [lgG:fC3b:FB]         [k^+_lgGfC3bFB]*[lgG:fC3b]*FB - [k^-_lgGfC3bFB]*[lgG:fC3b:FB]
+r90     FB + C3b <-> [C3b:FB]                     [k^+_C3bFB]*FB*C3b - [k^-_C3bFB]*[C3b:FB]
+r66     FB + [fC3b:C4b] <-> [fC3b:C4b:FB]         [k^+_fC3bC4bFB]*FB*[fC3b:C4b] - [k^-_fC3bC4bFB]*[fC3b:C4b:FB]
+r266    FB + [fC3b:C4b:P] <-> [fC3b:C4b:P:FB]     [k^+_fC3bC4bPFB]*FB*[fC3b:C4b:P] - [k^-_fC3bC4bPFB]*[fC3b:C4b:P:FB]
+r32     FB -> null                                [k^-_dFB]*FB
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-43
+
+d([C3W:FB])/dt = 1/Plasma*((([k^+_C3WFB]*FB*C3W)*Plasma-([k^-_C3WFB]*[C3W:FB])*Plasma) - 
+((r26.[k^FD_catC3WFB]*[C3W:FB]*FD/(r26.[k^FD_mC3WFB]+[C3W:FB]+[fC3b:FB]+[fC3b:FB:P]+[lgG:fC3b:FB]+
+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+[k^KAL_catC3WFB]*[C3W:FB]*KAL/([k^KAL_mC3WFB]+[C3W:FB]))*Plasma) - (([k^-_dC3WFB]*[C3W:FB])*Plasma))
+
+Name    Reaction                                  Reaction rate
+r23     FB + C3W <-> [C3W:FB]                     [k^+_C3WFB]*FB*C3W - [k^-_C3WFB]*[C3W:FB]
+r26     [C3W:FB] -> [C3W:Bb] + Ba                 [k^FD_catC3WFB]*[C3W:FB]*FD/([k^FD_mC3WFB]+[C3W:FB]+[fC3b:FB]+[fC3b:FB:P]+
+                                                  [lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+                                                  [k^KAL_catC3WFB]*[C3W:FB]*KAL/([k^KAL_mC3WFB]+[C3W:FB])
+r27     [C3W:FB] -> null                          [k^-_dC3WFB]*[C3W:FB]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-44
+
+d(FD)/dt = 1/Plasma*((([k^-_sFD])*Plasma) - (([k^-_dFD]*FD)*Plasma) + 
+(([k^MASP1_catPFD]*PFD*MASP1+[k^MASP2_catPFD]*PFD*MASP2+[k^F2a_catPFD]*PFD*F2a)*Plasma))
+
+Name    Reaction                    Reaction rate
+r47     null -> FD                  [k^-_sFD]
+r48     FD -> null                  [k^-_dFD]*FD
+r46     PFD -> FD                   [k^MASP1_catPFD]*PFD*MASP1+[k^MASP2_catPFD]*PFD*MASP2+[k^F2a_catPFD]*PFD*F2a
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-45
+
+d([fC3b:FB])/dt = 1/Plasma*((([k^+_fC3bFB]*FB*fC3b)*Plasma-([k^-_fC3bFB]*[fC3b:FB])*Plasma) - 
+(([k^FD_catfC3bFB]*[fC3b:FB]*FD/([k^FD_mfC3bFB]+[fC3b:FB]+[fC3b:FB:P]+[C3W:FB]+[lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+
+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+ [k^KAL_catfC3bFB]*[fC3b:FB]*KAL/([k^KAL_mfC3bFB]+[fC3b:FB]))*Plasma) - 
+(([k^+_fC3bFBP]*P*[fC3b:FB])*Plasma-([k^-_fC3bFBP]*[fC3b:FB:P])*Plasma) - (([k^-_dfC3bFB]*[fC3b:FB])*Plasma))
+
+Name    Reaction                                  Reaction rate
+r41     FB + fC3b <-> [fC3b:FB]                   [k^+_fC3bFB]*FB*fC3b - [k^-_fC3bFB]*[fC3b:FB]
+r42     [fC3b:FB] -> [fC3b:Bb] + Ba               [k^FD_catfC3bFB]*[fC3b:FB]*FD/([k^FD_mfC3bFB]+[fC3b:FB]+[fC3b:FB:P]+[C3W:FB]+
+                                                  [lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+						  [k^KAL_catfC3bFB]*[fC3b:FB]*KAL/([k^KAL_mfC3bFB]+[fC3b:FB])
+r109    P + [fC3b:FB] <-> [fC3b:FB:P]             [k^+_fC3bFBP]*P*[fC3b:FB] - [k^-_fC3bFBP]*[fC3b:FB:P]
+r45     [fC3b:FB] -> null                         [k^-_dfC3bFB]*[fC3b:FB]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+ODE-46
+	
+d([fC3b:FH])/dt = 1/Plasma*((([k^+_fC3bFH]*FH*fC3b)*Plasma-([k^-_fC3bFH]*[fC3b:FH])*Plasma) - 
+((r38.[k^FI_catfC3bFH]*[fC3b:FH]*FI/(r38.[k^FI_mfC3bFH]+[fC3b:FH]+[C3b:FH]+[C3b:CR1]+[fC3b:CR1]+
+[C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]))*Plasma))
+
+Name    Reaction                                  Reaction rate
+r37     FH + fC3b <-> [fC3b:FH]                   [k^+_fC3bFH]*FH*fC3b - [k^-_fC3bFH]*[fC3b:FH]
+r38     [fC3b:FH] -> null                         [k^FI_catfC3bFH]*[fC3b:FH]*FI/([k^FI_mfC3bFH]+[fC3b:FH]+[C3b:FH]+
+                                                  [C3b:CR1]+[fC3b:CR1]+[C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1])
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-47
+
+d([C3b:FH])/dt = 1/Plasma*((([k^+_C3bFH]*FH*C3b)*Plasma-([k^-_C3bFH]*[C3b:FH])*Plasma) - 
+((r127.[k^FI_catC3bFH]*[C3b:FH]*FI/(r127.[k^FI_mC3bFH]+[C3b:FH]+[fC3b:FH]+[C3b:CR1]+[fC3b:CR1]+
+[C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]))*Plasma))
+
+Name    Reaction                                  Reaction rate
+r126    FH + C3b <-> [C3b:FH]                     [k^+_C3bFH]*FH*C3b - [k^-_C3bFH]*[C3b:FH]
+r127    [C3b:FH] -> null                          [k^FI_catC3bFH]*[C3b:FH]*FI/([k^FI_mC3bFH]+[C3b:FH]+[fC3b:FH]+
+                                                  [C3b:CR1]+[fC3b:CR1]+[C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1])
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-48
+
+d([C3b:CR1])/dt = 1/Plasma*((([k^+_C3bCR1]*CR1*C3b)*Plasma-([k^-_C3bCR1]*[C3b:CR1])*Plasma) - 
+((r129.[k^FI_catC3bCR1]*[C3b:CR1]*FI/(r129.[k^FI_mC3bCR1]+[C3b:CR1]+[fC3b:CR1]+[C3b:FH]+[fC3b:FH]+
+[C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]))*Plasma))
+
+Name    Reaction                                  Reaction rate
+r128    CR1 + C3b <-> [C3b:CR1]                   [k^+_C3bCR1]*CR1*C3b - [k^-_C3bCR1]*[C3b:CR1]
+r129    [C3b:CR1] -> null                         [k^FI_catC3bCR1]*[C3b:CR1]*FI/([k^FI_mC3bCR1]+[C3b:CR1]+[fC3b:CR1]+
+                                                  [C3b:FH]+[fC3b:FH]+[C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1])
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-49
+
+d([C3W:FH])/dt = 1/Plasma*((([k^+_C3WFH]*FH*C3W)*Plasma-([k^-_C3WFH]*[C3W:FH])*Plasma) - 
+((r68.[k^FI_catC3WFH]*[C3W:FH]*FI/(r68.[k^FI_mC3WFH]+[C3W:FH]+[fC3b:FH]+[fC3b:CR1]+[fC3b:C4b:FH]+
+[fC3b:C4b:CR1]+[C3b:FH]+[C3b:CR1]))*Plasma))
+
+Name    Reaction                                  Reaction rate
+r36     FH + C3W <-> [C3W:FH]                     [k^+_C3WFH]*FH*C3W - [k^-_C3WFH]*[C3W:FH]
+r68     [C3W:FH] -> null                          [k^FI_catC3WFH]*[C3W:FH]*FI/([k^FI_mC3WFH]+[C3W:FH]+[fC3b:FH]+[fC3b:CR1]+
+                                                  [fC3b:C4b:FH]+[fC3b:C4b:CR1]+[C3b:FH]+[C3b:CR1])
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-50
+
+d(C3aR1)/dt = 1/Plasma*(-(([k^+_C3aC3aR1]*C3a*C3aR1)*Plasma-([k^-_C3aC3aR1]*[C3a:C3aR1])*Plasma))
+
+Name    Reaction                                  Reaction rate
+r138    C3a + C3aR1 <-> [C3a:C3aR1]               [k^+_C3aC3aR1]*C3a*C3aR1 - [k^-_C3aC3aR1]*[C3a:C3aR1]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-51
+
+d([C3a:C3aR1])/dt = 1/Plasma*((([k^+_C3aC3aR1]*C3a*C3aR1)*Plasma-([k^-_C3aC3aR1]*[C3a:C3aR1])*Plasma) - 
+(([k^C3aC3aR1_catIL6]*C3aR1)*Plasma))
+
+Name    Reaction                                  Reaction rate
+r138    C3a + C3aR1 <-> [C3a:C3aR1]               [k^+_C3aC3aR1]*C3a*C3aR1 - [k^-_C3aC3aR1]*[C3a:C3aR1]
+r139    [C3a:C3aR1] -> IL6                        [k^C3aC3aR1_catIL6]*C3aR1
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-52
+
+d(C5)/dt = 1/Plasma*(-(([k^fC3bBb_catC5]*[fC3b:Bb]*C5/(r140.[k^fC3bBb_mC5]*(1+C3/r140.[k^fC3bBb_mC3]+C5/r140.[k^fC3bBb_mC5]))+
+[k^fC3bBb_catC5]*[fC3b:Bb:P]*C5/(r140.[k^fC3bBb_mC5]*(1+C3/r140.[k^fC3bBb_mC3]+C5/r140.[k^fC3bBb_mC5]))+
+[k^C4b2a_catC5]*[C4b:C2a]*C5/([k^C4b2a_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a_mC5]))+
+[k^C4b2a3b_catC5]*[C4b:C2a:C3b]*C5/([k^C4b2a3b_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a3b_mC5]))+
+[k^fC3bBbC3b_catC5]*([fC3b:Bb:C3b]+[fC3b:Bb:C3b:P])*C5/(r140.[k^fC3bBbC3b_mC5]*(1+C3/r140.[k^fC3bBb_mC3]+
+C5/r140.[k^fC3bBbC3b_mC5]))+[k^KAL_catC5]*KAL*C5/([k^KAL_mC5]+C5)+[k^Pn_catC5]*Pn*C5/([k^Pn_mC5]+C5)+
+[k^F2a_catC5]*F2a*C5/([k^F2a_mC5]+C5)+[k^F10a_catC5]*F10a*C5/([k^F10a_mC5]+C5))*Plasma) - 
+(([k^-_dC5]*C5)*Plasma) + (([k^+_sC5])*Plasma))
+
+Name    Reaction                          Reaction rate
+r140    C5 -> C5a + C5b                   [k^fC3bBb_catC5]*[fC3b:Bb]*C5/([k^fC3bBb_mC5]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBb_mC5]))+
+                                          [k^fC3bBb_catC5]*[fC3b:Bb:P]*C5/([k^fC3bBb_mC5]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBb_mC5]))+
+				          [k^C4b2a_catC5]*[C4b:C2a]*C5/([k^C4b2a_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a_mC5]))+
+					  [k^C4b2a3b_catC5]*[C4b:C2a:C3b]*C5/([k^C4b2a3b_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a3b_mC5]))+
+					  [k^fC3bBbC3b_catC5]*([fC3b:Bb:C3b]+[fC3b:Bb:C3b:P])*C5/([k^fC3bBbC3b_mC5]*(1+C3/[k^fC3bBb_mC3]+
+					  C5/[k^fC3bBbC3b_mC5]))+[k^KAL_catC5]*KAL*C5/([k^KAL_mC5]+C5)+[k^Pn_catC5]*Pn*C5/([k^Pn_mC5]+C5)+
+					  [k^F2a_catC5]*F2a*C5/([k^F2a_mC5]+C5)+[k^F10a_catC5]*F10a*C5/([k^F10a_mC5]+C5)
+r142   	C5 -> null                        [k^-_dC5]*C5
+r141    null -> C5                        [k^+_sC5]								  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-53
+
+d(C5b)/dt = 1/Plasma*((([k^fC3bBb_catC5]*[fC3b:Bb]*C5/(r140.[k^fC3bBb_mC5]*(1+C3/r140.[k^fC3bBb_mC3]+
+C5/r140.[k^fC3bBb_mC5]))+[k^fC3bBb_catC5]*[fC3b:Bb:P]*C5/(r140.[k^fC3bBb_mC5]*(1+C3/r140.[k^fC3bBb_mC3]+
+C5/r140.[k^fC3bBb_mC5]))+[k^C4b2a_catC5]*[C4b:C2a]*C5/([k^C4b2a_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a_mC5]))+
+[k^C4b2a3b_catC5]*[C4b:C2a:C3b]*C5/([k^C4b2a3b_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a3b_mC5]))+
+[k^fC3bBbC3b_catC5]*([fC3b:Bb:C3b]+[fC3b:Bb:C3b:P])*C5/(r140.[k^fC3bBbC3b_mC5]*(1+C3/r140.[k^fC3bBb_mC3]+
+C5/r140.[k^fC3bBbC3b_mC5]))+[k^KAL_catC5]*KAL*C5/([k^KAL_mC5]+C5)+[k^Pn_catC5]*Pn*C5/([k^Pn_mC5]+C5)+
+[k^F2a_catC5]*F2a*C5/([k^F2a_mC5]+C5)+[k^F10a_catC5]*F10a*C5/([k^F10a_mC5]+C5))*Plasma) - 
+(([k^+_C5bC6]*C5b*C6-[k^-_C5bC6]*[C5b:C6])*Plasma) - (([k^-_dC5b]*C5b)*Plasma))
+
+Name    Reaction                          Reaction rate
+r140    C5 -> C5a + C5b                   [k^fC3bBb_catC5]*[fC3b:Bb]*C5/([k^fC3bBb_mC5]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBb_mC5]))+
+                                          [k^fC3bBb_catC5]*[fC3b:Bb:P]*C5/([k^fC3bBb_mC5]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBb_mC5]))+
+					  [k^C4b2a_catC5]*[C4b:C2a]*C5/([k^C4b2a_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a_mC5]))+
+					  [k^C4b2a3b_catC5]*[C4b:C2a:C3b]*C5/([k^C4b2a3b_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a3b_mC5]))+
+					  [k^fC3bBbC3b_catC5]*([fC3b:Bb:C3b]+[fC3b:Bb:C3b:P])*C5/([k^fC3bBbC3b_mC5]*(1+C3/[k^fC3bBb_mC3]+
+					  C5/[k^fC3bBbC3b_mC5]))+[k^KAL_catC5]*KAL*C5/([k^KAL_mC5]+C5)+[k^Pn_catC5]*Pn*C5/([k^Pn_mC5]+C5)+
+					  [k^F2a_catC5]*F2a*C5/([k^F2a_mC5]+C5)+[k^F10a_catC5]*F10a*C5/([k^F10a_mC5]+C5)
+r148    C5b + C6 <-> [C5b:C6]             [k^+_C5bC6]*C5b*C6 - [k^-_C5bC6]*[C5b:C6]
+r147    C5b -> null                       [k^-_dC5b]*C5b
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-54
+
+d(C5a)/dt = 1/Plasma*((([k^fC3bBb_catC5]*[fC3b:Bb]*C5/(r140.[k^fC3bBb_mC5]*(1+C3/r140.[k^fC3bBb_mC3]+
+C5/r140.[k^fC3bBb_mC5]))+[k^fC3bBb_catC5]*[fC3b:Bb:P]*C5/(r140.[k^fC3bBb_mC5]*(1+C3/r140.[k^fC3bBb_mC3]+
+C5/r140.[k^fC3bBb_mC5]))+[k^C4b2a_catC5]*[C4b:C2a]*C5/([k^C4b2a_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a_mC5]))+
+[k^C4b2a3b_catC5]*[C4b:C2a:C3b]*C5/([k^C4b2a3b_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a3b_mC5]))+
+[k^fC3bBbC3b_catC5]*([fC3b:Bb:C3b]+[fC3b:Bb:C3b:P])*C5/(r140.[k^fC3bBbC3b_mC5]*(1+C3/r140.[k^fC3bBb_mC3]+
+C5/r140.[k^fC3bBbC3b_mC5]))+[k^KAL_catC5]*KAL*C5/([k^KAL_mC5]+C5)+[k^Pn_catC5]*Pn*C5/([k^Pn_mC5]+C5)+
+[k^F2a_catC5]*F2a*C5/([k^F2a_mC5]+C5)+[k^F10a_catC5]*F10a*C5/([k^F10a_mC5]+C5))*Plasma) - 
+(([k^+_C5aC5aR1]*C5a*C5aR1)*Plasma-([k^-_C5aC5aR1]*[C5a:C5aR1])*Plasma) - (([k^C5a_catTF]*C5a)*Plasma) - 
+(([k^+_C5aTAFIa]*TAFIa*C5a)*Plasma) - (([k^-_dC5a]*C5a)*Plasma))
+
+Name    Reaction                          Reaction rate
+r140    C5 -> C5a + C5b                   [k^fC3bBb_catC5]*[fC3b:Bb]*C5/([k^fC3bBb_mC5]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBb_mC5]))+
+                                          [k^fC3bBb_catC5]*[fC3b:Bb:P]*C5/([k^fC3bBb_mC5]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBb_mC5]))+
+					  [k^C4b2a_catC5]*[C4b:C2a]*C5/([k^C4b2a_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a_mC5]))+
+					  [k^C4b2a3b_catC5]*[C4b:C2a:C3b]*C5/([k^C4b2a3b_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a3b_mC5]))+
+					  [k^fC3bBbC3b_catC5]*([fC3b:Bb:C3b]+[fC3b:Bb:C3b:P])*C5/([k^fC3bBbC3b_mC5]*(1+C3/[k^fC3bBb_mC3]+
+					  C5/[k^fC3bBbC3b_mC5]))+[k^KAL_catC5]*KAL*C5/([k^KAL_mC5]+C5)+[k^Pn_catC5]*Pn*C5/([k^Pn_mC5]+C5)+
+					  [k^F2a_catC5]*F2a*C5/([k^F2a_mC5]+C5)+[k^F10a_catC5]*F10a*C5/([k^F10a_mC5]+C5)
+r144    C5a + C5aR1 <-> [C5a:C5aR1]       [k^+_C5aC5aR1]*C5a*C5aR1 - [k^-_C5aC5aR1]*[C5a:C5aR1]
+r235    C5a -> TF                         [k^C5a_catTF]*C5a 
+r271    TAFIa + C5a -> null               [k^+_C5aTAFIa]*TAFIa*C5a
+r143    C5a -> null                       [k^-_dC5a]*C5a 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-55
+
+d(C6)/dt = 1/Plasma*(-(([k^+_C5bC6]*C5b*C6-[k^-_C5bC6]*[C5b:C6])*Plasma) - (([k^-_dC6]*C6)*Plasma) 
++ (([k^+_sC6])*Plasma))
+
+Name    Reaction                          Reaction rate
+r148    C5b + C6 <-> [C5b:C6]             [k^+_C5bC6]*C5b*C6 - [k^-_C5bC6]*[C5b:C6]
+r150    C6 -> null                        [k^-_dC6]*C6
+r149    null -> C6                        [k^+_sC6]
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-56
+
+d([C5b:C6])/dt = 1/Plasma*((([k^+_C5bC6]*C5b*C6-[k^-_C5bC6]*[C5b:C6])*Plasma) - 
+(([k^+_C5bC6C7]*C7*[C5b:C6])*Plasma-([k^-_C5bC6C7]*[C5b:C6:C7])*Plasma))
+
+Name    Reaction                          Reaction rate
+r148    C5b + C6 <-> [C5b:C6]             [k^+_C5bC6]*C5b*C6 - [k^-_C5bC6]*[C5b:C6]
+r151    C7 + [C5b:C6] <-> [C5b:C6:C7]     [k^+_C5bC6C7]*C7*[C5b:C6] - [k^-_C5bC6C7]*[C5b:C6:C7]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-57
+
+d(C7)/dt = 1/Plasma*(-(([k^+_C5bC6C7]*C7*[C5b:C6])*Plasma-([k^-_C5bC6C7]*[C5b:C6:C7])*Plasma) + 
+(([k^+_sC7])*Plasma) - (([k^-_dC7]*C7)*Plasma))
+
+Name    Reaction                          Reaction rate
+r151    C7 + [C5b:C6] <-> [C5b:C6:C7]     [k^+_C5bC6C7]*C7*[C5b:C6] - [k^-_C5bC6C7]*[C5b:C6:C7]
+r152    null -> C7                        [k^+_sC7]
+r153    C7 -> null                        [k^-_dC7]*C7
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-58
+
+d([C5b:C6:C7])/dt = 1/Plasma*((([k^+_C5bC6C7]*C7*[C5b:C6])*Plasma-([k^-_C5bC6C7]*[C5b:C6:C7])*Plasma) - 
+(([k^+_C5bC6C7C8]*C8*[C5b:C6:C7])*Plasma-([k^-C5bC6C7C8]*[C5b:C6:C7:C8])*Plasma))
+
+Name    Reaction                                Reaction rate
+r151    C7 + [C5b:C6] <-> [C5b:C6:C7]           [k^+_C5bC6C7]*C7*[C5b:C6] - [k^-_C5bC6C7]*[C5b:C6:C7]
+r154    C8 + [C5b:C6:C7] <-> [C5b:C6:C7:C8]     [k^+_C5bC6C7C8]*C8*[C5b:C6:C7] - [k^-C5bC6C7C8]*[C5b:C6:C7:C8]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-59
+
+d(C8)/dt = 1/Plasma*(-(([k^+_C5bC6C7C8]*C8*[C5b:C6:C7])*Plasma-([k^-C5bC6C7C8]*[C5b:C6:C7:C8])*Plasma) - 
+(([k^-_dC8]*C8)*Plasma) + (([k^+_sC8])*Plasma))
+
+r154    C8 + [C5b:C6:C7] <-> [C5b:C6:C7:C8]     [k^+_C5bC6C7C8]*C8*[C5b:C6:C7] - [k^-C5bC6C7C8]*[C5b:C6:C7:C8]
+r156    C8 -> null                              [k^-_dC8]*C8 
+r155    null -> C8                              [k^+_sC8]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-60
+
+d([C5b:C6:C7:C8])/dt = 1/Plasma*((([k^+_C5bC6C7C8]*C8*[C5b:C6:C7])*Plasma-([k^-C5bC6C7C8]*[C5b:C6:C7:C8])*Plasma) - 
+(([k^+_C5bC6C7C8C9]*C9*[C5b:C6:C7:C8])*Plasma-([k^-_C5bC6C7C8C9]*[C5b:C6:C7:C8:C9])*Plasma))
+
+Name    Reaction                                      Reaction rate
+r154    C8 + [C5b:C6:C7] <-> [C5b:C6:C7:C8]           [k^+_C5bC6C7C8]*C8*[C5b:C6:C7] - [k^-C5bC6C7C8]*[C5b:C6:C7:C8]
+r157    C9 + [C5b:C6:C7:C8] <-> [C5b:C6:C7:C8:C9]     [k^+_C5bC6C7C8C9]*C9*[C5b:C6:C7:C8] - [k^-_C5bC6C7C8C9]*[C5b:C6:C7:C8:C9]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-61
+
+d(C9)/dt = 1/Plasma*(-(([k^+_C5bC6C7C8C9]*C9*[C5b:C6:C7:C8])*Plasma-([k^-_C5bC6C7C8C9]*[C5b:C6:C7:C8:C9])*Plasma) - 
+(([k^-_dC9]*C9)*Plasma) + (([k^+_sC9])*Plasma))
+
+Name    Reaction                                      Reaction rate
+r157    C9 + [C5b:C6:C7:C8] <-> [C5b:C6:C7:C8:C9]     [k^+_C5bC6C7C8C9]*C9*[C5b:C6:C7:C8] - [k^-_C5bC6C7C8C9]*[C5b:C6:C7:C8:C9]
+r159    C9 -> null                                    [k^-_dC9]*C9
+r158    null -> C9                                    [k^+_sC9]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-62
+
+d([C5b:C6:C7:C8:C9])/dt = 1/Plasma*((([k^+_C5bC6C7C8C9]*C9*[C5b:C6:C7:C8])*Plasma-
+([k^-_C5bC6C7C8C9]*[C5b:C6:C7:C8:C9])*Plasma) - (([k^MAC_catF2]*[C5b:C6:C7:C8:C9])*Plasma) - 
+(([k^+_CD59MAC]*CD59*[C5b:C6:C7:C8:C9])*Plasma))
+
+Name    Reaction                                      Reaction rate
+r157    C9 + [C5b:C6:C7:C8] <-> [C5b:C6:C7:C8:C9]     [k^+_C5bC6C7C8C9]*C9*[C5b:C6:C7:C8] - [k^-_C5bC6C7C8C9]*[C5b:C6:C7:C8:C9]
+r243    [C5b:C6:C7:C8:C9] -> F2                       [k^MAC_catF2]*[C5b:C6:C7:C8:C9]
+r160    CD59 + [C5b:C6:C7:C8:C9] -> null              [k^+_CD59MAC]*CD59*[C5b:C6:C7:C8:C9]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-63
+
+d(C5aR1)/dt = 1/Plasma*(-(([k^+_C5aC5aR1]*C5a*C5aR1)*Plasma-([k^-_C5aC5aR1]*[C5a:C5aR1])*Plasma))
+
+Name    Reaction                                      Reaction rate
+r144           C5a + C5aR1 <-> [C5a:C5aR1]            [k^+_C5aC5aR1]*C5a*C5aR1 - [k^-_C5aC5aR1]*[C5a:C5aR1]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-64
+
+d([C5a:C5aR1])/dt = 1/Plasma*((([k^+_C5aC5aR1]*C5a*C5aR1)*Plasma-([k^-_C5aC5aR1]*[C5a:C5aR1])*Plasma) - 
+(([k^C5aC5aR1_catIL6]*C5aR1)*Plasma))
+
+Name    Reaction                               Reaction rate
+r144    C5a + C5aR1 <-> [C5a:C5aR1]            [k^+_C5aC5aR1]*C5a*C5aR1 - [k^-_C5aC5aR1]*[C5a:C5aR1]
+r251    [C5a:C5aR1] -> IL6                     [k^C5aC5aR1_catIL6]*C5aR1
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-65
+
+d([lgG:fC3b])/dt = 1/Plasma*(((r49.[k^+_lgGfC3b]*lgG*fC3b)*Plasma) - (([k^+_lgGfC3bFB]*[lgG:fC3b]*FB)*Plasma-
+([k^-_lgGfC3bFB]*[lgG:fC3b:FB])*Plasma) + ((r50.[k^+_lgGfC3b]*[lgG:fC3b]*W)*Plasma))
+
+Name    Reaction                               Reaction rate
+r49     lgG + fC3b -> [lgG:fC3b]               [k^+_lgGfC3b]*lgG*fC3b
+r60     [lgG:fC3b] + FB <-> [lgG:fC3b:FB]      [k^+_lgGfC3bFB]*[lgG:fC3b]*FB - [k^-_lgGfC3bFB]*[lgG:fC3b:FB]
+r50     null -> [lgG:fC3b]                     [k^+_lgGfC3b]*[lgG:fC3b]*W
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-66
+d([C4b:C2])/dt = 1/Plasma*((([k^+_C4bC2]*C2*C4b)*Plasma-([k^-_C4bC2]*[C4b:C2])*Plasma) - 
+((r74.[k^C1_catC2]*[C4b:C2]*C1/(r74.[k^C1_mC2]*(1+[C4b:C2]/r74.[k^C1_mC2]+[fC3b:C4b:C2]/r74.[k^C1_mC2]+
+C4/r74.[k^C1_mC4]))+r74.[k^MASP1_catC2]*[MBL:MASP1]*[C4b:C2]/(r74.[k^MASP1_mC2]*(1+[C4b:C2]/r74.[k^MASP1_mC2]+
+[fC3b:C4b:C2]/r74.[k^MASP1_mC2]+C4/r74.[k^MASP1_mC4]))+
+r74.[k^MASP2_catC2]*[MBL:MASP2]*[C4b:C2]/(r74.[k^MASP2_mC2]*(1+[C4b:C2]/r74.[k^MASP2_mC2]+
+[fC3b:C4b:C2]/r74.[k^MASP2_mC2]+C4/r74.[k^MASP2_mC4])))*Plasma))
+
+Name    Reaction                 Reaction rate
+r73     C2 + C4b <-> [C4b:C2]    [k^+_C4bC2]*C2*C4b - [k^-_C4bC2]*[C4b:C2]
+r74     [C4b:C2] -> null         [k^C1_catC2]*[C4b:C2]*C1/([k^C1_mC2]*(1+[C4b:C2]/[k^C1_mC2]+[fC3b:C4b:C2]/[k^C1_mC2]+C4/[k^C1_mC4]))+
+                                 [k^MASP1_catC2]*[MBL:MASP1]*[C4b:C2]/([k^MASP1_mC2]*(1+[C4b:C2]/[k^MASP1_mC2]+
+				 [fC3b:C4b:C2]/[k^MASP1_mC2]+C4/[k^MASP1_mC4]))+
+				 [k^MASP2_catC2]*[MBL:MASP2]*[C4b:C2]/([k^MASP2_mC2]*(1+[C4b:C2]/[k^MASP2_mC2]+
+				 [fC3b:C4b:C2]/[k^MASP2_mC2]+C4/[k^MASP2_mC4]))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-67
+
+d(P)/dt = 1/Plasma*(-(([K^+_C3bP]*P*C3b)*Plasma-([K^-_C3bP]*[C3b:P])*Plasma) - 
+(([k^+_fC3bBbP]*P*[fC3b:Bb]-r99.[k^-_fC3bBbP]*[fC3b:Bb:P])*Plasma) - 
+(([k^+_fC3bBbC3bP]*P*[fC3b:Bb:C3b])*Plasma-(r118.[k^-_fC3bBbC3bP]*[fC3b:Bb:C3b:P])*Plasma) - 
+(([k^+_fC3bFBP]*P*[fC3b:FB])*Plasma-([k^-_fC3bFBP]*[fC3b:FB:P])*Plasma) - 
+(([k^-_dP]*P)*Plasma) + (([k^+_sP])*Plasma) - (([k^+_lgGfC3bFBP]*P*[lgG:fC3b:FB])*Plasma-
+([k^-_lgGfC3bFBP]*[lgG:fC3b:FB:P])*Plasma) - (([k^+_fC3bC4bP]*P*[fC3b:C4b])*Plasma-
+([k^-_fC3bC4bP]*[fC3b:C4b:P])*Plasma))
+
+Name    Reaction                                 Reaction rate
+r130    P + C3b <-> [C3b:P]                      [k^+_C3bP]*P*C3b - [k^-_C3bP]*[C3b:P]
+r99     P + [fC3b:Bb] <-> [fC3b:Bb:P]            [k^+_fC3bBbP]*P*[fC3b:Bb] - [k^-_fC3bBbP]*[fC3b:Bb:P]
+r118    P + [fC3b:Bb:C3b] <-> [fC3b:Bb:C3b:P]    [k^+_fC3bBbC3bP]*P*[fC3b:Bb:C3b] - [k^-_fC3bBbC3bP]*[fC3b:Bb:C3b:P]
+r109    P + [fC3b:FB] <-> [fC3b:FB:P]            [k^+_fC3bFBP]*P*[fC3b:FB] - [k^-_fC3bFBP]*[fC3b:FB:P]
+r101    P -> null                                [k^-_dP]*P
+r100    null -> P                                [k^+_sP]
+r121    P + [lgG:fC3b:FB] <-> [lgG:fC3b:FB:P]    [k^+_lgGfC3bFBP]*P*[lgG:fC3b:FB] - [k^-_lgGfC3bFBP]*[lgG:fC3b:FB:P]
+r85     P + [fC3b:C4b] <-> [fC3b:C4b:P]          [k^+_fC3bC4bP]*P*[fC3b:C4b] - [k^-_fC3bC4bP]*[fC3b:C4b:P]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-68
+d([C3b:P])/dt = 1/Plasma*((([K^+_C3bP]*P*C3b)*Plasma-([K^-_C3bP]*[C3b:P])*Plasma))
+
+Name    Reaction                                 Reaction rate
+r130    P + C3b <-> [C3b:P]                      [k^+_C3bP]*P*C3b - [k^-_C3bP]*[C3b:P]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-69
+
+d([fC3b:Bb:P])/dt = 1/Plasma*((([k^+_fC3bBbP]*P*[fC3b:Bb]-r99.[k^-_fC3bBbP]*[fC3b:Bb:P])*Plasma))
+
+Name    Reaction                                 Reaction rate
+r99     P + [fC3b:Bb] <-> [fC3b:Bb:P]            [k^+_fC3bBbP]*P*[fC3b:Bb] - [k^-_fC3bBbP]*[fC3b:Bb:P]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-70
+
+d([fC3b:Bb:C3b:P])/dt = 1/Plasma*((([k^+_fC3bBbC3bP]*P*[fC3b:Bb:C3b])*Plasma-
+(r118.[k^-_fC3bBbC3bP]*[fC3b:Bb:C3b:P])*Plasma))
+
+Name    Reaction                                 Reaction rate
+r118    P + [fC3b:Bb:C3b] <-> [fC3b:Bb:C3b:P]    [k^+_fC3bBbC3bP]*P*[fC3b:Bb:C3b] - [k^-_fC3bBbC3bP]*[fC3b:Bb:C3b:P]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-71
+
+d([fC3b:FB:P])/dt = 1/Plasma*((([k^+_fC3bFBP]*P*[fC3b:FB])*Plasma-([k^-_fC3bFBP]*[fC3b:FB:P])*Plasma) - 
+((r110.[k^FD_catfC3bFBP]*[fC3b:FB:P]*FD/(r110.[k^FD_mfC3bFBP]+[fC3b:FB:P]+[fC3b:FB]+[C3W:FB]+[lgG:fC3b:FB]+
+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB]))*Plasma))
+
+Name    Reaction                                 Reaction rate
+r109    P + [fC3b:FB] <-> [fC3b:FB:P]            [k^+_fC3bFBP]*P*[fC3b:FB] - [k^-_fC3bFBP]*[fC3b:FB:P]
+r110    [fC3b:FB:P] -> null                      [k^FD_catfC3bFBP]*[fC3b:FB:P]*FD/([k^FD_mfC3bFBP]+[fC3b:FB:P]+[fC3b:FB]+[C3W:FB]+
+                                                 [lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-72
+
+d([C1r:C1s])/dt = 1/Plasma*(-(([k^+_C1qrs]*[C1r:C1s]*C1q)*Plasma-([k^-_C1qrs]*[C1q:C1r:C1s])*Plasma) + 
+(([k^+_C1rC1s]*C1r*C1s)*Plasma-([k^-_C1rC1s]*[C1r:C1s])*Plasma))
+
+Name    Reaction                                 Reaction rate
+r2      [C1r:C1s] + C1q <-> [C1q:C1r:C1s]        [k^+_C1qrs]*[C1r:C1s]*C1q - [k^-_C1qrs]*[C1q:C1r:C1s]
+r1      C1r + C1s <-> [C1r:C1s]                  [k^+_C1rC1s]*C1r*C1s - [k^-_C1rC1s]*[C1r:C1s]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-73
+
+d([C1q:C1r:C1s])/dt = 1/Plasma*((([k^+_C1qrs]*[C1r:C1s]*C1q)*Plasma-
+([k^-_C1qrs]*[C1q:C1r:C1s])*Plasma) - (([k^+_C1]*[C1q:C1r:C1s])*Plasma))
+
+Name    Reaction                                 Reaction rate
+r2      [C1r:C1s] + C1q <-> [C1q:C1r:C1s]        [k^+_C1qrs]*[C1r:C1s]*C1q - [k^-_C1qrs]*[C1q:C1r:C1s]
+r3      [C1q:C1r:C1s] -> C1                      [k^+_C1]*[C1q:C1r:C1s]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-74
+
+d(C1)/dt = 1/Plasma*(-(([k^+_C1C1INH]*C1INH*C1)*Plasma) + (([k^+_C1]*[C1q:C1r:C1s])*Plasma))
+
+Name    Reaction                                 Reaction rate
+r6      C1INH + C1 -> null                       [k^+_C1C1INH]*C1INH*C1
+r3      [C1q:C1r:C1s] -> C1                      [k^+_C1]*[C1q:C1r:C1s]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-75
+
+d([C3W:Bb:FH])/dt = 1/Plasma*((([k^+_C3WBbFH]*FH*[C3W:Bb])*Plasma-([k^-_C3WBbFH]*[C3W:Bb:FH])*Plasma) - 
+((r40.[k^-_dC3WBbFH]*[C3W:Bb:FH])*Plasma))
+
+Name    Reaction                                 Reaction rate
+r39     FH + [C3W:Bb] <-> [C3W:Bb:FH]            [k^+_C3WBbFH]*FH*[C3W:Bb] - [k^-_C3WBbFH]*[C3W:Bb:FH]
+r40     [C3W:Bb:FH] -> null                      [k^-_dC3WBbFH]*[C3W:Bb:FH]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-76
+
+d(Ba)/dt = 1/Plasma*((([k^FD_catfC3bFB]*[fC3b:FB]*FD/([k^FD_mfC3bFB]+[fC3b:FB]+[fC3b:FB:P]+[C3W:FB]+
+[lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+[k^KAL_catfC3bFB]*[fC3b:FB]*KAL/([k^KAL_mfC3bFB]+[fC3b:FB]))*Plasma) + 
+((r26.[k^FD_catC3WFB]*[C3W:FB]*FD/(r26.[k^FD_mC3WFB]+[C3W:FB]+[fC3b:FB]+[fC3b:FB:P]+[lgG:fC3b:FB]+
+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+[k^KAL_catC3WFB]*[C3W:FB]*KAL/([k^KAL_mC3WFB]+[C3W:FB]))*Plasma) + 
+((r43.[k^FD_catfC3bFBP]*[fC3b:FB:P]*FD/(r43.[k^FD_mfC3bFBP]+[fC3b:FB:P]+[lgG:fC3b:FB]+[lgG:fC3b:FB:P]+
+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+r43.[k^FD_catlgGfC3bFB]*[lgG:fC3b:FB]*FD/(r43.[k^FD_mlgGfC3bFB]+[lgG:fC3b:FB]+[fC3b:FB:P]+[lgG:fC3b:FB:P]+
+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+[k^FD_catlgGfC3bFBP]*[lgG:fC3b:FB:P]*FD/([k^FD_mlgGfC3bFBP]+
+[lgG:fC3b:FB:P]+[fC3b:FB:P]+[lgG:fC3b:FB]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+r43.[k^FD_catfC3bC4bFB]*[fC3b:C4b:FB]*FD/(r43.[k^FD_mfC3bC4bFB]+[fC3b:C4b:FB]+[fC3b:FB:P]+[lgG:fC3b:FB]+
+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+r43.[k^FD_catC3bFB]*[C3b:FB]*FD/(r43.[k^FD_mC3bFB]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:FB:P]+[lgG:fC3b:FB]+[lgG:fC3b:FB:P]+
+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+r43.[k^FD_catfC3bC4bPFB]*[fC3b:C4b:P:FB]*FD/(r43.[k^FD_mfC3bC4bPFB]+
+[fC3b:C4b:P:FB]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:FB:P]+[lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[fC3b:C3b:FB])+
+r43.[k^FD_catfC3bC3bFB]*[fC3b:C3b:FB]*FD/(r43.[k^FD_mfC3bC3bFB]+[fC3b:C3b:FB]+[C3b:FB]+[fC3b:FB:P]+
+[lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]))*Plasma) - (([k^-_dBa]*Ba)*Plasma))
+
+Name    Reaction                                 Reaction rate
+r42     [fC3b:FB] -> [fC3b:Bb] + Ba              [k^FD_catfC3bFB]*[fC3b:FB]*FD/([k^FD_mfC3bFB]+[fC3b:FB]+[fC3b:FB:P]+[C3W:FB]+
+                                                 [lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+						 [k^KAL_catfC3bFB]*[fC3b:FB]*KAL/([k^KAL_mfC3bFB]+[fC3b:FB])
+r26     [C3W:FB] -> [C3W:Bb] + Ba                [k^FD_catC3WFB]*[C3W:FB]*FD/([k^FD_mC3WFB]+[C3W:FB]+[fC3b:FB]+[fC3b:FB:P]+[lgG:fC3b:FB]+
+                                                 [lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+						 [k^KAL_catC3WFB]*[C3W:FB]*KAL/([k^KAL_mC3WFB]+[C3W:FB])
+r43     null -> Ba                               [k^FD_catfC3bFBP]*[fC3b:FB:P]*FD/([k^FD_mfC3bFBP]+[fC3b:FB:P]+[lgG:fC3b:FB]+
+                                                 [lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+						 [k^FD_catlgGfC3bFB]*[lgG:fC3b:FB]*FD/([k^FD_mlgGfC3bFB]+[lgG:fC3b:FB]+
+						 [fC3b:FB:P]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+						 [k^FD_catlgGfC3bFBP]*[lgG:fC3b:FB:P]*FD/([k^FD_mlgGfC3bFBP]+[lgG:fC3b:FB:P]+
+						 [fC3b:FB:P]+[lgG:fC3b:FB]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+						 [k^FD_catfC3bC4bFB]*[fC3b:C4b:FB]*FD/([k^FD_mfC3bC4bFB]+[fC3b:C4b:FB]+[fC3b:FB:P]+
+						 [lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+						 [k^FD_catC3bFB]*[C3b:FB]*FD/([k^FD_mC3bFB]+[C3b:FB]+[fC3b:C4b:FB]+
+						 [fC3b:FB:P]+[lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])+
+						 [k^FD_catfC3bC4bPFB]*[fC3b:C4b:P:FB]*FD/([k^FD_mfC3bC4bPFB]+
+						 [fC3b:C4b:P:FB]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:FB:P]+
+						 [lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[fC3b:C3b:FB])+
+						 [k^FD_catfC3bC3bFB]*[fC3b:C3b:FB]*FD/([k^FD_mfC3bC3bFB]+
+						 [fC3b:C3b:FB]+[C3b:FB]+[fC3b:FB:P]+[lgG:fC3b:FB]+
+						 [lgG:fC3b:FB:P]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB])
+r44    	Ba -> null                               [k^-_dBa]*Ba											 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-77
+
+d(Bb)/dt = 1/Plasma*(((r29.[k^-_dC3WBbFH]*[C3W:Bb:FH]+r29.[k^-_dfC3bBbFH]*[fC3b:Bb:FH]+
+r29.[k^-_fC3bBbP]*[fC3b:Bb:P]+r29.[k^-_dfC3bBbCR1]*[fC3b:Bb:CR1]+
+r29.[k^-_dfC3bBbDAF]*[fC3b:Bb:DAF]+r29.[k^-_dfC3bBbC3bFH]*[fC3b:Bb:C3b:FH]+
+r29.[k^-_fC3bBb]*[fC3b:Bb]+r29.[k^-_dfC3bBbC3bCR1]*[fC3b:Bb:C3b:CR1]+
+r29.[k^-_dfC3bBbC3bDAF]*[fC3b:Bb:C3b:DAF]+[k^-_dC4bC2aC3bDAF]*[C4b:C2a:C3b:DAF]+
+r29.[k^-_dC4bC2aC3bCR1]*[C4b:C2a:C3b:CR1]+r29.[k^-_dC4bC2aCR1]*[C4b:C2a:CR1]+
+r29.[k^-_dC4bC2aDAF]*[C4b:C2a:DAF]+r29.[k^-_fC3bBbC3bP]*[fC3b:Bb:C3b:P])*Plasma) + 
+((r28.[k^-_C3WBb]*[C3W:Bb])*Plasma) - (([k^-_dBb]*Bb)*Plasma))
+
+Name    Reaction                Reaction rate
+r29     null -> Bb              [k^-_dC3WBbFH]*[C3W:Bb:FH]+[k^-_dfC3bBbFH]*[fC3b:Bb:FH]+[k^-_fC3bBbP]*[fC3b:Bb:P]+
+                                [k^-_dfC3bBbCR1]*[fC3b:Bb:CR1]+[k^-_dfC3bBbDAF]*[fC3b:Bb:DAF]+[k^-_dfC3bBbC3bFH]*[fC3b:Bb:C3b:FH]+
+				[k^-_fC3bBb]*[fC3b:Bb]+[k^-_dfC3bBbC3bCR1]*[fC3b:Bb:C3b:CR1]+[k^-_dfC3bBbC3bDAF]*[fC3b:Bb:C3b:DAF]+
+				[k^-_dC4bC2aC3bDAF]*[C4b:C2a:C3b:DAF]+[k^-_dC4bC2aC3bCR1]*[C4b:C2a:C3b:CR1]+
+				[k^-_dC4bC2aCR1]*[C4b:C2a:CR1]+[k^-_dC4bC2aDAF]*[C4b:C2a:DAF]+[k^-_fC3bBbC3bP]*[fC3b:Bb:C3b:P]                   
+r28     [C3W:Bb] -> Bb          [k^-_C3WBb]*[C3W:Bb]
+r30     Bb -> null              [k^-_dBb]*Bb
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+ODE-78
+	
+d([lgG:fC3b:FB])/dt = 1/Plasma*((([k^+_lgGfC3bFB]*[lgG:fC3b]*FB)*Plasma-
+([k^-_lgGfC3bFB]*[lgG:fC3b:FB])*Plasma) - (([k^+_lgGfC3bFBP]*P*[lgG:fC3b:FB])*Plasma-
+([k^-_lgGfC3bFBP]*[lgG:fC3b:FB:P])*Plasma) - 
+((r61.[k^FD_catlgGfC3bFB]*[lgG:fC3b:FB]*FD/(r61.[k^FD_mlgGfC3bFB]+[lgG:fC3b:FB]+[fC3b:FB]+
+[fC3b:FB:P]+[lgG:fC3b:FB:P]+[C3W:FB]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB]))*Plasma))
+
+Name    Reaction                                Reaction rate
+r60    [lgG:fC3b] + FB <-> [lgG:fC3b:FB]        [k^+_lgGfC3bFB]*[lgG:fC3b]*FB - [k^-_lgGfC3bFB]*[lgG:fC3b:FB]
+r121   P + [lgG:fC3b:FB] <-> [lgG:fC3b:FB:P]    [k^+_lgGfC3bFBP]*P*[lgG:fC3b:FB] - [k^-_lgGfC3bFBP]*[lgG:fC3b:FB:P]
+r61    [lgG:fC3b:FB] -> null                    [k^FD_catlgGfC3bFB]*[lgG:fC3b:FB]*FD/([k^FD_mlgGfC3bFB]+[lgG:fC3b:FB]+
+                                                [fC3b:FB]+[fC3b:FB:P]+[lgG:fC3b:FB:P]+[C3W:FB]+[C3b:FB]+[fC3b:C4b:FB]+
+						[fC3b:C4b:P:FB]+[fC3b:C3b:FB])
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-79
+
+d([lgG:fC3b:FB:P])/dt = 1/Plasma*((([k^+_lgGfC3bFBP]*P*[lgG:fC3b:FB])*Plasma-([k^-_lgGfC3bFBP]*[lgG:fC3b:FB:P])*Plasma) - 
+((r265.[k^FD_catC3WFB]*[C3W:FB]*FD/(r265.[k^FD_mC3WFB]+[C3W:FB]+[fC3b:FB]+[fC3b:FB:P]+
+[lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB]))*Plasma))
+
+Name    Reaction                                Reaction rate
+r121   P + [lgG:fC3b:FB] <-> [lgG:fC3b:FB:P]    [k^+_lgGfC3bFBP]*P*[lgG:fC3b:FB] - [k^-_lgGfC3bFBP]*[lgG:fC3b:FB:P]
+r265   [lgG:fC3b:FB:P] -> null                  [k^FD_catC3WFB]*[C3W:FB]*FD/([k^FD_mC3WFB]+[C3W:FB]+[fC3b:FB] + [fC3b:FB:P] +
+                                                [lgG:fC3b:FB] +[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-80
+
+d(W)/dt = 1/Plasma*(-(([k^+_fC3b]*fC3b*W)*Plasma))
+
+Name    Reaction                  Reaction rate
+r70     W -> fC3b                 [k^+_fC3b]*fC3b*W
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-81
+
+d([fC3b:CR1])/dt = 1/Plasma*((([k^+_fC3bCR1]*CR1*fC3b)*Plasma-([k^-_fC3bCR1]*[fC3b:CR1])*Plasma) - 
+((r112.[k^FI_catfC3bCR1]*[fC3b:CR1]*FI/(r112.[k^FI_mfC3bCR1]+[fC3b:CR1]+[C3b:CR1]+[C3b:FH]+[fC3b:FH]+
+[C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]))*Plasma))
+
+Name    Reaction                     Reaction rate
+r111    CR1 + fC3b <-> [fC3b:CR1]    [k^+_fC3bCR1]*CR1*fC3b - [k^-_fC3bCR1]*[fC3b:CR1]
+r112    [fC3b:CR1] -> null           [k^FI_catfC3bCR1]*[fC3b:CR1]*FI/([k^FI_mfC3bCR1]+[fC3b:CR1]+
+                                     [C3b:CR1]+[C3b:FH]+[fC3b:FH]+[C3W:FH]+[fC3b:C4b:FH]+[fC3b:C4b:CR1]) 
+									 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-82
+
+d([C3b:FB])/dt = 1/Plasma*((([k^+_C3bFB]*FB*C3b)*Plasma-([k^-_C3bFB]*[C3b:FB])*Plasma) - 
+((r91.[k^FD_catC3bFB]*[C3b:FB]*FD/(r91.[k^FD_mC3bFB]+[C3b:FB]+[fC3b:FB]+[fC3b:FB:P]+[lgG:fC3b:FB]+
+[lgG:fC3b:FB:P]+[C3W:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB]))*Plasma) - 
+(([k^+_fC3bC3bFB]*[C3b:FB]*fC3b)*Plasma-([k^-_fC3bC3bFB]*[fC3b:C3b:FB])*Plasma))
+
+Name    Reaction                               Reaction rate
+r90     FB + C3b <-> [C3b:FB]                  [k^+_C3bFB]*FB*C3b - [k^-_C3bFB]*[C3b:FB]
+r91     [C3b:FB] -> null                       [k^FD_catC3bFB]*[C3b:FB]*FD/([k^FD_mC3bFB]+[C3b:FB]+[fC3b:FB]+[fC3b:FB:P]+
+                                               [lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3W:FB]+[fC3b:C4b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])
+r89     [C3b:FB] + fC3b <-> [fC3b:C3b:FB]      [k^+_fC3bC3bFB]*[C3b:FB]*fC3b - [k^-_fC3bC3bFB]*[fC3b:C3b:FB]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-83
+
+d(MASP2)/dt = 1/Plasma*(-((r14.[k^+_C1INHMASP2]*C1INH*MASP2)*Plasma) - (([k^+_MBLMASP2]*MBL*MASP2)*Plasma-
+([k^-_MBLMASP2]*[MBL:MASP2])*Plasma) - (([k^+_MASP2C4]*MASP2*C4)*Plasma-([k^-_MASP2C4]*[MASP2:C4])*Plasma) + 
+(([k^+_CoV2NMASP2]*MASP2*CoV2N)*Plasma))
+
+Name    Reaction                               Reaction rate
+r14     C1INH + MASP2 -> [C1INH:MASP2]         [k^+_C1INHMASP2]*C1INH*MASP2
+r10     MBL + MASP2 <-> [MBL:MASP2]            [k^+_MBLMASP2]*MBL*MASP2 - [k^-_MBLMASP2]*[MBL:MASP2]
+r33     MASP2 + C4 <-> [MASP2:C4]              [k^+_MASP2C4]*MASP2*C4 - [k^-_MASP2C4]*[MASP2:C4]
+r18     CoV2N -> MASP2                         [k^+_CoV2NMASP2]*MASP2*CoV2N
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+ODE-84	
+	
+d([MBL:MASP2])/dt = 1/Plasma*((([k^+_MBLMASP2]*MBL*MASP2)*Plasma-([k^-_MBLMASP2]*[MBL:MASP2])*Plasma) - 
+((r11.[k^+_C1INHMASP2]*C1INH*[MBL:MASP2])*Plasma))
+
+Name    Reaction                               Reaction rate
+r10     MBL + MASP2 <-> [MBL:MASP2]            [k^+_MBLMASP2]*MBL*MASP2 - [k^-_MBLMASP2]*[MBL:MASP2]
+r11     [MBL:MASP2] -> null                    [k^+_C1INHMASP2]*C1INH*[MBL:MASP2]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-85
+
+d([C1INH:MASP2])/dt = 1/Plasma*(((r14.[k^+_C1INHMASP2]*C1INH*MASP2)*Plasma) + 
+((r15.[k^+_C1INHMASP2]*C1INH*[MBL:MASP2])*Plasma))
+
+Name    Reaction                               Reaction rate
+r14     C1INH + MASP2 -> [C1INH:MASP2]        [k^+_C1INHMASP2]*C1INH*MASP2
+r15     null -> [C1INH:MASP2]                 [k^+_C1INHMASP2]*C1INH*[MBL:MASP2]
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-86
+
+d([C1INH:MASP1])/dt = 1/Plasma*(((r12.[k^+_C1INHMASP1]*C1INH*MASP1)*Plasma) + 
+((r13.[k^+_C1INHMASP1]*C1INH*[MBL:MASP1])*Plasma))
+
+Name    Reaction                               Reaction rate
+r12     C1INH + MASP1 -> [C1INH:MASP1]         [k^+_C1INHMASP1]*C1INH*MASP1
+r13     null -> [C1INH:MASP1]                  [k^+_C1INHMASP1]*C1INH*[MBL:MASP1]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-87
+
+d([fC3b:C4b])/dt = 1/Plasma*((([k^+_fC3bC4b]*fC3b*C4b)*Plasma) - 
+(([k^+_fC3bC4bFB]*FB*[fC3b:C4b]-[k^-_fC3bC4bFB]*[fC3b:C4b:FB])*Plasma) - 
+(([k^+_fC3bC4bFH]*FH*[fC3b:C4b])*Plasma-([k^-_fC3bC4bFH]*[fC3b:C4b:FH])*Plasma) - 
+(([k^+_fC3bC4bCR1]*[fC3b:C4b]*CR1)*Plasma-([k^-_fC3bC4bCR1]*[fC3b:C4b:CR1])*Plasma) - 
+(([k^+_fC3bC4bP]*P*[fC3b:C4b])*Plasma-([k^-_fC3bC4bP]*[fC3b:C4b:P])*Plasma) - 
+(([k^+_fC3bC4bC2]*[fC3b:C4b]*C2)*Plasma-([k^-_fC3bC4bC2]*[fC3b:C4b:C2])*Plasma))
+
+Name    Reaction                               Reaction rate
+r79     C4b + fC3b -> [fC3b:C4b]              [k^+_fC3bC4b]*fC3b*C4b
+r66     FB + [fC3b:C4b] <-> [fC3b:C4b:FB]     [k^+_fC3bC4bFB]*FB*[fC3b:C4b] - [k^-_fC3bC4bFB]*[fC3b:C4b:FB]
+r81     FH + [fC3b:C4b] <-> [fC3b:C4b:FH]     [k^+_fC3bC4bFH]*FH*[fC3b:C4b] - [k^-_fC3bC4bFH]*[fC3b:C4b:FH]
+r98     CR1 + [fC3b:Bb] <-> [fC3b:Bb:CR1]     [k^+_fC3bBbCR1]*CR1*[fC3b:Bb] - [k^-_fC3bBbCR1]*[fC3b:Bb:CR1]
+r85     P + [fC3b:C4b] <-> [fC3b:C4b:P]       [k^+_fC3bC4bP]*P*[fC3b:C4b] - [k^-_fC3bC4bP]*[fC3b:C4b:P]
+r92     [fC3b:C4b] + C2 <-> [fC3b:C4b:C2]     [k^+_fC3bC4bC2]*[fC3b:C4b]*C2 - [k^-_fC3bC4bC2]*[fC3b:C4b:C2]
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-88
+
+d([fC3b:C4b:FB])/dt = 1/Plasma*((([k^+_fC3bC4bFB]*FB*[fC3b:C4b]-[k^-_fC3bC4bFB]*[fC3b:C4b:FB])*Plasma) - 
+((r67.[k^FD_catfC3bC4bFB]*[fC3b:C4b:FB]*FD/(r67.[k^FD_mfC3bC4bFB]+[fC3b:C4b:FB]+[C3W:FB]+[fC3b:FB]+
+[fC3b:FB:P]+[lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB]))*Plasma))
+
+Name    Reaction                               Reaction rate
+r66     FB + [fC3b:C4b] <-> [fC3b:C4b:FB]      [k^+_fC3bC4bFB]*FB*[fC3b:C4b] - [k^-_fC3bC4bFB]*[fC3b:C4b:FB]
+r67     [fC3b:C4b:FB] -> null                  [k^FD_catfC3bC4bFB]*[fC3b:C4b:FB]*FD/([k^FD_mfC3bC4bFB]+[fC3b:C4b:FB]+[C3W:FB]+
+                                               [fC3b:FB]+[fC3b:FB:P]+[lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C4b:P:FB]+[fC3b:C3b:FB])
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-89
+
+d([fC3b:C4b:FH])/dt = 1/Plasma*((([k^+_fC3bC4bFH]*FH*[fC3b:C4b])*Plasma-([k^-_fC3bC4bFH]*[fC3b:C4b:FH])*Plasma) - 
+((r82.[k^FI_catfC3bC4bFH]*[fC3b:C4b:FH]*FI/(r82.[k^FI_mfC3bC4bFH]+[fC3b:C4b:FH]+[C3W:FH]+[fC3b:FH]+[fC3b:CR1]+
+[C3b:FH]+[C3b:CR1]+[fC3b:C4b:CR1]))*Plasma))
+
+Name    Reaction                               Reaction rate
+r81     FH + [fC3b:C4b] <-> [fC3b:C4b:FH]      [k^+_fC3bC4bFH]*FH*[fC3b:C4b] - [k^-_fC3bC4bFH]*[fC3b:C4b:FH]
+r82     [fC3b:C4b:FH] -> null                  [k^FI_catfC3bC4bFH]*[fC3b:C4b:FH]*FI/([k^FI_mfC3bC4bFH]+
+                                               [fC3b:C4b:FH]+[C3W:FH]+[fC3b:FH]+[fC3b:CR1]+[C3b:FH]+[C3b:CR1]+[fC3b:C4b:CR1]) 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-90
+
+d([fC3b:C4b:CR1])/dt = 1/Plasma*((([k^+_fC3bC4bCR1]*[fC3b:C4b]*CR1)*Plasma-([k^-_fC3bC4bCR1]*[fC3b:C4b:CR1])*Plasma) - 
+((r267.[k^FI_catfC3bC4bCR1]*[fC3b:C4b:CR1]*FI/(r267.[k^FI_mfC3bC4bCR1]+[fC3b:C4b:CR1]+[C3W:FB]+[fC3b:FH]+[fC3b:CR1]+
+[C3b:FH]+[C3b:CR1]+[fC3b:C4b:FH]))*Plasma))
+
+Name    Reaction                               Reaction rate
+r96     [fC3b:C4b] + CR1 <-> [fC3b:C4b:CR1]    [k^+_fC3bC4bCR1]*[fC3b:C4b]*CR1 - [k^-_fC3bC4bCR1]*[fC3b:C4b:CR1]
+r267    [fC3b:C4b:CR1] -> null                 [k^FI_catfC3bC4bCR1]*[fC3b:C4b:CR1]*FI/([k^FI_mfC3bC4bCR1]+
+                                               [fC3b:C4b:CR1]+[C3W:FB]+[fC3b:FH]+[fC3b:CR1]+[C3b:FH]+[C3b:CR1]+[fC3b:C4b:FH])
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+ODE-91
+
+d([fC3b:C4b:P])/dt = 1/Plasma*((([k^+_fC3bC4bP]*P*[fC3b:C4b])*Plasma-([k^-_fC3bC4bP]*[fC3b:C4b:P])*Plasma) - 
+(([k^+_fC3bC4bPFB]*FB*[fC3b:C4b:P])*Plasma-([k^-_fC3bC4bPFB]*[fC3b:C4b:P:FB])*Plasma))
+
+Name    Reaction                               Reaction rate
+r85     P + [fC3b:C4b] <-> [fC3b:C4b:P]        [k^+_fC3bC4bP]*P*[fC3b:C4b] - [k^-_fC3bC4bP]*[fC3b:C4b:P]
+r266    FB + [fC3b:C4b:P] <-> [fC3b:C4b:P:FB]  [k^+_fC3bC4bPFB]*FB*[fC3b:C4b:P] - [k^-_fC3bC4bPFB]*[fC3b:C4b:P:FB]
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-92
+
+d([fC3b:C4b:C2])/dt = 1/Plasma*((([k^+_fC3bC4bC2]*[fC3b:C4b]*C2)*Plasma-([k^-_fC3bC4bC2]*[fC3b:C4b:C2])*Plasma) - 
+((r107.[k^C1_catC2]*[fC3b:C4b:C2]*C2/(r107.[k^C1_mC2]*(1+[C4b:C2]/r107.[k^C1_mC2]+[fC3b:C4b:C2]/r107.[k^C1_mC2]+
+C4/r107.[k^C1_mC4]))+r107.[k^MASP1_catC2]*[MBL:MASP1]*[fC3b:C4b:C2]/(r107.[k^MASP1_mC2]*(1+[C4b:C2]/r107.[k^MASP1_mC2]+
+[fC3b:C4b:C2]/r107.[k^MASP1_mC2]+C4/r107.[k^MASP1_mC4]))+
+r107.[k^MASP2_catC2]*[MBL:MASP2]*[fC3b:C4b:C2]/(r107.[k^MASP2_mC2]*(1+[C4b:C2]/r107.[k^MASP2_mC2]+
+[fC3b:C4b:C2]/r107.[k^MASP2_mC2]+C4/r107.[k^MASP2_mC4])))*Plasma))
+
+Name    Reaction                               Reaction rate
+r92    [fC3b:C4b] + C2 <-> [fC3b:C4b:C2]       [k^+_fC3bC4bC2]*[fC3b:C4b]*C2 - [k^-_fC3bC4bC2]*[fC3b:C4b:C2]
+r107   [fC3b:C4b:C2] -> [C4b:C2a:C3b]          [k^C1_catC2]*[fC3b:C4b:C2]*C2/([k^C1_mC2]*(1+[C4b:C2]/[k^C1_mC2]+
+                                               [fC3b:C4b:C2]/[k^C1_mC2]+C4/[k^C1_mC4]))+
+					       [k^MASP1_catC2]*[MBL:MASP1]*[fC3b:C4b:C2]/([k^MASP1_mC2]*(1+[C4b:C2]/[k^MASP1_mC2]+
+					       [fC3b:C4b:C2]/[k^MASP1_mC2]+C4/[k^MASP1_mC4]))+
+					       [k^MASP2_catC2]*[MBL:MASP2]*[fC3b:C4b:C2]/([k^MASP2_mC2]*(1+[C4b:C2]/[k^MASP2_mC2]+
+					       [fC3b:C4b:C2]/[k^MASP2_mC2]+C4/[k^MASP2_mC4]))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-93
+
+d([fC3b:C4b:P:FB])/dt = 1/Plasma*((([k^+_fC3bC4bPFB]*FB*[fC3b:C4b:P])*Plasma-([k^-_fC3bC4bPFB]*[fC3b:C4b:P:FB])*Plasma) - 
+((r69.[k^FD_catfC3bC4bPFB]*[fC3b:C4b:P:FB]*FD/(r69.[k^FD_mfC3bC4bPFB]+[fC3b:C4b:P:FB]+[fC3b:C4b:FB]+
+[C3W:FB]+[fC3b:FB]+[fC3b:FB:P]+[lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C3b:FB]))*Plasma))
+
+Name    Reaction                                  Reaction rate
+r266    FB + [fC3b:C4b:P] <-> [fC3b:C4b:P:FB]     [k^+_fC3bC4bPFB]*FB*[fC3b:C4b:P] - [k^-_fC3bC4bPFB]*[fC3b:C4b:P:FB] 
+r69     [fC3b:C4b:P:FB] -> null                   [k^FD_catfC3bC4bPFB]*[fC3b:C4b:P:FB]*FD/([k^FD_mfC3bC4bPFB]+
+                                                  [fC3b:C4b:P:FB]+[fC3b:C4b:FB]+[C3W:FB]+[fC3b:FB]+[fC3b:FB:P]+
+												  [lgG:fC3b:FB]+[lgG:fC3b:FB:P]+[C3b:FB]+[fC3b:C3b:FB]) 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-94
+
+d(CoV2N)/dt = 1/Plasma*(-(([k^+_CoV2NMASP2]*MASP2*CoV2N)*Plasma) - 
+(([k^CoV2N_catgC1qR]*gC1qR*CoV2N)*Plasma) - 
+(([k^+_CoV2NHK]*HK*CoV2N)*Plasma))
+
+Name    Reaction                        Reaction rate
+r18     CoV2N -> MASP2                  [k^+_CoV2NMASP2]*MASP2*CoV2N
+r19     CoV2N -> gC1qR                  [k^CoV2N_catgC1qR]*gC1qR*CoV2N
+r162    CoV2N -> HK                     [k^+_CoV2NHK]*HK*CoV2N
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-95
+
+d(IL6)/dt = 1/Plasma*((([k^C5aC5aR1_catIL6]*C5aR1)*Plasma) + (([k^C3aC3aR1_catIL6]*C3aR1)*Plasma) - 
+(([k^IL6_catF1]*IL6)*Plasma) + (([k^BKB2R_catIL6]*B2R)*Plasma) - (([k^-_dIL6]*IL6)*Plasma))
+
+Name    Reaction                        Reaction rate
+r251    [C5a:C5aR1] -> IL6              [k^C5aC5aR1_catIL6]*C5aR1
+r139    [C3a:C3aR1] -> IL6              [k^C3aC3aR1_catIL6]*C3aR1
+r233    [BK:B2R] -> IL6                 [k^BKB2R_catIL6]*B2R
+r71     IL6 -> null                     [k^-_dIL6]*IL6
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-96
+
+d(C1r)/dt = 1/Plasma*(-(([k^+_C1rC1s]*C1r*C1s)*Plasma-([k^-_C1rC1s]*[C1r:C1s])*Plasma) + 
+(([k^F12a_catC1r]*C1r*F12a)*Plasma))
+
+Name    Reaction                        Reaction rate
+r1      C1r + C1s <-> [C1r:C1s]         [k^+_C1rC1s]*C1r*C1s - [k^-_C1rC1s]*[C1r:C1s]
+r239    F12a -> C1r                     [k^F12a_catC1r]*C1r*F12a
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-97
+
+d(C1s)/dt = 1/Plasma*(-(([k^+_C1rC1s]*C1r*C1s)*Plasma-([k^-_C1rC1s]*[C1r:C1s])*Plasma) - 
+(([k^+_C1sC4]*C4*C1s)*Plasma-([k^-_C1sC4]*[C1s:C4])*Plasma))
+
+Name    Reaction                        Reaction rate
+r1      C1r + C1s <-> [C1r:C1s]         [k^+_C1rC1s]*C1r*C1s - [k^-_C1rC1s]*[C1r:C1s]
+r34     C4 + C1s <-> [C1s:C4]           [k^+_C1sC4]*C4*C1s - [k^-_C1sC4]*[C1s:C4]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-98
+
+d([C1s:C4])/dt = 1/Plasma*((([k^+_C1sC4]*C4*C1s)*Plasma-([k^-_C1sC4]*[C1s:C4])*Plasma))
+
+Name    Reaction                        Reaction rate
+r34     C4 + C1s <-> [C1s:C4]           [k^+_C1sC4]*C4*C1s - [k^-_C1sC4]*[C1s:C4]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-99
+
+d([MASP2:C4])/dt = 1/Plasma*((([k^+_MASP2C4]*MASP2*C4)*Plasma-([k^-_MASP2C4]*[MASP2:C4])*Plasma))
+
+Name    Reaction                        Reaction rate
+r33     MASP2 + C4 <-> [MASP2:C4]       [k^+_MASP2C4]*MASP2*C4 - [k^-_MASP2C4]*[MASP2:C4]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODe-100
+
+d([fC3b:C3b:FB])/dt = 1/Plasma*((([k^+_fC3bC3bFB]*[C3b:FB]*fC3b)*Plasma-([k^-_fC3bC3bFB]*[fC3b:C3b:FB])*Plasma))
+
+Name    Reaction                               Reaction rate
+r89     [C3b:FB] + fC3b <-> [fC3b:C3b:FB]      [k^+_fC3bC3bFB]*[C3b:FB]*fC3b - [k^-_fC3bC3bFB]*[fC3b:C3b:FB]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-101
+
+d(F7)/dt = 1/Plasma*(-(([k^+_TFF7]*F7*TF-[k^-_TFF7]*[TF:F7])*Plasma) - 
+(([k^TFF7a_catF7]*F7*[TF:F7a]+[k^F10a_catF7]*F7*F10a+[k^F2a_catF7]*F7*F2a)*Plasma))
+
+Name    Reaction                               Reaction rate
+r193    F7 + TF <-> [TF:F7]                    [k^+_TFF7]*F7*TF-[k^-_TFF7]*[TF:F7]
+r192    F7 -> F7a                              [k^TFF7a_catF7]*F7*[TF:F7a]+[k^F10a_catF7]*F7*F10a+[k^F2a_catF7]*F7*F2a
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-102
+
+d(F7a)/dt = 1/Plasma*(-(([k^+_TFF7a]*F7a*TF)*Plasma-([k^-_TFF7a]*[TF:F7a])*Plasma) + 
+(([k^TFF7a_catF7]*F7*[TF:F7a]+[k^F10a_catF7]*F7*F10a+[k^F2a_catF7]*F7*F2a)*Plasma) - 
+(([k^+_F10F7a]*F7a*F10-[k^-_F10F7a]*[F10:F7a])*Plasma) - (([k^+_F9F7a]*F9*F7a)*Plasma-
+([k^-_F9F7a]*[F9:F7a])*Plasma) + ((r194.[k^F7a_catF9a]*[F9:F7a]+r194.[k^F7a_catF10a]*[F10:F7a])*Plasma))
+
+Name    Reaction                               Reaction rate
+r196    F7a + TF <-> [TF:F7a]                  [k^+_TFF7a]*F7a*TF - [k^-_TFF7a]*[TF:F7a]
+r192    F7 -> F7a                              [k^TFF7a_catF7]*F7*[TF:F7a]+[k^F10a_catF7]*F7*F10a+[k^F2a_catF7]*F7*F2a
+r197    F7a + F10 <-> [F10:F7a]                [k^+_F10F7a]*F7a*F10 - [k^-_F10F7a]*[F10:F7a]
+r195    F9 + F7a <-> [F9:F7a]                  [k^+_F9F7a]*F9*F7a - [k^-_F9F7a]*[F9:F7a]
+r194    null -> F7a                            [k^F7a_catF9a]*[F9:F7a]+[k^F7a_catF10a]*[F10:F7a] 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-103
+
+d(F9)/dt = 1/Plasma*(-(([k^+_F9F7a]*F9*F7a)*Plasma-([k^-_F9F7a]*[F9:F7a])*Plasma) - 
+(([k^+_TFF7aF9]*[TF:F7a]*F9)*Plasma-([k^-_TFF7aF9]*[TF:F7a:F9])*Plasma) - 
+(([k^+_F11aF9]*F9*F11a)*Plasma-([k^-_F11aF9]*[F11a:F9])*Plasma))
+
+Name    Reaction                               Reaction rate
+r195    F9 + F7a <-> [F9:F7a]                   [k^+_F9F7a]*F9*F7a - [k^-_F9F7a]*[F9:F7a]
+r209    [TF:F7a] + F9 <-> [TF:F7a:F9]           [k^+_TFF7aF9]*[TF:F7a]*F9 - [k^-_TFF7aF9]*[TF:F7a:F9]
+r207    F9 + F11a <-> [F11a:F9]                 [k^+_F11aF9]*F9*F11a - [k^-_F11aF9]*[F11a:F9] 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-104
+
+d(F9a)/dt = 1/Plasma*(-(([k^+_F9aF10]*F10*F9a)*Plasma-([k^-_F9aF10]*[F9a:F10])*Plasma) - 
+(([k^+_F9aAT3]*AT3*F9a)*Plasma) + ((r203.[k^F9a_catF10a]*[F9a:F10])*Plasma) - 
+(([k^+_F9aF8a]*F9a*F8a)*Plasma-([k^-_F9aF8a]*[F9a:F8a])*Plasma) + 
+((r202.[k^F7a_catF9a]*[F9:F7a])*Plasma) + ((r208.[k^F11a_catF9a]*[F11a:F9])*Plasma))
+
+Name    Reaction                              Reaction rate
+r199    F10 + F9a <-> [F9a:F10]               [k^+_F9aF10]*F10*F9a - [k^-_F9aF10]*[F9a:F10]
+r204    AT3 + F9a -> [F9a:AT3]                [k^+_F9aAT3]*AT3*F9a
+r203    null -> F9a                           [k^F9a_catF10a]*[F9a:F10]
+r205    F9a + F8a <-> [F9a:F8a]               [k^+_F9aF8a]*F9a*F8a - [k^-_F9aF8a]*[F9a:F8a]
+r202    [F9:F7a] -> F9a                       [k^F7a_catF9a]*[F9:F7a]
+r208    [F11a:F9] -> F9a                      [k^F11a_catF9a]*[F11a:F9]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-105
+
+d(F10)/dt = 1/Plasma*(-(([k^+_F9aF10]*F10*F9a)*Plasma-([k^-_F9aF10]*[F9a:F10])*Plasma) - 
+(([k^+_F10F7a]*F7a*F10-[k^-_F10F7a]*[F10:F7a])*Plasma) - (([k^+_TFF7aF10]*[TF:F7a]*F10)*Plasma-
+([k^-_TFF7aF10]*[TF:F7a:F10])*Plasma) - (([k^+_F9aF8aF10]*[F9a:F8a]*F10)*Plasma-
+([k^-_F9aF8aF10]*[F9a:F8a:F10])*Plasma))
+
+Name    Reaction                               Reaction rate
+r199    F10 + F9a <-> [F9a:F10]                [k^+_F9aF10]*F10*F9a - [k^-_F9aF10]*[F9a:F10]
+r197    F7a + F10 <-> [F10:F7a]                [k^+_F10F7a]*F7a*F10 - [k^-_F10F7a]*[F10:F7a]
+r212    [TF:F7a] + F10 <-> [TF:F7a:F10]        [k^+_TFF7aF10]*[TF:F7a]*F10 - [k^-_TFF7aF10]*[TF:F7a:F10]
+r268    [F9a:F8a] + F10 <-> [F9a:F8a:F10]      [k^+_F9aF8aF10]*[F9a:F8a]*F10 - [k^-_F9aF8aF10]*[F9a:F8a:F10]
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-106
+	
+d(F10a)/dt = 1/Plasma*(-(([k^+_F10aAT3]*F10a*AT3)*Plasma) - 
+(([k^+_F10aTFPI]*F10a*TFPI)*Plasma-([k^-_F10aTFPI]*[F10a:TFPI])*Plasma) - 
+(([k^F10a_catCoV2S]*CoV2S*F10a/([k^F10a_mCoV2S]+CoV2S))*Plasma) - 
+(([k^+_TFF7aF10a]*F10a*[TF:F7a])*Plasma-([k^-_TFF7aF10a]*[TF:F7a:F10a])*Plasma) - 
+(([k^+_F10aF5a]*F5a*F10a)*Plasma-([k^-_F10aF5a]*[F10a:F5a])*Plasma) + 
+((r200.[k^F9a_catF10a]*[F9a:F10])*Plasma) - (([k^+_F10aF8]*F10a*F8)*Plasma-
+([k^-_F10aF8]*[F10a:F8])*Plasma) + ((r217.[k^F9aF8a_catF10]*[F9a:F8a:F10])*Plasma) + 
+((r201.[k^F10a_catF8a]*[F10a:F8])*Plasma) + ((r198.[k^F7a_catF10a]*[F10:F7a])*Plasma))
+
+Name    Reaction                               Reaction rate
+r223    F10a + AT3 -> [F10a:AT3]               [k^+_F10aAT3]*F10a*AT3
+r215    F10a + TFPI <-> [F10a:TFPI]            [k^+_F10aTFPI]*F10a*TFPI - [k^-_F10aTFPI]*[F10a:TFPI]
+r237    F10a -> CoV2S                          [k^F10a_catCoV2S]*CoV2S*F10a/([k^F10a_mCoV2S]+CoV2S)
+r214    F10a + [TF:F7a] <-> [TF:F7a:F10a]      [k^+_TFF7aF10a]*F10a*[TF:F7a] - [k^-_TFF7aF10a]*[TF:F7a:F10a]
+r221    F5a + F10a <-> [F10a:F5a]              [k^+_F10aF5a]*F5a*F10a - [k^-_F10aF5a]*[F10a:F5a]
+r200    [F9a:F10] -> F10a                      [k^F9a_catF10a]*[F9a:F10]
+r218    F10a + F8 <-> [F10a:F8]                [k^+_F10aF8]*F10a*F8 - [k^-_F10aF8]*[F10a:F8]
+r217    [F9a:F8a:F10] -> F10a                  [k^F9aF8a_catF10]*[F9a:F8a:F10]
+r201    null -> F10a                           [k^F10a_catF8a]*[F10a:F8]
+r198    [F10:F7a] -> F10a                      [k^F7a_catF10a]*[F10:F7a]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-107
+
+d(F8)/dt = 1/Plasma*(-(([k^F2a_catF8]*F8*F2a)*Plasma) - 
+(([k^+_F10aF8]*F10a*F8)*Plasma-([k^-_F10aF8]*[F10a:F8])*Plasma))
+
+Name    Reaction                               Reaction rate
+r225    F8 -> F8a                              [k^F2a_catF8]*F8*F2a
+r218    F10a + F8 <-> [F10a:F8]                [k^+_F10aF8]*F10a*F8 - [k^-_F10aF8]*[F10a:F8]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODe-108
+
+d(F8a)/dt = 1/Plasma*((([k^F2a_catF8]*F8*F2a)*Plasma) + ((r219.[k^F10a_catF8a]*[F10a:F8])*Plasma) - 
+(([k^+_F9aF8a]*F9a*F8a)*Plasma-([k^-_F9aF8a]*[F9a:F8a])*Plasma))
+
+Name    Reaction                  Reaction rate
+r225    F8 -> F8a                 [k^F2a_catF8]*F8*F2a
+r219    [F10a:F8] -> F8a          [k^F10a_catF8a]*[F10a:F8]
+r205    F9a + F8a <-> [F9a:F8a]   [k^+_F9aF8a]*F9a*F8a - [k^-_F9aF8a]*[F9a:F8a]
+        
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-109
+
+d(F2a)/dt = 1/Plasma*((([k^F10a_catF2]*F2*F10a+[k^MASP1_catF2]*F2*MASP1+[k^MASP2_catF2]*F2*MASP2)*Plasma) - 
+(([k^+_F2aAT3]*F2a*AT3)*Plasma) - (([k^+_F2aA2M]*F2a*A2M)*Plasma) - 
+(([k^F2a_catCoV2S]*CoV2S*F2a/([k^F2a_mCoV2S]+CoV2S))*Plasma) - 
+(([k^+_F11F2a]*F2a*F11)*Plasma-([k^-_F11F2a]*[F11:F2a])*Plasma) + 
+((r180.[k^F11_catF2a]*[F11:F2a])*Plasma) - (([k^+_C1INHF2a]*C1INH*F2a)*Plasma) - 
+(([k^+_FHF2a]*FH*F2a)*Plasma) - (([k^+_F2aF1]*F2a*F1)*Plasma-([k^-_F2aF1]*[F2a:F1])*Plasma))
+
+Name    Reaction                  Reaction rate
+r242    F2 -> F2a                 [k^F10a_catF2]*F2*F10a+[k^MASP1_catF2]*F2*MASP1+[k^MASP2_catF2]*F2*MASP2
+r224    F2a + AT3 -> [F2a:AT3]    [k^+_F2aAT3]*F2a*AT3 
+r226    F2a + A2M -> [F2a:A2M]    [k^+_F2aA2M]*F2a*A2M
+r237    F10a -> CoV2S             [k^F10a_catCoV2S]*CoV2S*F10a/([k^F10a_mCoV2S]+CoV2S)
+r179    F2a + F11 <-> [F11:F2a]   [k^+_F11F2a]*F2a*F11 - [k^-_F11F2a]*[F11:F2a]
+r180    [F11:F2a] -> F2a          [k^F11_catF2a]*[F11:F2a]
+r264    C1INH + F2a -> null       [k^+_C1INHF2a]*C1INH*F2a  
+r241    FH + F2a -> null          [k^+_FHF2a]*FH*F2a
+r227    F2a + F1 <-> [F2a:F1]     [k^+_F2aF1]*F2a*F1 - [k^-_F2aF1]*[F2a:F1] 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-110
+
+d(F5)/dt = 1/Plasma*(-(([k^F2a_catF5]*F5*F2a)*Plasma))
+
+Name    Reaction                  Reaction rate
+r220    F5 -> F5a                 [k^F2a_catF5]*F5*F2a
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-111
+
+d(F5a)/dt = 1/Plasma*((([k^F2a_catF5]*F5*F2a)*Plasma) - (([k^+_F10aF5a]*F5a*F10a)*Plasma-
+([k^-_F10aF5a]*[F10a:F5a])*Plasma))
+
+Name    Reaction                      Reaction rate
+r220    F5 -> F5a                     [k^F2a_catF5]*F5*F2a
+r221    F5a + F10a <-> [F10a:F5a]     [k^+_F10aF5a]*F5a*F10a - [k^-_F10aF5a]*[F10a:F5a]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-112
+
+d(TF)/dt = 1/Plasma*(-(([k^+_TFF7]*F7*TF-[k^-_TFF7]*[TF:F7])*Plasma) - 
+(([k^+_TFF7a]*F7a*TF)*Plasma-([k^-_TFF7a]*[TF:F7a])*Plasma) + 
+(([k^C5a_catTF]*C5a)*Plasma) + (([k^C3a_catTF]*C3a)*Plasma))
+
+Name    Reaction                      Reaction rate
+r193    F7 + TF <-> [TF:F7]           [k^+_TFF7]*F7*TF-[k^-_TFF7]*[TF:F7]
+r196    F7a + TF <-> [TF:F7a]         [k^+_TFF7a]*F7a*TF - [k^-_TFF7a]*[TF:F7a]
+r235    C5a -> TF                     [k^C5a_catTF]*C5a
+r234    C3a -> TF                     [k^C3a_catTF]*C3a
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-113
+
+d(F2)/dt = 1/Plasma*(-(([k^F10a_catF2]*F2*F10a+[k^MASP1_catF2]*F2*MASP1+[k^MASP2_catF2]*F2*MASP2)*Plasma) - 
+(([k^+_F10aF5aF2]*[F10a:F5a]*F2)*Plasma-([k^-_F10aF5aF2]*[F10a:F5a:F2])*Plasma) + 
+(([k^MAC_catF2]*[C5b:C6:C7:C8:C9])*Plasma))
+
+Name    Reaction                               Reaction rate
+r242    F2 -> F2a                              [k^F10a_catF2]*F2*F10a+[k^MASP1_catF2]*F2*MASP1+[k^MASP2_catF2]*F2*MASP2
+r222    [F10a:F5a] + F2 <-> [F10a:F5a:F2]      [k^+_F10aF5aF2]*[F10a:F5a]*F2 - [k^-_F10aF5aF2]*[F10a:F5a:F2]
+r243    [C5b:C6:C7:C8:C9] -> F2                [k^MAC_catF2]*[C5b:C6:C7:C8:C9]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODe-114
+
+d(Pn)/dt = 1/Plasma*(-(([k^+_C1INHPn]*C1INH*Pn)*Plasma) + 
+(([k^KAL_catGlu-Pg]*[Glu-Pg]*KAL/([k^KAL_mGlu-Pg]+[Glu-Pg])+
+[k^tPA_catGlu-Pg]*[Glu-Pg]*tPA/([k^tPA_mGlu-Pg]+[Glu-Pg]))*Plasma) - (([k^Pn_catLys-Pg]*Pn)*Plasma))
+
+Name    Reaction                  Reaction rate
+r262    C1INH + Pn -> null        [k^+_C1INHPn]*C1INH*Pn
+r256    [Glu-Pg] -> Pn            [k^KAL_catGlu-Pg]*[Glu-Pg]*KAL/([k^KAL_mGlu-Pg]+[Glu-Pg])+
+                                  [k^tPA_catGlu-Pg]*[Glu-Pg]*tPA/([k^tPA_mGlu-Pg]+[Glu-Pg])
+r261    Pn -> [Lys-Pg]            [k^Pn_catLys-Pg]*Pn
+								  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-115
+
+d(AT3)/dt = 1/Plasma*(-(([k^+_F10aAT3]*F10a*AT3)*Plasma) - (([k^+_F2aAT3]*F2a*AT3)*Plasma) - 
+(([k^+_F9aAT3]*AT3*F9a)*Plasma) - (([k^+_TFF7aAT3]*[TF:F7a]*AT3)*Plasma) - 
+(([k^+_F12aAT3]*AT3*F12a)*Plasma) - (([k^+_F11aAT3]*AT3*F11a)*Plasma))
+
+Name    Reaction                          Reaction rate
+r223    F10a + AT3 -> [F10a:AT3]          [k^+_F10aAT3]*F10a*AT3
+r224    F2a + AT3 -> [F2a:AT3]            [k^+_F2aAT3]*F2a*AT3
+r204    AT3 + F9a -> [F9a:AT3]            [k^+_F9aAT3]*AT3*F9a
+r211    [TF:F7a] + AT3 -> [TF:F7a:AT3]    [k^+_TFF7aAT3]*[TF:F7a]*AT3
+r189    AT3 + F11a -> [F11a:AT3]          [k^+_F11aAT3]*AT3*F11a
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-116
+
+d([F10a:AT3])/dt = 1/Plasma*((([k^+_F10aAT3]*F10a*AT3)*Plasma))
+
+Name    Reaction                        Reaction rate
+r223    F10a + AT3 -> [F10a:AT3]        [k^+_F10aAT3]*F10a*AT3
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-117
+d([F2a:AT3])/dt = 1/Plasma*((([k^+_F2aAT3]*F2a*AT3)*Plasma))
+
+Name    Reaction                  Reaction rate
+r224    F2a + AT3 -> [F2a:AT3]    [k^+_F2aAT3]*F2a*AT3 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-118	
+
+d([F9a:AT3])/dt = 1/Plasma*((([k^+_F9aAT3]*AT3*F9a)*Plasma))
+
+Name    Reaction                  Reaction rate
+r204    AT3 + F9a -> [F9a:AT3]    [k^+_F9aAT3]*AT3*F9a
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-119
+
+d(TFPI)/dt = 1/Plasma*(-(([k^+_F10aTFPI]*F10a*TFPI)*Plasma-([k^-_F10aTFPI]*[F10a:TFPI])*Plasma) - 
+(([k^+_TFF7aF10aTFPI]*[TF:F7a:F10a]*TFPI)*Plasma-([k^-_TFF7aF10aTFPI]*[TF:F7a:F10a:TFPI])*Plasma))
+
+Name    Reaction                                       Reaction rate
+r215    F10a + TFPI <-> [F10a:TFPI]                    [k^+_F10aTFPI]*F10a*TFPI - [k^-_F10aTFPI]*[F10a:TFPI]
+r216    [TF:F7a:F10a] + TFPI <-> [TF:F7a:F10a:TFPI]    [k^+_TFF7aF10aTFPI]*[TF:F7a:F10a]*TFPI - [k^-_TFF7aF10aTFPI]*[TF:F7a:F10a:TFPI]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-120
+
+d([F10a:TFPI])/dt = 1/Plasma*((([k^+_F10aTFPI]*F10a*TFPI)*Plasma-([k^-_F10aTFPI]*[F10a:TFPI])*Plasma) - 
+(([k^+_F10aTFPITFF7a]*[F10a:TFPI]*[TF:F7a])*Plasma))
+
+Name    Reaction                                            Reaction rate
+r215    F10a + TFPI <-> [F10a:TFPI]                         [k^+_F10aTFPI]*F10a*TFPI - [k^-_F10aTFPI]*[F10a:TFPI]
+r240    [F10a:TFPI] + [TF:F7a] -> [TF:F7a:F10a:TFPI]        [k^+_F10aTFPITFF7a]*[F10a:TFPI]*[TF:F7a]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-121
+
+d(A2M)/dt = 1/Plasma*(-(([k^+_F2aA2M]*F2a*A2M)*Plasma))
+
+Name    Reaction                       Reaction rate
+r226    F2a + A2M -> [F2a:A2M]	       [k^+_F2aA2M]*F2a*A2M
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+ODE-122
+
+d([F2a:A2M])/dt = 1/Plasma*((([k^+_F2aA2M]*F2a*A2M)*Plasma))
+
+Name    Reaction                       Reaction rate
+r226    F2a + A2M -> [F2a:A2M]	       [k^+_F2aA2M]*F2a*A2M
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-123
+
+d([TF:F7])/dt = 1/Plasma*((([k^+_TFF7]*F7*TF-[k^-_TFF7]*[TF:F7])*Plasma))
+
+Name    Reaction                       Reaction rate
+r193    F7 + TF <-> [TF:F7]            [k^+_TFF7]*F7*TF-[k^-_TFF7]*[TF:F7]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-124
+
+d([TF:F7a])/dt = 1/Plasma*((([k^+_TFF7a]*F7a*TF)*Plasma-([k^-_TFF7a]*[TF:F7a])*Plasma) - 
+(([k^+_F10aTFPITFF7a]*[F10a:TFPI]*[TF:F7a])*Plasma) - (([k^+_TFF7aF10a]*F10a*[TF:F7a])*Plasma-
+([k^-_TFF7aF10a]*[TF:F7a:F10a])*Plasma) - (([k^+_TFF7aF10]*[TF:F7a]*F10)*Plasma-
+([k^-_TFF7aF10]*[TF:F7a:F10])*Plasma) - (([k^+_TFF7aAT3]*[TF:F7a]*AT3)*Plasma) - 
+(([k^+_TFF7aF9]*[TF:F7a]*F9)*Plasma-([k^-_TFF7aF9]*[TF:F7a:F9])*Plasma) + 
+(([k^TFF7a_catF9]*[TF:F7a:F9])*Plasma))
+
+Name    Reaction                                           Reaction rate
+r196    F7a + TF <-> [TF:F7a]                              [k^+_TFF7a]*F7a*TF - [k^-_TFF7a]*[TF:F7a]
+r240    [F10a:TFPI] + [TF:F7a] -> [TF:F7a:F10a:TFPI]       [k^+_F10aTFPITFF7a]*[F10a:TFPI]*[TF:F7a]
+r214    F10a + [TF:F7a] <-> [TF:F7a:F10a]                  [k^+_TFF7aF10a]*F10a*[TF:F7a] - [k^-_TFF7aF10a]*[TF:F7a:F10a]
+r212    [TF:F7a] + F10 <-> [TF:F7a:F10]                    [k^+_TFF7aF10]*[TF:F7a]*F10 - [k^-_TFF7aF10]*[TF:F7a:F10]
+r209    [TF:F7a] + F9 <-> [TF:F7a:F9]                      [k^+_TFF7aF9]*[TF:F7a]*F9 - [k^-_TFF7aF9]*[TF:F7a:F9]
+r210    [TF:F7a:F9] -> [TF:F7a]                            [k^TFF7a_catF9]*[TF:F7a:F9]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-125
+
+d([F10:F7a])/dt = 1/Plasma*((([k^+_F10F7a]*F7a*F10-[k^-_F10F7a]*[F10:F7a])*Plasma) - 
+((r198.[k^F7a_catF10a]*[F10:F7a])*Plasma))
+
+Name    Reaction                       Reaction rate
+r197    F7a + F10 <-> [F10:F7a]        [k^+_F10F7a]*F7a*F10 - [k^-_F10F7a]*[F10:F7a]
+r198    [F10:F7a] -> F10a              [k^F7a_catF10a]*[F10:F7a]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-126
+
+d([F9:F7a])/dt = 1/Plasma*((([k^+_F9F7a]*F9*F7a)*Plasma-([k^-_F9F7a]*[F9:F7a])*Plasma) - 
+((r202.[k^F7a_catF9a]*[F9:F7a])*Plasma))
+
+Name    Reaction                       Reaction rate
+r195    F9 + F7a <-> [F9:F7a]          [k^+_F9F7a]*F9*F7a - [k^-_F9F7a]*[F9:F7a]
+r202    [F9:F7a] -> F9a                [k^F7a_catF9a]*[F9:F7a]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-127
+
+d([TF:F7a:F10a])/dt = 1/Plasma*((([k^+_TFF7aF10a]*F10a*[TF:F7a])*Plasma-
+([k^-_TFF7aF10a]*[TF:F7a:F10a])*Plasma) + (([k^TFF7a_catF10]*[TF:F7a:F10])*Plasma) - 
+(([k^+_TFF7aF10aTFPI]*[TF:F7a:F10a]*TFPI)*Plasma-([k^-_TFF7aF10aTFPI]*[TF:F7a:F10a:TFPI])*Plasma))
+
+Name    Reaction                                          Reaction rate
+r214    F10a + [TF:F7a] <-> [TF:F7a:F10a]                 [k^+_TFF7aF10a]*F10a*[TF:F7a] - [k^-_TFF7aF10a]*[TF:F7a:F10a]
+r213    [TF:F7a:F10] -> [TF:F7a:F10a]                     [k^TFF7a_catF10]*[TF:F7a:F10]
+r216    [TF:F7a:F10a] + TFPI <-> [TF:F7a:F10a:TFPI]       [k^+_TFF7aF10aTFPI]*[TF:F7a:F10a]*TFPI - [k^-_TFF7aF10aTFPI]*[TF:F7a:F10a:TFPI]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-128
+
+d([F10a:F5a])/dt = 1/Plasma*((([k^+_F10aF5a]*F5a*F10a)*Plasma-([k^-_F10aF5a]*[F10a:F5a])*Plasma) - 
+(([k^+_F10aF5aF2]*[F10a:F5a]*F2)*Plasma-([k^-_F10aF5aF2]*[F10a:F5a:F2])*Plasma))
+
+Name    Reaction                               Reaction rate
+r221    F5a + F10a <-> [F10a:F5a]              [k^+_F10aF5a]*F5a*F10a - [k^-_F10aF5a]*[F10a:F5a]
+r222    [F10a:F5a] + F2 <-> [F10a:F5a:F2]      [k^+_F10aF5aF2]*[F10a:F5a]*F2 - [k^-_F10aF5aF2]*[F10a:F5a:F2]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-129
+
+d([F10a:F5a:F2])/dt = 1/Plasma*((([k^+_F10aF5aF2]*[F10a:F5a]*F2)*Plasma-([k^-_F10aF5aF2]*[F10a:F5a:F2])*Plasma))
+
+Name    Reaction                               Reaction rate
+r222    [F10a:F5a] + F2 <-> [F10a:F5a:F2]      [k^+_F10aF5aF2]*[F10a:F5a]*F2 - [k^-_F10aF5aF2]*[F10a:F5a:F2]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-130
+
+d([F9a:F10])/dt = 1/Plasma*((([k^+_F9aF10]*F10*F9a)*Plasma-([k^-_F9aF10]*[F9a:F10])*Plasma) - 
+((r200.[k^F9a_catF10a]*[F9a:F10])*Plasma))
+
+Name    Reaction                       Reaction rate
+r199    F10 + F9a <-> [F9a:F10]        [k^+_F9aF10]*F10*F9a - [k^-_F9aF10]*[F9a:F10]
+r200    [F9a:F10] -> F10a              [k^F9a_catF10a]*[F9a:F10]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-131
+
+d([F11:F2a])/dt = 1/Plasma*((([k^+_F11F2a]*F2a*F11)*Plasma-([k^-_F11F2a]*[F11:F2a])*Plasma) - 
+((r180.[k^F11_catF2a]*[F11:F2a])*Plasma))
+
+Name    Reaction                       Reaction rate
+r179    F2a + F11 <-> [F11:F2a]        [k^+_F11F2a]*F2a*F11 - [k^-_F11F2a]*[F11:F2a]
+r180    [F11:F2a] -> F2a               [k^F11_catF2a]*[F11:F2a] 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-132
+
+d([TF:F7a:F10])/dt = 1/Plasma*((([k^+_TFF7aF10]*[TF:F7a]*F10)*Plasma-
+([k^-_TFF7aF10]*[TF:F7a:F10])*Plasma) - (([k^TFF7a_catF10]*[TF:F7a:F10])*Plasma))
+
+Name    Reaction                             Reaction rate
+r212    [TF:F7a] + F10 <-> [TF:F7a:F10]      [k^+_TFF7aF10]*[TF:F7a]*F10 - [k^-_TFF7aF10]*[TF:F7a:F10]
+r213    [TF:F7a:F10] -> [TF:F7a:F10a]        [k^TFF7a_catF10]*[TF:F7a:F10]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-133	
+	
+d([TF:F7a:F10a:TFPI])/dt = 1/Plasma*((([k^+_F10aTFPITFF7a]*[F10a:TFPI]*[TF:F7a])*Plasma) + 
+(([k^+_TFF7aF10aTFPI]*[TF:F7a:F10a]*TFPI)*Plasma-([k^-_TFF7aF10aTFPI]*[TF:F7a:F10a:TFPI])*Plasma))
+
+Name    Reaction                                        Reaction rate
+r240    [F10a:TFPI] + [TF:F7a] -> [TF:F7a:F10a:TFPI]    [k^+_F10aTFPITFF7a]*[F10a:TFPI]*[TF:F7a]
+r216    [TF:F7a:F10a] + TFPI <-> [TF:F7a:F10a:TFPI]     [k^+_TFF7aF10aTFPI]*[TF:F7a:F10a]*TFPI - [k^-_TFF7aF10aTFPI]*[TF:F7a:F10a:TFPI]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-134
+
+d([F10a:F8])/dt = 1/Plasma*((([k^+_F10aF8]*F10a*F8)*Plasma-([k^-_F10aF8]*[F10a:F8])*Plasma) - 
+((r219.[k^F10a_catF8a]*[F10a:F8])*Plasma))
+
+Name    Reaction                       Reaction rate
+r218    F10a + F8 <-> [F10a:F8]        [k^+_F10aF8]*F10a*F8 - [k^-_F10aF8]*[F10a:F8]
+r219    [F10a:F8] -> F8a               [k^F10a_catF8a]*[F10a:F8]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-135
+
+d([F9a:F8a])/dt = 1/Plasma*((([k^+_F9aF8a]*F9a*F8a)*Plasma-([k^-_F9aF8a]*[F9a:F8a])*Plasma) - 
+(([k^+_F9aF8aF10]*[F9a:F8a]*F10)*Plasma-([k^-_F9aF8aF10]*[F9a:F8a:F10])*Plasma) + 
+((r206.[k^F9aF8a_catF10]*[F9a:F8a:F10])*Plasma))
+
+Name    Reaction                                Reaction rate
+r205    F9a + F8a <-> [F9a:F8a]                 [k^+_F9aF8a]*F9a*F8a - [k^-_F9aF8a]*[F9a:F8a]
+r268    [F9a:F8a] + F10 <-> [F9a:F8a:F10]       [k^+_F9aF8aF10]*[F9a:F8a]*F10 - [k^-_F9aF8aF10]*[F9a:F8a:F10]
+r206    null -> [F9a:F8a]                       [k^F9aF8a_catF10]*[F9a:F8a:F10]
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-136
+
+d([F9a:F8a:F10])/dt = 1/Plasma*((([k^+_F9aF8aF10]*[F9a:F8a]*F10)*Plasma-
+([k^-_F9aF8aF10]*[F9a:F8a:F10])*Plasma) - ((r217.[k^F9aF8a_catF10]*[F9a:F8a:F10])*Plasma))
+
+Name    Reaction                                Reaction rate
+r268    [F9a:F8a] + F10 <-> [F9a:F8a:F10]       [k^+_F9aF8aF10]*[F9a:F8a]*F10 - [k^-_F9aF8aF10]*[F9a:F8a:F10]
+r217    [F9a:F8a:F10] -> F10a                   [k^F9aF8a_catF10]*[F9a:F8a:F10]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-137
+
+d([TF:F7a:AT3])/dt = 1/Plasma*((([k^+_TFF7aAT3]*[TF:F7a]*AT3)*Plasma))
+
+Name    Reaction                            Reaction rate
+r211    [TF:F7a] + AT3 -> [TF:F7a:AT3]      [k^+_TFF7aAT3]*[TF:F7a]*AT3
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-138
+
+d([TF:F7a:F9])/dt = 1/Plasma*((([k^+_TFF7aF9]*[TF:F7a]*F9)*Plasma-([k^-_TFF7aF9]*[TF:F7a:F9])*Plasma) - 
+(([k^TFF7a_catF9]*[TF:F7a:F9])*Plasma))
+
+Name    Reaction                         Reaction rate
+r209    [TF:F7a] + F9 <-> [TF:F7a:F9]    [k^+_TFF7aF9]*[TF:F7a]*F9 - [k^-_TFF7aF9]*[TF:F7a:F9]
+r210    [TF:F7a:F9] -> [TF:F7a]          [k^TFF7a_catF9]*[TF:F7a:F9]
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-139
+
+d(F12)/dt = 1/Plasma*(-(([k^+_F12F12a]*F12*F12a)*Plasma-([k^-_F12F12a]*[F12:F12a])*Plasma) - 
+(([k^+_KALF12]*F12*KAL)*Plasma-([k^-_KALF12]*[KAL:F12])*Plasma) - 
+(([k^+_CoV2SF12]*F12*CoV2S+[k^+_CoV2NF12]*F12*CoV2N+[k^+_CoV2MF12]*F12*CoV2M+
+[k^+_CoV2EF12]*F12*CoV2E+[k^Pn_catF12]*Pn*F12)*Plasma) - (([k^+_gC1qRF12]*gC1qR*F12)*Plasma-
+([k^-_gC1qRF12]*[gC1qR:F12])*Plasma))
+
+Name    Reaction                       Reaction rate
+r175    F12 + F12a <-> [F12:F12a]      [k^+_F12F12a]*F12*F12a - [k^-_F12F12a]*[F12:F12a]
+r172    F12 + KAL <-> [KAL:F12]        [k^+_KALF12]*F12*KAL - [k^-_KALF12]*[KAL:F12]
+r176    F12 -> F12a                    [k^+_CoV2SF12]*F12*CoV2S +[k^+_CoV2NF12]*F12*CoV2N+
+                                       [k^+_CoV2MF12]*F12*CoV2M+[k^+_CoV2EF12]*F12*CoV2E+[k^Pn_catF12]*Pn*F12 
+r173    gC1qR + F12 <-> [gC1qR:F12]    [k^+_gC1qRF12]*gC1qR*F12 - [k^-_gC1qRF12]*[gC1qR:F12]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+ODE-140
+
+d(F12a)/dt = 1/Plasma*(-(([k^+_F12F12a]*F12*F12a)*Plasma-([k^-_F12F12a]*[F12:F12a])*Plasma) - 
+(([k^+_F12aAT3]*AT3*F12a)*Plasma) - (([k^+_F12aF11]*F11*F12a)*Plasma-([k^-_F12aF11]*[F12a:F11])*Plasma) + 
+(([k^KAL_catF12a]*[KAL:F12])*Plasma) - (([k^F12a_catC1r]*C1r*F12a)*Plasma) - 
+(([k^+_C1INHF12a]*C1INH*F12a)*Plasma) + ((r182.[k^F12a_catF11a]*[F12a:F11])*Plasma) + 
+(([k^F12F12a_catF12a]*[F12:F12a])*Plasma) + 
+(([k^+_CoV2SF12]*F12*CoV2S+[k^+_CoV2NF12]*F12*CoV2N+[k^+_CoV2MF12]*F12*CoV2M+
+[k^+_CoV2EF12]*F12*CoV2E+[k^Pn_catF12]*Pn*F12)*Plasma) - 
+(([k^+_PKALF12a]*F12a*[P-KAL])*Plasma-([k^-_PKALF12a]*[P-KAL:F12a])*Plasma) + 
+(([k^gC1qRF12_catF12a]*[gC1qR:F12])*Plasma))
+
+Name    Reaction                            Reaction rate
+r175    F12 + F12a <-> [F12:F12a]           [k^+_F12F12a]*F12*F12a - [k^-_F12F12a]*[F12:F12a]
+r190    AT3 + F12a -> [F12a:AT3]            [k^+_F12aAT3]*AT3*F12a
+r191    F11 + F12a <-> [F12a:F11]           [k^+_F12aF11]*F11*F12a - [k^-_F12aF11]*[F12a:F11]
+r181    [KAL:F12] -> F12a                   [k^KAL_catF12a]*[KAL:F12] 
+r239    F12a -> C1r                         [k^F12a_catC1r]*C1r*F12a
+r270    C1INH + F12a -> null                [k^+_C1INHF12a]*C1INH*F12a
+r182    null -> F12a                        [k^F12a_catF11a]*[F12a:F11]
+r177    [F12:F12a] -> F12a                  [k^F12F12a_catF12a]*[F12:F12a]
+r176    F12 -> F12a                         [k^+_CoV2SF12]*F12*CoV2S +[k^+_CoV2NF12]*F12*CoV2N+
+                                            [k^+_CoV2MF12]*F12*CoV2M+[k^+_CoV2EF12]*F12*CoV2E+[k^Pn_catF12]*Pn*F12
+r183    F12a + [P-KAL] <-> [P-KAL:F12a]     [k^+_PKALF12a]*F12a*[P-KAL] - [k^-_PKALF12a]*[P-KAL:F12a]
+r174    [gC1qR:F12] -> F12a                 [k^gC1qRF12_catF12a]*[gC1qR:F12]
+									   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-141
+
+d([F12:F12a])/dt = 1/Plasma*((([k^+_F12F12a]*F12*F12a)*Plasma-([k^-_F12F12a]*[F12:F12a])*Plasma) - 
+(([k^F12F12a_catF12a]*[F12:F12a])*Plasma))
+
+Name    Reaction                            Reaction rate
+r175    F12 + F12a <-> [F12:F12a]           [k^+_F12F12a]*F12*F12a - [k^-_F12F12a]*[F12:F12a]
+r177    [F12:F12a] -> F12a                  [k^F12F12a_catF12a]*[F12:F12a] 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-142
+
+d([F12a:AT3])/dt = 1/Plasma*((([k^+_F12aAT3]*AT3*F12a)*Plasma))
+
+Name    Reaction                            Reaction rate
+r190    AT3 + F12a -> [F12a:AT3]            [k^+_F12aAT3]*AT3*F12a  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-143
+
+d(F11)/dt = 1/Plasma*(-(([k^+_F11F2a]*F2a*F11)*Plasma-([k^-_F11F2a]*[F11:F2a])*Plasma) - 
+(([k^+_F12aF11]*F11*F12a)*Plasma-([k^-_F12aF11]*[F12a:F11])*Plasma) - 
+(([k^+_HKF11]*HK*F11)*Plasma-([k^-_HKF11]*[HK:F11])*Plasma))
+
+Name    Reaction                            Reaction rate
+r179    F2a + F11 <-> [F11:F2a]             [k^+_F11F2a]*F2a*F11 - [k^-_F11F2a]*[F11:F2a] 
+r191    F11 + F12a <-> [F12a:F11]           [k^+_F12aF11]*F11*F12a - [k^-_F12aF11]*[F12a:F11]
+r187    HK + F11 <-> [HK:F11]               [k^+_HKF11]*HK*F11 - [k^-_HKF11]*[HK:F11]
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-144
+
+d([F12a:F11])/dt = 1/Plasma*((([k^+_F12aF11]*F11*F12a)*Plasma-([k^-_F12aF11]*[F12a:F11])*Plasma) - 
+((r185.[k^F12a_catF11a]*[F12a:F11])*Plasma))
+
+Name    Reaction                            Reaction rate
+r191    F11 + F12a <-> [F12a:F11]           [k^+_F12aF11]*F11*F12a - [k^-_F12aF11]*[F12a:F11]
+r185    [F12a:F11] -> F11a                  [k^F12a_catF11a]*[F12a:F11]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-145
+
+d(F11a)/dt = 1/Plasma*(((r185.[k^F12a_catF11a]*[F12a:F11])*Plasma) - 
+(([k^+_F11aF9]*F9*F11a)*Plasma-([k^-_F11aF9]*[F11a:F9])*Plasma) - (([k^+_F11aAT3]*AT3*F11a)*Plasma) + 
+((r186.[k^F11a_catF9a]*[F11a:F9]+r186.[k^F11_catF2a]*[F11:F2a])*Plasma) - 
+(([k^+_F11aC1INH]*C1INH*F11a)*Plasma) + (([k^HKF11_catF11a]*[HK:F11])*Plasma))
+
+Name    Reaction                            Reaction rate
+r185    [F12a:F11] -> F11a                  [k^F12a_catF11a]*[F12a:F11]
+r207    F9 + F11a <-> [F11a:F9]             [k^+_F11aF9]*F9*F11a - [k^-_F11aF9]*[F11a:F9]
+r186    null -> F11a                        [k^F11a_catF9a]*[F11a:F9]+[k^F11_catF2a]*[F11:F2a]
+r236    C1INH + F11a -> null                [k^+_F11aC1INH]*C1INH*F11a 
+r188    [HK:F11] -> F11a                    [k^HKF11_catF11a]*[HK:F11]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-146
+
+d([F11a:F9])/dt = 1/Plasma*((([k^+_F11aF9]*F9*F11a)*Plasma-([k^-_F11aF9]*[F11a:F9])*Plasma) - 
+((r208.[k^F11a_catF9a]*[F11a:F9])*Plasma))
+
+Name    Reaction                            Reaction rate
+r207    F9 + F11a <-> [F11a:F9]            [k^+_F11aF9]*F9*F11a - [k^-_F11aF9]*[F11a:F9]
+r208    [F11a:F9] -> F9a                   [k^F11a_catF9a]*[F11a:F9] 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-147
+
+d([F11a:AT3])/dt = 1/Plasma*((([k^+_F11aAT3]*AT3*F11a)*Plasma))
+
+Name    Reaction                            Reaction rate
+r189    AT3 + F11a -> [F11a:AT3]            [k^+_F11aAT3]*AT3*F11a
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-148
+
+d(KAL)/dt = 1/Plasma*(-(([k^+_KALF12]*F12*KAL)*Plasma-([k^-_KALF12]*[KAL:F12])*Plasma) - 
+(([k^+_C1INHKAL]*C1INH*KAL)*Plasma) - (([k^KAL_catHK]*KAL*HK)*Plasma) + 
+(([k^+_KALPKAL]*[P-KAL]*KAL)*Plasma) + ((r170.[k^F12a_catKAL]*[P-KAL:F12a])*Plasma))
+
+Name    Reaction                            Reaction rate
+r172    F12 + KAL <-> [KAL:F12]             [k^+_KALF12]*F12*KAL - [k^-_KALF12]*[KAL:F12]
+r269    KAL + C1INH -> null                 [k^+_C1INHKAL]*C1INH*KAL
+r171    KAL -> HK                           [k^KAL_catHK]*KAL*HK
+r168    [P-KAL] -> KAL                      [k^+_KALPKAL]*[P-KAL]*KAL
+r170    null -> KAL                         [k^F12a_catKAL]*[P-KAL:F12a]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-149
+
+d([KAL:F12])/dt = 1/Plasma*((([k^+_KALF12]*F12*KAL)*Plasma-([k^-_KALF12]*[KAL:F12])*Plasma) - 
+(([k^KAL_catF12a]*[KAL:F12])*Plasma))
+
+Name    Reaction                            Reaction rate
+r172    F12 + KAL <-> [KAL:F12]             [k^+_KALF12]*F12*KAL - [k^-_KALF12]*[KAL:F12]
+r181    [KAL:F12] -> F12a                   [k^KAL_catF12a]*[KAL:F12]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-150
+
+d(F1a)/dt = 1/Plasma*(-(([k^+_FHF1a]*FH*F1a)*Plasma) + (([k^F2a_catF1a]*[F2a:F1])*Plasma) + 
+(([k^F2a_catF1]*F2a*F1/([k^F2a_mF1]+F1)+[k^Pn_catF1]*Pn*F1/([k^Pn_mF1]+F1)+
+[k^MASP1_catF1]*F1*MASP1+[k^MASP2_catF1]*F1*MASP2+[k^LysPg_catF1]*F1*[Lys-Pg])*Plasma) - 
+(([k^+_F1aLys-Pg]*F1a*[Lys-Pg])*Plasma-([k^-_F1aLys-Pg]*[F1a:Lys-Pg])*Plasma) - 
+(([k^Pn_catF1a]*F1a*Pn/([k^Pn_mF1a]+F1a))*Plasma))
+
+Name    Reaction                            Reaction rate
+r263    FH + F1a -> null                    [k^+_FHF1a]*FH*F1a
+r228    [F2a:F1] -> F1a                     [k^F2a_catF1a]*[F2a:F1]
+r229    F1 -> F1a                           [k^F2a_catF1]*F2a*F1/([k^F2a_mF1]+F1)+[k^Pn_catF1]*Pn*F1/([k^Pn_mF1]+F1)+
+                                            [k^MASP1_catF1]*F1*MASP1+[k^MASP2_catF1]*F1*MASP2+[k^LysPg_catF1]*F1*[Lys-Pg]  
+r244    F1a + [Lys-Pg] <-> [F1a:Lys-Pg]     [k^+_F1aLys-Pg]*F1a*[Lys-Pg] - [k^-_F1aLys-Pg]*[F1a:Lys-Pg]
+r258    F1a -> FDPs                         [k^Pn_catF1a]*F1a*Pn/([k^Pn_mF1a]+F1a)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-151
+
+d(F1)/dt = 1/Plasma*((([k^IL6_catF1]*IL6)*Plasma) - (([k^+_F2aF1]*F2a*F1)*Plasma-([k^-_F2aF1]*[F2a:F1])*Plasma) - 
+(([k^F2a_catF1]*F2a*F1/([k^F2a_mF1]+F1)+[k^Pn_catF1]*Pn*F1/([k^Pn_mF1]+F1)+[k^MASP1_catF1]*F1*MASP1+
+[k^MASP2_catF1]*F1*MASP2+[k^LysPg_catF1]*F1*[Lys-Pg])*Plasma))
+
+Name    Reaction                            Reaction rate
+r230    IL6 -> F1                           [k^IL6_catF1]*IL6 
+r227    F2a + F1 <-> [F2a:F1]               [k^+_F2aF1]*F2a*F1 - [k^-_F2aF1]*[F2a:F1]
+r229    F1 -> F1a                           [k^F2a_catF1]*F2a*F1/([k^F2a_mF1]+F1)+[k^Pn_catF1]*Pn*F1/([k^Pn_mF1]+F1)+
+                                            [k^MASP1_catF1]*F1*MASP1+[k^MASP2_catF1]*F1*MASP2+[k^LysPg_catF1]*F1*[Lys-Pg]
+											
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-152
+
+d([F2a:F1])/dt = 1/Plasma*((([k^+_F2aF1]*F2a*F1)*Plasma-([k^-_F2aF1]*[F2a:F1])*Plasma) - 
+(([k^F2a_catF1a]*[F2a:F1])*Plasma))
+
+Name    Reaction                            Reaction rate
+r227    F2a + F1 <-> [F2a:F1]               [k^+_F2aF1]*F2a*F1 - [k^-_F2aF1]*[F2a:F1]
+r228   [F2a:F1] -> F1a                      [k^F2a_catF1a]*[F2a:F1]
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-153
+
+d(gC1qR)/dt = 1/Plasma*(-(([k^+_C1qgC1qR]*C1q*gC1qR)*Plasma-([k^-_C1qgC1qR]*[C1q:gC1qR])*Plasma) + 
+(([k^CoV2E_catgC1qR]*gC1qR*CoV2E)*Plasma) + (([k^CoV2N_catgC1qR]*gC1qR*CoV2N)*Plasma) + 
+(([k^CoV2S_catgC1qR]*CoV2S*gC1qR)*Plasma) + (([k^CoV2M_catgC1qR]*gC1qR*CoV2M)*Plasma) - 
+(([k^+_gC1qRF12]*gC1qR*F12)*Plasma-([k^-_gC1qRF12]*[gC1qR:F12])*Plasma) - 
+(([k^+_gC1qRHK]*HK*gC1qR)*Plasma-([k^-_gC1qRHK]*[gC1qR:HK])*Plasma))
+
+Name    Reaction                            Reaction rate
+r4      C1q + gC1qR <-> [C1q:gC1qR]         [k^+_C1qgC1qR]*C1q*gC1qR - [k^-_C1qgC1qR]*[C1q:gC1qR] 
+r22     CoV2E -> gC1qR                      [k^CoV2E_catgC1qR]*gC1qR*CoV2E
+r19     CoV2N -> gC1qR                      [k^CoV2N_catgC1qR]*gC1qR*CoV2N 
+r20     CoV2S -> gC1qR                      [k^CoV2S_catgC1qR]*CoV2S*gC1qR
+r21     CoV2M -> gC1qR                      [k^CoV2M_catgC1qR]*gC1qR*CoV2M
+r173    gC1qR + F12 <-> [gC1qR:F12]         [k^+_gC1qRF12]*gC1qR*F12 - [k^-_gC1qRF12]*[gC1qR:F12]
+r166    HK + gC1qR <-> [gC1qR:HK]           [k^+_gC1qRHK]*HK*gC1qR - [k^-_gC1qRHK]*[gC1qR:HK]
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-154
+
+d([C1q:gC1qR])/dt = 1/Plasma*((([k^+_C1qgC1qR]*C1q*gC1qR)*Plasma-([k^-_C1qgC1qR]*[C1q:gC1qR])*Plasma))
+
+Name    Reaction                            Reaction rate
+r4      C1q + gC1qR <-> [C1q:gC1qR]         [k^+_C1qgC1qR]*C1q*gC1qR - [k^-_C1qgC1qR]*[C1q:gC1qR]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-155
+
+d(CoV2E)/dt = 1/Plasma*(-(([k^CoV2E_catgC1qR]*gC1qR*CoV2E)*Plasma) - (([k^+_CoV2EHK]*HK*CoV2E)*Plasma))
+
+Name    Reaction                            Reaction rate
+r22     CoV2E -> gC1qR                      [k^CoV2E_catgC1qR]*gC1qR*CoV2E
+r164    CoV2E -> HK                         [k^+_CoV2EHK]*HK*CoV2E 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-156
+
+d(CoV2M)/dt = 1/Plasma*(-(([k^CoV2M_catgC1qR]*gC1qR*CoV2M)*Plasma) - (([k^+_CoV2MHK]*HK*CoV2M)*Plasma))
+
+Name    Reaction                            Reaction rate
+r21     CoV2M -> gC1qR                      [k^CoV2M_catgC1qR]*gC1qR*CoV2M
+r163    CoV2M -> HK                         [k^+_CoV2MHK]*HK*CoV2M
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-157
+d(HK)/dt = 1/Plasma*((([k^KAL_catHK]*KAL*HK)*Plasma) + (([k^+_CoV2MHK]*HK*CoV2M)*Plasma) + 
+(([k^+_CoV2EHK]*HK*CoV2E)*Plasma) + (([k^+_CoV2NHK]*HK*CoV2N)*Plasma) + 
+(([k^+_CoV2SHK]*HK*CoV2S)*Plasma) - (([k^+_PKALHK]*HK*[P-KAL]-[k^-_PKALHK]*[P-KAL:HK])*Plasma) - 
+(([k^+_HKF11]*HK*F11)*Plasma-([k^-_HKF11]*[HK:F11])*Plasma) - 
+(([k^+_gC1qRHK]*HK*gC1qR)*Plasma-([k^-_gC1qRHK]*[gC1qR:HK])*Plasma))
+
+Name    Reaction                                Reaction rate
+r171    KAL -> HK                               [k^KAL_catHK]*KAL*HK 
+r163    CoV2M -> HK                             [k^+_CoV2MHK]*HK*CoV2M  
+r164    CoV2E -> HK                             [k^+_CoV2EHK]*HK*CoV2E 
+r162    CoV2N -> HK                             [k^+_CoV2NHK]*HK*CoV2N
+r161    CoV2S -> HK                             [k^+_CoV2SHK]*HK*CoV2S 
+r178    HK + [P-KAL] <-> [P-KAL:HK]             [k^+_PKALHK]*HK*[P-KAL]-[k^-_PKALHK]*[P-KAL:HK]
+r187    HK + F11 <-> [HK:F11]                   [k^+_HKF11]*HK*F11 - [k^-_HKF11]*[HK:F11]
+r166    HK + gC1qR <-> [gC1qR:HK]               [k^+_gC1qRHK]*HK*gC1qR - [k^-_gC1qRHK]*[gC1qR:HK]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-158	
+
+d([P-KAL])/dt = 1/Plasma*(-(([k^+_KALPKAL]*[P-KAL]*KAL)*Plasma) - 
+(([k^+_PKALF12a]*F12a*[P-KAL])*Plasma-([k^-_PKALF12a]*[P-KAL:F12a])*Plasma) - 
+(([k^+_PKALHK]*HK*[P-KAL]-[k^-_PKALHK]*[P-KAL:HK])*Plasma))
+
+Name    Reaction                                Reaction rate
+r168    [P-KAL] -> KAL                          [k^+_KALPKAL]*[P-KAL]*KAL
+r183    F12a + [P-KAL] <-> [P-KAL:F12a]         [k^+_PKALF12a]*F12a*[P-KAL] - [k^-_PKALF12a]*[P-KAL:F12a]
+r178    HK + [P-KAL] <-> [P-KAL:HK]             [k^+_PKALHK]*HK*[P-KAL]-[k^-_PKALHK]*[P-KAL:HK]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-159
+
+d(BK)/dt = 1/Plasma*((([k^PKALHK_catBK]*[P-KAL:HK])*Plasma) - 
+(([k^+_BKB2R]*B2R*BK)*Plasma-([k^-_BKB2R]*[BK:B2R])*Plasma) + 
+(([k^gC1qRHK_catBK]*[gC1qR:HK])*Plasma) - (([k^+_BKTAFIa]*TAFIa*BK)*Plasma))
+
+Name    Reaction                                Reaction rate
+r231    [P-KAL:HK] -> BK                        [k^PKALHK_catBK]*[P-KAL:HK]
+r232    B2R + BK <-> [BK:B2R]                   [k^+_BKB2R]*B2R*BK - [k^-_BKB2R]*[BK:B2R]
+r167    [gC1qR:HK] -> BK                        [k^gC1qRHK_catBK]*[gC1qR:HK] 
+r245    TAFIa + BK -> null                      [k^+_BKTAFIa]*TAFIa*BK
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-160
+
+d(B2R)/dt = 1/Plasma*(-(([k^+_BKB2R]*B2R*BK)*Plasma-([k^-_BKB2R]*[BK:B2R])*Plasma))
+
+Name    Reaction                                Reaction rate
+r232    B2R + BK <-> [BK:B2R]                   [k^+_BKB2R]*B2R*BK - [k^-_BKB2R]*[BK:B2R]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-161
+
+d([BK:B2R])/dt = 1/Plasma*(-(([k^BKB2R_catIL6]*B2R)*Plasma) - (([k^BKB2R_cattPA]*[BK:B2R])*Plasma) + 
+(([k^+_BKB2R]*B2R*BK)*Plasma-([k^-_BKB2R]*[BK:B2R])*Plasma))
+
+Name    Reaction                                Reaction rate
+r233    [BK:B2R] -> IL6                         [k^BKB2R_catIL6]*B2R
+r248    [BK:B2R] -> tPA                         [k^BKB2R_cattPA]*[BK:B2R]
+r232    B2R + BK <-> [BK:B2R]                   [k^+_BKB2R]*B2R*BK - [k^-_BKB2R]*[BK:B2R]
+   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-162
+
+d(TAFIa)/dt = 1/Plasma*(-(([k^+_C3aTAFIa]*TAFIa*C3a)*Plasma) + 
+(([k^F2a_catTAFI]*TAFI*F2a/([k^F2a_mTAFI]+TAFI)+[k^Pn_catTAFI]*TAFI*Pn/([k^Pn_mTAFI]+TAFI)+
+[k^MASP1_catTAFI]*TAFI*MASP1/([k^MASP1_mTAFI]+TAFI))*Plasma) - (([k^+_C5aTAFIa]*TAFIa*C5a)*Plasma) - 
+(([k^+_Lys-PgTAFIa]*TAFIa*[Lys-Pg])*Plasma) - (([k^+_BKTAFIa]*TAFIa*BK)*Plasma) - 
+((r273.[k^+_Glu-PgTAFIa]*[Glu-Pg:FDPs]*TAFIa)*Plasma) - ((r272.[k^+_Lys-PgFDPs]*[Lys-Pg:FDPs]*TAFIa)*Plasma) - 
+((r257.[k^+_Glu-PgTAFIa]*TAFIa*[Glu-Pg])*Plasma))
+
+Name    Reaction                                Reaction rate
+r246    TAFIa + C3a -> null                     [k^+_C3aTAFIa]*TAFIa*C3a
+r247    TAFI -> TAFIa                           [k^F2a_catTAFI]*TAFI*F2a/([k^F2a_mTAFI]+TAFI)+
+                                                [k^Pn_catTAFI]*TAFI*Pn/([k^Pn_mTAFI]+TAFI)+
+                                                [k^MASP1_catTAFI]*TAFI*MASP1/([k^MASP1_mTAFI]+TAFI)
+r271    TAFIa + C5a -> null                     [k^+_C5aTAFIa]*TAFIa*C5a
+r253    TAFIa + [Lys-Pg] -> null                [k^+_Lys-PgTAFIa]*TAFIa*[Lys-Pg]
+r245    TAFIa + BK -> null                      [k^+_BKTAFIa]*TAFIa*BK
+r273    [Glu-Pg:FDPs] + TAFIa -> null           [k^+_Glu-PgTAFIa]*[Glu-Pg:FDPs]*TAFIa 
+r272    [Lys-Pg:FDPs] + TAFIa -> null           [k^+_Lys-PgFDPs]*[Lys-Pg:FDPs]*TAFIa
+r257    TAFIa + [Glu-Pg] -> null                [k^+_Glu-PgTAFIa]*TAFIa*[Glu-Pg]
+       												
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-163
+
+d(TAFI)/dt = 1/Plasma*(-(([k^F2a_catTAFI]*TAFI*F2a/([k^F2a_mTAFI]+TAFI)+
+[k^Pn_catTAFI]*TAFI*Pn/([k^Pn_mTAFI]+TAFI)+
+[k^MASP1_catTAFI]*TAFI*MASP1/([k^MASP1_mTAFI]+TAFI))*Plasma))
+
+Name    Reaction                                Reaction rate
+r247    TAFI -> TAFIa                           [k^F2a_catTAFI]*TAFI*F2a/([k^F2a_mTAFI]+TAFI)+
+                                                [k^Pn_catTAFI]*TAFI*Pn/([k^Pn_mTAFI]+TAFI)+
+                                                [k^MASP1_catTAFI]*TAFI*MASP1/([k^MASP1_mTAFI]+TAFI)
+												
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-164
+
+d([Glu-Pg])/dt = 1/Plasma*(-(([k^KAL_catGlu-Pg]*[Glu-Pg]*KAL/([k^KAL_mGlu-Pg]+[Glu-Pg])+
+[k^tPA_catGlu-Pg]*[Glu-Pg]*tPA/([k^tPA_mGlu-Pg]+[Glu-Pg]))*Plasma) + 
+((r254.[k^F1a_cattPA]*tPA*F1a/(r254.[k^F1a_mtPA]+tPA))*Plasma) - 
+(([k^+_Glu-PgFDPs]*[Glu-Pg]*FDPs)*Plasma-([k^-_Glu-PgFDPs]*[Glu-Pg:FDPs])*Plasma) - 
+((r257.[k^+_Glu-PgTAFIa]*TAFIa*[Glu-Pg])*Plasma) - 
+(([k^Pn_catGlu-Pg]*[Glu-Pg]*Pn/([k^Pn_mGlu-Pg]+[Glu-Pg]))*Plasma))
+
+Name    Reaction                                Reaction rate
+r256    [Glu-Pg] -> Pn                          [k^KAL_catGlu-Pg]*[Glu-Pg]*KAL/([k^KAL_mGlu-Pg]+[Glu-Pg])+
+                                                [k^tPA_catGlu-Pg]*[Glu-Pg]*tPA/([k^tPA_mGlu-Pg]+[Glu-Pg]) 
+r254    tPA -> [Glu-Pg]                         [k^F1a_cattPA]*tPA*F1a/([k^F1a_mtPA]+tPA) 
+r259    [Glu-Pg] + FDPs <-> [Glu-Pg:FDPs]       [k^+_Glu-PgFDPs]*[Glu-Pg]*FDPs - [k^-_Glu-PgFDPs]*[Glu-Pg:FDPs]
+r257    TAFIa + [Glu-Pg] -> null                [k^+_Glu-PgTAFIa]*TAFIa*[Glu-Pg]
+r255    [Glu-Pg] -> [Lys-Pg]                    [k^Pn_catGlu-Pg]*[Glu-Pg]*Pn/([k^Pn_mGlu-Pg]+[Glu-Pg]) 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-165
+
+d(tPA)/dt = 1/Plasma*(-((r254.[k^F1a_cattPA]*tPA*F1a/(r254.[k^F1a_mtPA]+tPA))*Plasma) + 
+(([k^BKB2R_cattPA]*[BK:B2R])*Plasma) - (([k^+_tPAPAI-1]*[PAI-1]*tPA)*Plasma) - 
+((r252.[k^F1a_cattPA]*tPA*F1a/(r252.[k^F1a_mtPA]+tPA))*Plasma) + 
+((r249.[k^F1a_cattPA]*[F1a:Lys-Pg])*Plasma))
+
+Name    Reaction                                Reaction rate
+r254    tPA -> [Glu-Pg]                         [k^F1a_cattPA]*tPA*F1a/([k^F1a_mtPA]+tPA)
+r248    [BK:B2R] -> tPA                         [k^BKB2R_cattPA]*[BK:B2R]
+r250    [PAI-1] + tPA -> null                   [k^+_tPAPAI-1]*[PAI-1]*tPA
+r252    tPA -> [Lys-Pg]                         [k^F1a_cattPA]*tPA*F1a/([k^F1a_mtPA]+tPA)
+249     [F1a:Lys-Pg] -> tPA                     [k^F1a_cattPA]*[F1a:Lys-Pg] 
+      
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-166
+
+d([Lys-Pg])/dt = 1/Plasma*((([k^Pn_catLys-Pg]*Pn)*Plasma) + 
+((r252.[k^F1a_cattPA]*tPA*F1a/(r252.[k^F1a_mtPA]+tPA))*Plasma) - 
+(([k^+_Lys-PgTAFIa]*TAFIa*[Lys-Pg])*Plasma) - (([k^+_F1aLys-Pg]*F1a*[Lys-Pg])*Plasma-
+([k^-_F1aLys-Pg]*[F1a:Lys-Pg])*Plasma) - ((r260.[k^+_Lys-PgFDPs]*[Lys-Pg]*FDPs)*Plasma-
+([k^-_Lys-PgFDPs]*[Lys-Pg:FDPs])*Plasma) + (([k^Pn_catGlu-Pg]*[Glu-Pg]*Pn/([k^Pn_mGlu-Pg]+[Glu-Pg]))*Plasma))
+
+Name    Reaction                                Reaction rate
+r261    Pn -> [Lys-Pg]                          [k^Pn_catLys-Pg]*Pn 
+r252    tPA -> [Lys-Pg]                         [k^F1a_cattPA]*tPA*F1a/([k^F1a_mtPA]+tPA)
+r253    TAFIa + [Lys-Pg] -> null                [k^+_Lys-PgTAFIa]*TAFIa*[Lys-Pg]
+r244    F1a + [Lys-Pg] <-> [F1a:Lys-Pg]         [k^+_F1aLys-Pg]*F1a*[Lys-Pg] - [k^-_F1aLys-Pg]*[F1a:Lys-Pg]  
+r260    [Lys-Pg] + FDPs <-> [Lys-Pg:FDPs]       [k^+_Lys-PgFDPs]*[Lys-Pg]*FDPs - [k^-_Lys-PgFDPs]*[Lys-Pg:FDPs]
+r255    [Glu-Pg] -> [Lys-Pg]                    [k^Pn_catGlu-Pg]*[Glu-Pg]*Pn/([k^Pn_mGlu-Pg]+[Glu-Pg])
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-167
+
+d(CD59)/dt = 1/Plasma*(-(([k^+_CD59MAC]*CD59*[C5b:C6:C7:C8:C9])*Plasma))
+
+Name    Reaction                                Reaction rate
+r160    CD59 + [C5b:C6:C7:C8:C9] -> null        [k^+_CD59MAC]*CD59*[C5b:C6:C7:C8:C9]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-168
+
+d([P-KAL:F12a])/dt = 1/Plasma*((([k^+_PKALF12a]*F12a*[P-KAL])*Plasma-([k^-_PKALF12a]*[P-KAL:F12a])*Plasma) - 
+((r184.[k^F12a_catKAL]*[P-KAL:F12a])*Plasma))
+
+Name    Reaction                                Reaction rate
+r183    F12a + [P-KAL] <-> [P-KAL:F12a]         [k^+_PKALF12a]*F12a*[P-KAL] - [k^-_PKALF12a]*[P-KAL:F12a] 
+r184    [P-KAL:F12a] -> null                    [k^F12a_catKAL]*[P-KAL:F12a]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-169
+
+d([PAI-1])/dt = 1/Plasma*(-(([k^+_tPAPAI-1]*[PAI-1]*tPA)*Plasma))
+
+Name    Reaction                                Reaction rate
+r250    [PAI-1] + tPA -> null                   [k^+_tPAPAI-1]*[PAI-1]*tPA  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-170
+
+d([F1a:Lys-Pg])/dt = 1/Plasma*(-((r249.[k^F1a_cattPA]*[F1a:Lys-Pg])*Plasma) + 
+(([k^+_F1aLys-Pg]*F1a*[Lys-Pg])*Plasma-([k^-_F1aLys-Pg]*[F1a:Lys-Pg])*Plasma))
+
+Name    Reaction                                Reaction rate
+r249    [F1a:Lys-Pg] -> tPA                     [k^F1a_cattPA]*[F1a:Lys-Pg]
+r244    F1a + [Lys-Pg] <-> [F1a:Lys-Pg]         [k^+_F1aLys-Pg]*F1a*[Lys-Pg] - [k^-_F1aLys-Pg]*[F1a:Lys-Pg]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-171
+
+d([P-KAL:HK])/dt = 1/Plasma*(-(([k^PKALHK_catBK]*[P-KAL:HK])*Plasma) + 
+(([k^+_PKALHK]*HK*[P-KAL]-[k^-_PKALHK]*[P-KAL:HK])*Plasma))
+
+Name    Reaction                                Reaction rate
+r231    [P-KAL:HK] -> BK                        [k^PKALHK_catBK]*[P-KAL:HK]
+r178    HK + [P-KAL] <-> [P-KAL:HK]             [k^+_PKALHK]*HK*[P-KAL]-[k^-_PKALHK]*[P-KAL:HK]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-172
+
+d([gC1qR:F12])/dt = 1/Plasma*((([k^+_gC1qRF12]*gC1qR*F12)*Plasma-([k^-_gC1qRF12]*[gC1qR:F12])*Plasma) - 
+(([k^gC1qRF12_catF12a]*[gC1qR:F12])*Plasma))
+
+Name    Reaction                                Reaction rate
+r173    gC1qR + F12 <-> [gC1qR:F12]             [k^+_gC1qRF12]*gC1qR*F12 - [k^-_gC1qRF12]*[gC1qR:F12]
+r174    [gC1qR:F12] -> F12a                     [k^gC1qRF12_catF12a]*[gC1qR:F12] 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-173
+
+d([HK:F11])/dt = 1/Plasma*((([k^+_HKF11]*HK*F11)*Plasma-([k^-_HKF11]*[HK:F11])*Plasma) - 
+(([k^HKF11_catF11a]*[HK:F11])*Plasma))
+
+Name    Reaction                                Reaction rate
+r187    HK + F11 <-> [HK:F11]                   [k^+_HKF11]*HK*F11 - [k^-_HKF11]*[HK:F11]
+r188    [HK:F11] -> F11a                        [k^HKF11_catF11a]*[HK:F11] 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-174
+
+d([gC1qR:HK])/dt = 1/Plasma*((([k^+_gC1qRHK]*HK*gC1qR)*Plasma-([k^-_gC1qRHK]*[gC1qR:HK])*Plasma) - 
+(([k^gC1qRHK_catBK]*[gC1qR:HK])*Plasma))
+
+Name    Reaction                                Reaction rate
+r166    HK + gC1qR <-> [gC1qR:HK]               [k^+_gC1qRHK]*HK*gC1qR - [k^-_gC1qRHK]*[gC1qR:HK] 
+r167    [gC1qR:HK] -> BK                        [k^gC1qRHK_catBK]*[gC1qR:HK] 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-175
+
+d(PFD)/dt = 1/Plasma*(-(([k^MASP1_catPFD]*PFD*MASP1+[k^MASP2_catPFD]*PFD*MASP2+[k^F2a_catPFD]*PFD*F2a)*Plasma))
+
+Name    Reaction                    Reaction rate
+r46     PFD -> FD                   [k^MASP1_catPFD]*PFD*MASP1+[k^MASP2_catPFD]*PFD*MASP2+[k^F2a_catPFD]*PFD*F2a  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-176
+
+d(FDPs)/dt = 1/Plasma*(-(([k^+_Glu-PgFDPs]*[Glu-Pg]*FDPs)*Plasma-([k^-_Glu-PgFDPs]*[Glu-Pg:FDPs])*Plasma) - 
+((r260.[k^+_Lys-PgFDPs]*[Lys-Pg]*FDPs)*Plasma-([k^-_Lys-PgFDPs]*[Lys-Pg:FDPs])*Plasma) + 
+(([k^Pn_catF1a]*F1a*Pn/([k^Pn_mF1a]+F1a))*Plasma))
+
+Name    Reaction                                Reaction rate
+r259    [Glu-Pg] + FDPs <-> [Glu-Pg:FDPs]       [k^+_Glu-PgFDPs]*[Glu-Pg]*FDPs - [k^-_Glu-PgFDPs]*[Glu-Pg:FDPs]
+r260    [Lys-Pg] + FDPs <-> [Lys-Pg:FDPs]       [k^+_Lys-PgFDPs]*[Lys-Pg]*FDPs - [k^-_Lys-PgFDPs]*[Lys-Pg:FDPs]
+r258    F1a -> FDPs                             [k^Pn_catF1a]*F1a*Pn/([k^Pn_mF1a]+F1a)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-177
+
+d([Glu-Pg:FDPs])/dt = 1/Plasma*((([k^+_Glu-PgFDPs]*[Glu-Pg]*FDPs)*Plasma-([k^-_Glu-PgFDPs]*[Glu-Pg:FDPs])*Plasma) - 
+((r273.[k^+_Glu-PgTAFIa]*[Glu-Pg:FDPs]*TAFIa)*Plasma))
+
+Name    Reaction                                Reaction rate
+r259    [Glu-Pg] + FDPs <-> [Glu-Pg:FDPs]       [k^+_Glu-PgFDPs]*[Glu-Pg]*FDPs - [k^-_Glu-PgFDPs]*[Glu-Pg:FDPs]
+r273    [Glu-Pg:FDPs] + TAFIa -> null           [k^+_Glu-PgTAFIa]*[Glu-Pg:FDPs]*TAFIa
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-178
+
+d([Lys-Pg:FDPs])/dt = 1/Plasma*(((r260.[k^+_Lys-PgFDPs]*[Lys-Pg]*FDPs)*Plasma-([k^-_Lys-PgFDPs]*[Lys-Pg:FDPs])*Plasma) - 
+((r272.[k^+_Lys-PgFDPs]*[Lys-Pg:FDPs]*TAFIa)*Plasma))   
+
+Name    Reaction                                Reaction rate  
+r260    [Lys-Pg] + FDPs <-> [Lys-Pg:FDPs]       [k^+_Lys-PgFDPs]*[Lys-Pg]*FDPs - [k^-_Lys-PgFDPs]*[Lys-Pg:FDPs]
+r272    [Lys-Pg:FDPs] + TAFIa -> null           [k^+_Lys-PgFDPs]*[Lys-Pg:FDPs]*TAFIa
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

@@ -1,0 +1,344 @@
+
+Model information: ODEs, reactions, and rates. 
+
+Table S1a. Average gene expression values of the complement and coagulation entities acquired from 
+the analysis of microarray dataset(source: GEO accession GSE177477, Title: Type I interferon pathways 
+in SARS-CoV-2-infected individuals from Pakistan)
+Table S1b. The concentration of entities explored from experimental studies and estimation.
+Table S1c. For intervened disease state (INT-DS) modeling and analysis drugs and targets  
+
+The kinetic constants and reactions reference and evidence details are provided in (Table S2a-Table S2e).pdf
+Table S2a. Complement entities kinetic constants
+Table S2b. Coagulation entities kinetic constants
+Table S2c. Complement and coagulation cross-talk entities kinetic constants
+Table S2d. Complement, coagulation entities and SASR-CoV-2 structure proteins kinetic constants
+Table S2e. Kinetic constants for Drug-Target interactions
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-5
+
+d(C2)/dt = 1/Plasma*(-(([k^+_C4bC2]*C2*C4b)*Plasma-([k^-_C4bC2]*[C4b:C2])*Plasma) - 
+(([k^+_fC3bC4bC2]*[fC3b:C4b]*C2)*Plasma-([k^-_fC3bC4bC2]*[fC3b:C4b:C2])*Plasma) - 
+((r75.[k^MASP2_catC2]*C2*MASP2/(r75.[k^MASP2_mC2]+C2)+[k^C1s_catC2]*C2*C1s/([k^C1s_mC2]+C2))*Plasma)
+- (([k^+_HepC2]*Heparin*C2)*Plasma-([k^-_HepC2]*[Hep:C2])*Plasma))
+
+Name    Reaction                            Reaction rate
+r75     C2 -> C2b + C2a                     [k^MASP2_catC2]*C2*MASP2/([k^MASP2_mC2]+C2)+[k^C1s_catC2]*C2*C1s/([k^C1s_mC2]+C2)
+r73     C2 + C4b <-> [C4b:C2]               [k^+_C4bC2]*C2*C4b - [k^-_C4bC2]*[C4b:C2]
+r92     [fC3b:C4b] + C2 <-> [fC3b:C4b:C2]   [k^+_fC3bC4bC2]*[fC3b:C4b]*C2 - [k^-_fC3bC4bC2]*[fC3b:C4b:C2]
+r_d3    Heparin + C2 <-> [Hep:C2]           [k^+_HepC2]*Heparin*C2 - [k^-_HepC2]*[Hep:C2]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-8
+
+d(C4)/dt = 1/Plasma*(-(([k^C1_catC4]*C4*C1/(r35.[k^C1_mC4]*(1+[C4b:C2]/r35.[k^C1_mC2]+
+[fC3b:C4b:C2]/r35.[k^C1_mC2]+C4/r35.[k^C1_mC4]))+
+[k^MASP1_catC4]*[MBL:MASP1]*C4/(r35.[k^MASP1_mC4]*(1+[C4b:C2]/r35.[k^MASP1_mC2]+
+[fC3b:C4b:C2]/r35.[k^MASP1_mC2]+C4/r35.[k^MASP1_mC4]))+
+[k^MASP2_catC4]*[MBL:MASP2]*C4/(r35.[k^MASP2_mC4]*(1+[C4b:C2]/r35.[k^MASP2_mC2]+
+[fC3b:C4b:C2]/r35.[k^MASP2_mC2]+C4/r35.[k^MASP2_mC4])))*Plasma) - 
+(([k^+_C1sC4]*C4*C1s)*Plasma-([k^-_C1sC4]*[C1s:C4])*Plasma) - 
+(([k^+_MASP2C4]*MASP2*C4)*Plasma-([k^-_MASP2C4]*[MASP2:C4])*Plasma)
+- (([k^+_HepC4]*Heparin*C4)*Plasma-([k^-_HepC4]*[Hep:C4])*Plasma))
+
+Name    Reaction                            Reaction rate
+r35     C4 -> C4a + C4b                     [k^C1_catC4]*C4*C1/([k^C1_mC4]*(1+[C4b:C2]/[k^C1_mC2]+
+                                            [fC3b:C4b:C2]/[k^C1_mC2]+C4/[k^C1_mC4]))+
+					    [k^MASP1_catC4]*[MBL:MASP1]*C4/([k^MASP1_mC4]*(1+[C4b:C2]/[k^MASP1_mC2]+
+					    [fC3b:C4b:C2]/[k^MASP1_mC2]+C4/[k^MASP1_mC4]))+
+					    [k^MASP2_catC4]*[MBL:MASP2]*C4/([k^MASP2_mC4]*(1+[C4b:C2]/[k^MASP2_mC2]+
+					    [fC3b:C4b:C2]/[k^MASP2_mC2]+C4/[k^MASP2_mC4]))
+
+r34	C4 + C1s <-> [C1s:C4]               [k^+_C1sC4]*C4*C1s - [k^-_C1sC4]*[C1s:C4]									
+r33     MASP2 + C4 <-> [MASP2:C4]           [k^+_MASP2C4]*MASP2*C4 - [k^-_MASP2C4]*[MASP2:C4]
+r_d2    Heparin + C4 <-> [Hep:C4]           [k^+_HepC4]*Heparin*C4 - [k^-_HepC4]*[Hep:C4]  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-13
+
+d(C3)/dt = 1/Plasma*(-(([k^C3WBb_catC3]*[C3W:Bb]*C3/([k^C3WBb_mC3]+C3)+
+[k^C4bC2a_catC3]*[C4b:C2a]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+C5/[k^C4bC2a_mC5]))+
+[k^fC3bBb_catC3]*([fC3b:Bb]+[fC3b:Bb:P])*C3/(r122.[k^fC3bBb_mC3]*(1+C3/r122.[k^fC3bBb_mC3]+C5/r122.[k^fC3bBb_mC5]))
++[k^fC3bBb_catC3]*[fC3b:Bb:C3b]*C3/(r122.[k^fC3bBb_mC3]*(1+C3/r122.[k^fC3bBb_mC3]+C5/r122.[k^fC3bBbC3b_mC5]))+
+[k^C4bC2a_catC3]*[C4b:C2a:C3b]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+C5/[k^C4bC2aC3b_mC5]))+
+[k^fC3bBb_catC3]*[fC3b:Bb:C3b:P]*C3/(r122.[k^fC3bBb_mC3]*(1+C3/r122.[k^fC3bBb_mC3]+C5/r122.[k^fC3bBbC3b_mC5]))+
+[k^KAL_catC3]*KAL*C3/([k^KAL_mC3]+C3)+[k^Pn_catC3]*Pn*C3/([k^Pn_mC3]+C3)+
+[k^F2a_catC3]*F2a*C3/([k^F2a_mC3]+C3)+[k^F10a_catC3]*F10a*C3/([k^F10a_mC3]+C3))*Plasma) - 
+((r124.[k^+_C3W]*C3)*Plasma) + (([k^+_sC3])*Plasma) - (([k^+_HepC3]*Heparin*C3)*Plasma-([k^-_HepC3]*[Hep:C3])*Plasma))
+
+Name    Reaction                       Reaction rate
+r122    C3 -> C3b + C3a                [k^C3WBb_catC3]*[C3W:Bb]*C3/([k^C3WBb_mC3]+C3)+
+                                       [k^C4bC2a_catC3]*[C4b:C2a]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+
+				       C5/[k^C4bC2a_mC5]))+[k^fC3bBb_catC3]*([fC3b:Bb]+
+				       [fC3b:Bb:P])*C3/([k^fC3bBb_mC3]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBb_mC5]))+
+				       [k^fC3bBb_catC3]*[fC3b:Bb:C3b]*C3/([k^fC3bBb_mC3]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBbC3b_mC5]))+
+				       [k^C4bC2a_catC3]*[C4b:C2a:C3b]*C3/([k^C4bC2a_mC3]*(1+C3/[k^C4bC2a_mC3]+C5/[k^C4bC2aC3b_mC5]))+
+				       [k^fC3bBb_catC3]*[fC3b:Bb:C3b:P]*C3/([k^fC3bBb_mC3]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBbC3b_mC5]))+
+				       [k^KAL_catC3]*KAL*C3/([k^KAL_mC3]+C3)+[k^Pn_catC3]*Pn*C3/([k^Pn_mC3]+C3)+
+				       [k^F2a_catC3]*F2a*C3/([k^F2a_mC3]+C3)+[k^F10a_catC3]*F10a*C3/([k^F10a_mC3]+C3)
+							  
+r124    C3 -> null                     [k^+_C3W]*C3
+r123    null -> C3                     [k^+_sC3]
+r_d4    Heparin + C3 <-> [Hep:C3]      [k^+_HepC3]*Heparin*C3 - [k^-_HepC3]*[Hep:C3]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-52
+
+d(C5)/dt = 1/Plasma*(-(([k^fC3bBb_catC5]*[fC3b:Bb]*C5/(r140.[k^fC3bBb_mC5]*(1+C3/r140.[k^fC3bBb_mC3]+C5/r140.[k^fC3bBb_mC5]))+
+[k^fC3bBb_catC5]*[fC3b:Bb:P]*C5/(r140.[k^fC3bBb_mC5]*(1+C3/r140.[k^fC3bBb_mC3]+C5/r140.[k^fC3bBb_mC5]))+
+[k^C4b2a_catC5]*[C4b:C2a]*C5/([k^C4b2a_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a_mC5]))+
+[k^C4b2a3b_catC5]*[C4b:C2a:C3b]*C5/([k^C4b2a3b_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a3b_mC5]))+
+[k^fC3bBbC3b_catC5]*([fC3b:Bb:C3b]+[fC3b:Bb:C3b:P])*C5/(r140.[k^fC3bBbC3b_mC5]*(1+C3/r140.[k^fC3bBb_mC3]+
+C5/r140.[k^fC3bBbC3b_mC5]))+[k^KAL_catC5]*KAL*C5/([k^KAL_mC5]+C5)+[k^Pn_catC5]*Pn*C5/([k^Pn_mC5]+C5)+
+[k^F2a_catC5]*F2a*C5/([k^F2a_mC5]+C5)+[k^F10a_catC5]*F10a*C5/([k^F10a_mC5]+C5))*Plasma) - 
+(([k^-_dC5]*C5)*Plasma) + (([k^+_sC5])*Plasma) - (([k^+_HepC5]*Heparin*C5)*Plasma-([k^-_HepC5]*[Hep:C5])*Plasma))
+
+Name    Reaction                          Reaction rate
+r140    C5 -> C5a + C5b                   [k^fC3bBb_catC5]*[fC3b:Bb]*C5/([k^fC3bBb_mC5]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBb_mC5]))+
+                                          [k^fC3bBb_catC5]*[fC3b:Bb:P]*C5/([k^fC3bBb_mC5]*(1+C3/[k^fC3bBb_mC3]+C5/[k^fC3bBb_mC5]))+
+					  [k^C4b2a_catC5]*[C4b:C2a]*C5/([k^C4b2a_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a_mC5]))+
+					  [k^C4b2a3b_catC5]*[C4b:C2a:C3b]*C5/([k^C4b2a3b_mC5]*(1+C3/[k^C4b2a_mC3]+C5/[k^C4b2a3b_mC5]))+
+					  [k^fC3bBbC3b_catC5]*([fC3b:Bb:C3b]+[fC3b:Bb:C3b:P])*C5/([k^fC3bBbC3b_mC5]*(1+C3/[k^fC3bBb_mC3]+
+					  C5/[k^fC3bBbC3b_mC5]))+[k^KAL_catC5]*KAL*C5/([k^KAL_mC5]+C5)+[k^Pn_catC5]*Pn*C5/([k^Pn_mC5]+C5)+
+					  [k^F2a_catC5]*F2a*C5/([k^F2a_mC5]+C5)+[k^F10a_catC5]*F10a*C5/([k^F10a_mC5]+C5)
+r142   	C5 -> null                        [k^-_dC5]*C5
+r141    null -> C5                        [k^+_sC5]	
+r_d5    Heparin + C5 <-> [Hep:C5]         [k^+_HepC5]*Heparin*C5 - [k^-_HepC5]*[Hep:C5]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-55
+
+d(C6)/dt = 1/Plasma*(-(([k^+_C5bC6]*C5b*C6-[k^-_C5bC6]*[C5b:C6])*Plasma) - (([k^-_dC6]*C6)*Plasma
++ (([k^+_sC6])*Plasma) - (([k^+_HepC6]*Heparin*C6)*Plasma-([k^-_HepC6]*[Hep:C6])*Plasma))
+
+Name    Reaction                          Reaction rate
+r148    C5b + C6 <-> [C5b:C6]             [k^+_C5bC6]*C5b*C6 - [k^-_C5bC6]*[C5b:C6]
+r150    C6 -> null                        [k^-_dC6]*C6
+r149    null -> C6                        [k^+_sC6]
+r_d6    C6 + Heparin <-> [Hep:C6]         [k^+_HepC6]*C6*Heparin - [k^-_HepC6]*[Hep:C6]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-57
+
+d(C7)/dt = 1/Plasma*(-(([k^+_C5bC6C7]*C7*[C5b:C6])*Plasma-([k^-_C5bC6C7]*[C5b:C6:C7])*Plasma) + 
+(([k^+_sC7])*Plasma) - (([k^-_dC7]*C7)*Plasma)- (([k^+_HepC7]*Heparin*C7)*Plasma-([k^-_HepC7]*[Hep:C7])*Plasma))
+
+Name    Reaction                          Reaction rate
+r151    C7 + [C5b:C6] <-> [C5b:C6:C7]     [k^+_C5bC6C7]*C7*[C5b:C6] - [k^-_C5bC6C7]*[C5b:C6:C7]
+r152    null -> C7                        [k^+_sC7]
+r153    C7 -> null                        [k^-_dC7]*C7
+r_d7    Heparin + C7 <-> [Hep:C7]         [k^+_HepC7]*Heparin*C7 - [k^-_HepC7]*[Hep:C7]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-59
+
+d(C8)/dt = 1/Plasma*(-(([k^+_C5bC6C7C8]*C8*[C5b:C6:C7])*Plasma-([k^-C5bC6C7C8]*[C5b:C6:C7:C8])*Plasma) - 
+(([k^-_dC8]*C8)*Plasma) + (([k^+_sC8])*Plasma)- (([k^+_HepC8]*Heparin*C8)*Plasma-([k^-_HepC8]*[Hep:C8])*Plasma))
+
+r154    C8 + [C5b:C6:C7] <-> [C5b:C6:C7:C8]     [k^+_C5bC6C7C8]*C8*[C5b:C6:C7] - [k^-C5bC6C7C8]*[C5b:C6:C7:C8]
+r156    C8 -> null                              [k^-_dC8]*C8 
+r155    null -> C8                              [k^+_sC8]
+r_d8    C8 + Heparin <-> [Hep:C8]               [k^+_HepC8]*C8*Heparin - [k^-_HepC8]*[Hep:C8]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-61
+
+d(C9)/dt = 1/Plasma*(-(([k^+_C5bC6C7C8C9]*C9*[C5b:C6:C7:C8])*Plasma-([k^-_C5bC6C7C8C9]*[C5b:C6:C7:C8:C9])*Plasma) - 
+(([k^-_dC9]*C9)*Plasma) + (([k^+_sC9])*Plasma)- (([k^+_HepC9]*Heparin*C9)*Plasma-([k^-_HepC9]*[Hep:C9])*Plasma))
+
+Name    Reaction                                      Reaction rate
+r157    C9 + [C5b:C6:C7:C8] <-> [C5b:C6:C7:C8:C9]     [k^+_C5bC6C7C8C9]*C9*[C5b:C6:C7:C8] - [k^-_C5bC6C7C8C9]*[C5b:C6:C7:C8:C9]
+r159    C9 -> null                                    [k^-_dC9]*C9
+r158    null -> C9                                    [k^+_sC9]
+r_d9    C9 + Heparin <-> [Hep:C9]                     [k^+_HepC9]*C9*Heparin - [k^-_HepC9]*[Hep:C9]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-63
+
+d(C5aR1)/dt = 1/Plasma*(-(([k^+_C5aC5aR1]*C5a*C5aR1)*Plasma-([k^-_C5aC5aR1]*[C5a:C5aR1])*Plasma) - 
+(([k^+_AvdC5aR1]*Avdoralimab*C5aR1)*Plasma))
+
+Name           Reaction                                Reaction rate
+r144           C5a + C5aR1 <-> [C5a:C5aR1]             [k^+_C5aC5aR1]*C5a*C5aR1 - [k^-_C5aC5aR1]*[C5a:C5aR1]
+r_d11          Avdoralimab + C5aR1 -> null             [k^+_AvdC5aR1]*Avdoralimab*C5aR1
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-115
+
+d(AT3)/dt = 1/Plasma*(-(([k^+_F10aAT3]*F10a*AT3)*Plasma) - (([k^+_F2aAT3]*F2a*AT3)*Plasma) - 
+(([k^+_F9aAT3]*AT3*F9a)*Plasma) - (([k^+_TFF7aAT3]*[TF:F7a]*AT3)*Plasma) - 
+(([k^+_F12aAT3]*AT3*F12a)*Plasma) - (([k^+_F11aAT3]*AT3*F11a)*Plasma) + (([k^+_HepAT3]*Heparin*AT3)*Plasma))
+
+Name    Reaction                          Reaction rate
+r223    F10a + AT3 -> [F10a:AT3]          [k^+_F10aAT3]*F10a*AT3
+r224    F2a + AT3 -> [F2a:AT3]            [k^+_F2aAT3]*F2a*AT3
+r204    AT3 + F9a -> [F9a:AT3]            [k^+_F9aAT3]*AT3*F9a
+r211    [TF:F7a] + AT3 -> [TF:F7a:AT3]    [k^+_TFF7aAT3]*[TF:F7a]*AT3
+r189    AT3 + F11a -> [F11a:AT3]          [k^+_F11aAT3]*AT3*F11a
+r_d12   Heparin -> AT3                    [k^+_HepAT3]*Heparin*AT3
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-149
+
+d([KAL:F12])/dt = 1/Plasma*((([k^+_KALF12]*F12*KAL)*Plasma-([k^-_KALF12]*[KAL:F12])*Plasma) - 
+(([k^KAL_catF12a]*[KAL:F12])*Plasma) - (([k^+_GaradKALF12]*Garadacimab*[KAL:F12])*Plasma))
+
+Name    Reaction                            Reaction rate
+r172    F12 + KAL <-> [KAL:F12]             [k^+_KALF12]*F12*KAL - [k^-_KALF12]*[KAL:F12]
+r181    [KAL:F12] -> F12a                   [k^KAL_catF12a]*[KAL:F12]
+r_d10   Garadacimab + [KAL:F12] -> null     [k^+_GaradKALF12]*Garadacimab*[KAL:F12]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-165
+
+d(tPA)/dt = 1/Plasma*(-((r254.[k^F1a_cattPA]*tPA*F1a/(r254.[k^F1a_mtPA]+tPA))*Plasma) + 
+(([k^BKB2R_cattPA]*[BK:B2R])*Plasma) - (([k^+_tPAPAI-1]*[PAI-1]*tPA)*Plasma) - 
+((r252.[k^F1a_cattPA]*tPA*F1a/(r252.[k^F1a_mtPA]+tPA))*Plasma) + 
+((r249.[k^F1a_cattPA]*[F1a:Lys-Pg])*Plasma) - (([k^+_TXAtPA]*TXA*tPA)*Plasma))
+
+Name    Reaction                                Reaction rate
+r254    tPA -> [Glu-Pg]                         [k^F1a_cattPA]*tPA*F1a/([k^F1a_mtPA]+tPA)
+r248    [BK:B2R] -> tPA                         [k^BKB2R_cattPA]*[BK:B2R]
+r250    [PAI-1] + tPA -> null                   [k^+_tPAPAI-1]*[PAI-1]*tPA
+r252    tPA -> [Lys-Pg]                         [k^F1a_cattPA]*tPA*F1a/([k^F1a_mtPA]+tPA)
+249     [F1a:Lys-Pg] -> tPA                     [k^F1a_cattPA]*[F1a:Lys-Pg] 
+r_d13   TXA + tPA -> null                       [k^+_TXAtPA]*TXA*tPA
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-179
+
+d(Heparin)/dt = 1/Plasma*(-(([k^+_HepC4]*Heparin*C4)*Plasma-([k^-_HepC4]*[Hep:C4])*Plasma) - 
+(([k^+_HepC2]*Heparin*C2)*Plasma-([k^-_HepC2]*[Hep:C2])*Plasma) - 
+(([k^+_HepC3]*Heparin*C3)*Plasma-([k^-_HepC3]*[Hep:C3])*Plasma) - 
+(([k^+_HepC5]*Heparin*C5)*Plasma-([k^-_HepC5]*[Hep:C5])*Plasma) - 
+(([k^+_HepC6]*C6*Heparin)*Plasma-([k^-_HepC6]*[Hep:C6])*Plasma) - 
+(([k^+_HepC7]*Heparin*C7)*Plasma-([k^-_HepC7]*[Hep:C7])*Plasma) - 
+(([k^+_HepC8]*C8*Heparin)*Plasma-([k^-_HepC8]*[Hep:C8])*Plasma) - 
+(([k^+_HepC9]*C9*Heparin)*Plasma-([k^-_HepC9]*[Hep:C9])*Plasma) - 
+(([k^+_HepAT3]*Heparin*AT3)*Plasma))
+
+Name    Reaction                                Reaction rate
+r_d2    Heparin + C4 <-> [Hep:C4]               [k^+_HepC4]*Heparin*C4 - [k^-_HepC4]*[Hep:C4]
+r_d3    Heparin + C2 <-> [Hep:C2]               [k^+_HepC2]*Heparin*C2 - [k^-_HepC2]*[Hep:C2]
+r_d4    Heparin + C3 <-> [Hep:C3]               [k^+_HepC3]*Heparin*C3 - [k^-_HepC3]*[Hep:C3]
+r_d5    Heparin + C5 <-> [Hep:C5]               [k^+_HepC5]*Heparin*C5 - [k^-_HepC5]*[Hep:C5]
+r_d6    C6 + Heparin <-> [Hep:C6]               [k^+_HepC6]*C6*Heparin - [k^-_HepC6]*[Hep:C6]
+r_d7    Heparin + C7 <-> [Hep:C7]               [k^+_HepC7]*Heparin*C7 - [k^-_HepC7]*[Hep:C7]
+r_d8    C8 + Heparin <-> [Hep:C8]               [k^+_HepC8]*C8*Heparin - [k^-_HepC8]*[Hep:C8]
+r_d9    C9 + Heparin <-> [Hep:C9]               [k^+_HepC9]*C9*Heparin - [k^-_HepC9]*[Hep:C9]
+r_d12   Heparin -> AT3                          [k^+_HepAT3]*Heparin*AT3
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-180
+
+d([Hep:C4])/dt = 1/Plasma*((([k^+_HepC4]*Heparin*C4)*Plasma-([k^-_HepC4]*[Hep:C4])*Plasma))
+
+Name    Reaction                                Reaction rate
+r_d2    Heparin + C4 <-> [Hep:C4]           [k^+_HepC4]*Heparin*C4 - [k^-_HepC4]*[Hep:C4]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-181
+
+d([Hep:C2])/dt = 1/Plasma*((([k^+_HepC2]*Heparin*C2)*Plasma-([k^-_HepC2]*[Hep:C2])*Plasma))
+
+Name    Reaction                                Reaction rate
+r_d3    Heparin + C2 <-> [Hep:C2]               [k^+_HepC2]*Heparin*C2 - [k^-_HepC2]*[Hep:C2]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-182
+
+d([Hep:C3])/dt = 1/Plasma*((([k^+_HepC3]*Heparin*C3)*Plasma-([k^-_HepC3]*[Hep:C3])*Plasma))
+
+Name    Reaction                                Reaction rate
+r_d3    Heparin + C2 <-> [Hep:C2]               [k^+_HepC2]*Heparin*C2 - [k^-_HepC2]*[Hep:C2]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-183
+
+d([Hep:C5])/dt = 1/Plasma*((([k^+_HepC5]*Heparin*C5)*Plasma-([k^-_HepC5]*[Hep:C5])*Plasma))
+
+Name    Reaction                                Reaction rate
+r_d5    Heparin + C5 <-> [Hep:C5]               [k^+_HepC5]*Heparin*C5 - [k^-_HepC5]*[Hep:C5]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-184
+
+d([Hep:C6])/dt = 1/Plasma*((([k^+_HepC6]*C6*Heparin)*Plasma-([k^-_HepC6]*[Hep:C6])*Plasma))
+
+Name    Reaction                                Reaction rate
+r_d6    C6 + Heparin <-> [Hep:C6]               [k^+_HepC6]*C6*Heparin - [k^-_HepC6]*[Hep:C6]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-185
+
+d([Hep:C7])/dt = 1/Plasma*((([k^+_HepC7]*Heparin*C7)*Plasma-([k^-_HepC7]*[Hep:C7])*Plasma))
+
+Name    Reaction                                Reaction rate
+r_d7    Heparin + C7 <-> [Hep:C7]               [k^+_HepC7]*Heparin*C7 - [k^-_HepC7]*[Hep:C7]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-186
+
+d([Hep:C8])/dt = 1/Plasma*((([k^+_HepC8]*C8*Heparin)*Plasma-([k^-_HepC8]*[Hep:C8])*Plasma))
+
+Name    Reaction                                Reaction rate
+r_d8    C8 + Heparin <-> [Hep:C8]               [k^+_HepC8]*C8*Heparin - [k^-_HepC8]*[Hep:C8]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-187
+
+d([Hep:C9])/dt = 1/Plasma*((([k^+_HepC9]*C9*Heparin)*Plasma-([k^-_HepC9]*[Hep:C9])*Plasma))
+
+Name    Reaction                                Reaction rate
+r_d9    C9 + Heparin <-> [Hep:C9]               [k^+_HepC9]*C9*Heparin - [k^-_HepC9]*[Hep:C9]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-188
+
+d(Garadacimab)/dt = 1/Plasma*(-(([k^+_GaradKALF12]*Garadacimab*[KAL:F12])*Plasma))
+
+Name    Reaction                                Reaction rate
+r_d10   Garadacimab + [KAL:F12] -> null     [k^+_GaradKALF12]*Garadacimab*[KAL:F12]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-189
+
+d(TXA)/dt = 1/Plasma*(-(([k^+_TXAtPA]*TXA*tPA)*Plasma))
+
+Name    Reaction                                Reaction rate
+r_d13   TXA + tPA -> null                       [k^+_TXAtPA]*TXA*tPA
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ODE-190
+	
+d(Avdoralimab)/dt = 1/Plasma*(-(([k^+_AvdC5aR1]*Avdoralimab*C5aR1)*Plasma))
+
+Name    Reaction                                Reaction rate
+r_d11          Avdoralimab + C5aR1 -> null             [k^+_AvdC5aR1]*Avdoralimab*C5aR1
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
